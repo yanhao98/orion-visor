@@ -12,7 +12,7 @@ concurrency: # This is needed to prevent concurrent builds from running at the s
   group: ${{github.workflow}} - ${{github.ref}} - ${{github.ref_name}}
   cancel-in-progress: true
 jobs:
-  build:
+  build-service:
     runs-on: ubuntu-latest
     steps:
       - name: 📥 检出代码
@@ -30,6 +30,7 @@ jobs:
       - name: 🏗️ Maven构建
         run: |
           mvn --batch-mode clean install -Dmaven.test.skip=true --threads=1C --settings=docker-arm/settings.xml
+          #  -Dspring.profiles.active=prod
       - name: 🔑 登录 GitHub Container Registry
         uses: docker/login-action@v2
         with:
@@ -60,6 +61,44 @@ jobs:
           context: '.'
           push: true
           file: docker-arm/Dockerfile.service
+          platforms: linux/amd64,linux/arm64
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+  build-mysql:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 检出代码
+        uses: actions/checkout@main
+      - name: 🔑 登录 GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: 🏷️ 准备 Docker 镜像元数据
+        id: meta
+        uses: docker/metadata-action@v5
+        env:
+          # This env var ensures {{sha}} is a real commit SHA for type=ref,event=pr
+          DOCKER_METADATA_PR_HEAD_SHA: 'true'
+        with:
+          images: |
+            ghcr.io/${{ github.repository }}-mysql
+          # type=ref,event=branch generates tag(s) on branch only. E.g. 'master', 'master-abc0123'
+          # type=ref,event=tag generates tag(s) on tags only. E.g. 'v0.0.0', 'v0.0.0-abc0123', and 'latest'
+          tags: |
+            type=ref,event=branch
+            type=ref,event=tag
+      - name: 🖥️ 设置 QEMU
+        uses: docker/setup-qemu-action@v3
+      - name: 🐳 设置 Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: 🚀 构建并推送 Docker 镜像
+        uses: docker/build-push-action@v6
+        with:
+          context: '.'
+          push: true
+          file: docker-arm/Dockerfile.mysql
           platforms: linux/amd64,linux/arm64
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
