@@ -102,3 +102,57 @@ jobs:
           platforms: linux/amd64,linux/arm64
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+  build-ui:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 检出代码
+        uses: actions/checkout@main
+      - name: 📦 安装 PNPM
+        uses: pnpm/action-setup@v4
+        with:
+          version: latest
+      - name: 🟢 设置 Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'pnpm'
+          cache-dependency-path: 'orion-visor-ui/pnpm-lock.yaml'
+      - name: 📥 安装依赖
+        run: pnpm install --frozen-lockfile
+        working-directory: orion-visor-ui
+      - name: 🏗️ 构建UI
+        run: pnpm build
+        working-directory: orion-visor-ui
+      - name: 🔑 登录 GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: 🏷️ 准备 Docker 镜像元数据
+        id: meta
+        uses: docker/metadata-action@v5
+        env:
+          # This env var ensures {{sha}} is a real commit SHA for type=ref,event=pr
+          DOCKER_METADATA_PR_HEAD_SHA: 'true'
+        with:
+          images: |
+            ghcr.io/${{ github.repository }}-ui
+          # type=ref,event=branch generates tag(s) on branch only. E.g. 'master', 'master-abc0123'
+          # type=ref,event=tag generates tag(s) on tags only. E.g. 'v0.0.0', 'v0.0.0-abc0123', and 'latest'
+          tags: |
+            type=ref,event=branch
+            type=ref,event=tag
+      - name: 🖥️ 设置 QEMU
+        uses: docker/setup-qemu-action@v3
+      - name: 🐳 设置 Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: 🚀 构建并推送 Docker 镜像
+        uses: docker/build-push-action@v6
+        with:
+          context: '.'
+          push: true
+          file: docker-arm/Dockerfile.ui
+          platforms: linux/amd64,linux/arm64
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}

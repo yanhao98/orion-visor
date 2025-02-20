@@ -1,6 +1,15 @@
-services: # docker-compose down -v; docker compose -f docker-compose.arm.yml up --force-recreate --build
+services: # docker-compose -f docker-compose.arm.yml down -v; docker compose -f docker-compose.arm.yml up --force-recreate --build
+  ui:
+    image: ghcr.io/yanhao98/orion-visor-ui:docker-arm
+    build:
+      context: .
+      dockerfile: docker-arm/Dockerfile.ui
+    ports:
+      - ${UI_PORT:-80}:80
+    depends_on:
+      - service
   service:
-    image: ghcr.io/dromara/orion-visor-service:latest
+    image: ghcr.io/yanhao98/orion-visor-service:docker-arm
     build:
       context: .
       dockerfile: docker-arm/Dockerfile.service
@@ -28,7 +37,7 @@ services: # docker-compose down -v; docker compose -f docker-compose.arm.yml up 
       - SECRET_KEY=${SECRET_KEY:-uQeacXV8b3isvKLK}
       - DEMO_MODE=${DEMO_MODE:-false}
   mysql:
-    image: ghcr.io/dromara/orion-visor-mysql:latest
+    image: ghcr.io/yanhao98/orion-visor-mysql:docker-arm
     build:
       context: .
       dockerfile: docker-arm/Dockerfile.mysql
@@ -57,7 +66,7 @@ services: # docker-compose down -v; docker compose -f docker-compose.arm.yml up 
       - REDIS_PASSWORD=${REDIS_PASSWORD:-Data@123456}
     # volumes:
     #   - ${VOLUME_BASE:-/data/orion-visor-space/docker-volumes}/redis/data:/data
-    command: sh -c "redis-server --requirepass $${REDIS_PASSWORD}"
+    command: sh -c "exec redis-server --requirepass $${REDIS_PASSWORD}"
     healthcheck:
       test: [ "CMD", "redis-cli", "--raw", "incr", "ping" ]
       interval: 15s
