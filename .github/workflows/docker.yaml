@@ -1,11 +1,11 @@
-name: docker
+name: Docker
 on:
   push:
     branches:
-      - docker-arm
+      - feat-docker-multiarch
     tags:
       - '*'
-permissions: # # This is needed to push to GitHub Container Registry. See https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry
+permissions: # This is needed to push to GitHub Container Registry. See https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry
   contents: read
   packages: write
 concurrency: # This is needed to prevent concurrent builds from running at the same time
@@ -29,7 +29,7 @@ jobs:
           maven-version: 3.9.9
       - name: 🏗️ Maven构建
         run: |
-          mvn --batch-mode clean install -Dmaven.test.skip=true --threads=1C --settings=docker-arm/settings.xml
+          mvn --batch-mode clean install -Dmaven.test.skip=true --threads=1C --settings=docker-multiarch/settings.xml
           #  -Dspring.profiles.active=prod
       - name: 🔑 登录 GitHub Container Registry
         uses: docker/login-action@v2
@@ -60,7 +60,7 @@ jobs:
         with:
           context: '.'
           push: true
-          file: docker-arm/Dockerfile.service
+          file: docker-multiarch/Dockerfile.service
           platforms: linux/amd64,linux/arm64
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
@@ -98,7 +98,7 @@ jobs:
         with:
           context: '.'
           push: true
-          file: docker-arm/Dockerfile.mysql
+          file: docker-multiarch/Dockerfile.mysql
           platforms: linux/amd64,linux/arm64
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
@@ -152,7 +152,7 @@ jobs:
         with:
           context: '.'
           push: true
-          file: docker-arm/Dockerfile.ui
+          file: docker-multiarch/Dockerfile.ui
           platforms: linux/amd64,linux/arm64
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}

@@ -1,0 +1,58 @@
+volumes:
+  redis:
+  mysql:
+services:
+  ui:
+    image: ghcr.io/yanhao98/orion-visor-ui:feat-docker-multiarch
+    build:
+      context: .
+      dockerfile: docker-multiarch/Dockerfile.ui
+    ports:
+      - 1081:80
+    depends_on:
+      - service
+  service:
+    image: ghcr.io/yanhao98/orion-visor-service:feat-docker-multiarch
+    build:
+      context: .
+      dockerfile: docker-multiarch/Dockerfile.service
+    depends_on:
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    environment:
+      MYSQL_HOST: mysql
+      MYSQL_PORT: 3306
+      MYSQL_DATABASE: orion_database
+      MYSQL_USER: orion_mysql_user
+      MYSQL_PASSWORD: orion_mysql_pass
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      REDIS_PASSWORD: redis_pass
+      SECRET_KEY: secret_key_s12aTc89Hpjvr64J
+      DEMO_MODE: false
+  mysql:
+    image: ghcr.io/yanhao98/orion-visor-mysql:feat-docker-multiarch
+    build:
+      context: .
+      dockerfile: docker-multiarch/Dockerfile.mysql
+    environment:
+      MYSQL_DATABASE: orion_database
+      MYSQL_USER: orion_mysql_user
+      MYSQL_PASSWORD: orion_mysql_pass
+      MYSQL_ROOT_PASSWORD: orion_mysql_root_pass
+    volumes:
+      - mysql:/var/lib/mysql
+  redis:
+    image: redis:7-alpine
+    environment:
+      - TZ=Asia/Shanghai
+    volumes:
+      - redis:/data
+    command: redis-server --requirepass 'redis_pass'
+    healthcheck:
+      test: ['CMD', 'redis-cli', '--raw', 'incr', 'ping']
+      interval: 15s
+      timeout: 5s
+      retries: 3
