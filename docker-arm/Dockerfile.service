@@ -1,0 +1,10 @@
+FROM amazoncorretto:17-alpine
+
+WORKDIR /app
+
+ENV TZ=Asia/Shanghai
+
+ARG JAR_FILE=orion-visor-launch/target/orion-visor-launch.jar
+COPY ${JAR_FILE} /app/app.jar
+
+CMD ["java", "-jar", "app.jar"]
