@@ -7,6 +7,9 @@ services:
     build:
       context: .
       dockerfile: docker-multiarch/Dockerfile.ui
+    # environment:
+    #   CADDY_TRUSTED_PROXIES: |-
+    #     192.168.1.1
     ports:
       - 1081:80
     depends_on:
