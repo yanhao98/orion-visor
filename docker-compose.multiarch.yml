@@ -3,6 +3,7 @@ volumes:
   mysql:
 services:
   ui:
+    restart: unless-stopped
     image: ghcr.io/yanhao98/orion-visor-ui:feat-docker-multiarch
     build:
       context: .
@@ -15,6 +16,7 @@ services:
     depends_on:
       - service
   service:
+    restart: unless-stopped
     image: ghcr.io/yanhao98/orion-visor-service:feat-docker-multiarch
     build:
       context: .
@@ -36,6 +38,7 @@ services:
       SECRET_KEY: secret_key_s12aTc89Hpjvr64J
       DEMO_MODE: false
   mysql:
+    restart: unless-stopped
     image: ghcr.io/yanhao98/orion-visor-mysql:feat-docker-multiarch
     build:
       context: .
@@ -48,6 +51,7 @@ services:
     volumes:
       - mysql:/var/lib/mysql
   redis:
+    restart: unless-stopped
     image: redis:7-alpine
     environment:
       - TZ=Asia/Shanghai
