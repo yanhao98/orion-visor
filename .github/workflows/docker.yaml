@@ -31,6 +31,13 @@ jobs:
         run: |
           mvn --batch-mode clean install -Dmaven.test.skip=true --threads=1C --settings=docker-multiarch/settings.xml
           #  -Dspring.profiles.active=prod
+      - name: 🗄️ 缓存Docker层
+        uses: actions/cache@v4
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-service-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-service-
       - name: 🔑 登录 GitHub Container Registry
         uses: docker/login-action@v2
         with:
@@ -64,11 +71,27 @@ jobs:
           platforms: linux/amd64,linux/arm64
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache-new,mode=max
+      # Temp fix
+      # https://github.com/docker/build-push-action/issues/252
+      # https://github.com/moby/buildkit/issues/1896
+      - name: 🔄 更新缓存
+        run: |
+          rm -rf /tmp/.buildx-cache
+          mv /tmp/.buildx-cache-new /tmp/.buildx-cache
   build-mysql:
     runs-on: ubuntu-latest
     steps:
       - name: 📥 检出代码
         uses: actions/checkout@main
+      - name: 🗄️ 缓存Docker层
+        uses: actions/cache@v4
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-mysql-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-mysql-
       - name: 🔑 登录 GitHub Container Registry
         uses: docker/login-action@v2
         with:
@@ -102,6 +125,15 @@ jobs:
           platforms: linux/amd64,linux/arm64
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache-new,mode=max
+      # Temp fix
+      # https://github.com/docker/build-push-action/issues/252
+      # https://github.com/moby/buildkit/issues/1896
+      - name: 🔄 更新缓存
+        run: |
+          rm -rf /tmp/.buildx-cache
+          mv /tmp/.buildx-cache-new /tmp/.buildx-cache
   build-ui:
     runs-on: ubuntu-latest
     steps:
@@ -156,3 +188,5 @@ jobs:
           platforms: linux/amd64,linux/arm64
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
