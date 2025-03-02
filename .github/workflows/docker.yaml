@@ -4,7 +4,7 @@ on:
     branches:
       - feat-docker-multiarch
     tags:
-      - '*'
+      - 'v[0-9]+.[0-9]+.[0-9]+' # Semantic version tags
 permissions: # This is needed to push to GitHub Container Registry. See https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry
   contents: read
   packages: write
