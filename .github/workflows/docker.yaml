@@ -4,7 +4,7 @@ on:
     branches:
       - feat-docker-multiarch
     tags:
-      - '*'
+      - 'v*'
 permissions: # This is needed to push to GitHub Container Registry. See https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry
   contents: read
   packages: write
@@ -12,7 +12,29 @@ concurrency: # This is needed to prevent concurrent builds from running at the s
   group: ${{github.workflow}} - ${{github.ref}} - ${{github.ref_name}}
   cancel-in-progress: true
 jobs:
+  docker-meta:
+    runs-on: ubuntu-latest
+    outputs:
+      tags: ${{ steps.meta.outputs.tags }}
+      labels: ${{ steps.meta.outputs.labels }}
+    steps:
+      - name: 🏷️ 准备 Docker 镜像元数据
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: |
+            ghcr.io/${{ github.repository }}-mysql
+          # https://github.com/docker/metadata-action/tree/v5/?tab=readme-ov-file#semver
+          # Event: push,     Ref: refs/head/main,       Tags: main
+          # Event: push tag, Ref: refs/tags/v1.2.3,     Tags: 1.2.3, 1.2, 1, latest
+          # Event: push tag, Ref: refs/tags/v2.0.8-rc1, Tags: 2.0.8-rc1
+          tags: |
+            type=ref,event=branch
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=semver,pattern={{major}}
   build-service:
+    needs: docker-meta
     runs-on: ubuntu-latest
     steps:
       - name: 📥 检出代码
@@ -44,20 +66,6 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - name: 🏷️ 准备 Docker 镜像元数据
-        id: meta
-        uses: docker/metadata-action@v5
-        env:
-          # This env var ensures {{sha}} is a real commit SHA for type=ref,event=pr
-          DOCKER_METADATA_PR_HEAD_SHA: 'true'
-        with:
-          images: |
-            ghcr.io/${{ github.repository }}-service
-          # type=ref,event=branch generates tag(s) on branch only. E.g. 'master', 'master-abc0123'
-          # type=ref,event=tag generates tag(s) on tags only. E.g. 'v0.0.0', 'v0.0.0-abc0123', and 'latest'
-          tags: |
-            type=ref,event=branch
-            type=ref,event=tag
       - name: 🖥️ 设置 QEMU
         uses: docker/setup-qemu-action@v3
       - name: 🐳 设置 Docker Buildx
@@ -69,8 +77,8 @@ jobs:
           push: true
           file: docker-multiarch/Dockerfile.service
           platforms: linux/amd64,linux/arm64
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+          tags: ${{ needs.docker-meta.outputs.tags }}
+          labels: ${{ needs.docker-meta.outputs.labels }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache-new,mode=max
       # Temp fix
@@ -81,6 +89,7 @@ jobs:
           rm -rf /tmp/.buildx-cache
           mv /tmp/.buildx-cache-new /tmp/.buildx-cache
   build-mysql:
+    needs: docker-meta
     runs-on: ubuntu-latest
     steps:
       - name: 📥 检出代码
@@ -98,20 +107,6 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - name: 🏷️ 准备 Docker 镜像元数据
-        id: meta
-        uses: docker/metadata-action@v5
-        env:
-          # This env var ensures {{sha}} is a real commit SHA for type=ref,event=pr
-          DOCKER_METADATA_PR_HEAD_SHA: 'true'
-        with:
-          images: |
-            ghcr.io/${{ github.repository }}-mysql
-          # type=ref,event=branch generates tag(s) on branch only. E.g. 'master', 'master-abc0123'
-          # type=ref,event=tag generates tag(s) on tags only. E.g. 'v0.0.0', 'v0.0.0-abc0123', and 'latest'
-          tags: |
-            type=ref,event=branch
-            type=ref,event=tag
       - name: 🖥️ 设置 QEMU
         uses: docker/setup-qemu-action@v3
       - name: 🐳 设置 Docker Buildx
@@ -123,8 +118,8 @@ jobs:
           push: true
           file: docker-multiarch/Dockerfile.mysql
           platforms: linux/amd64,linux/arm64
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+          tags: ${{ needs.docker-meta.outputs.tags }}
+          labels: ${{ needs.docker-meta.outputs.labels }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache-new,mode=max
       # Temp fix
@@ -135,6 +130,7 @@ jobs:
           rm -rf /tmp/.buildx-cache
           mv /tmp/.buildx-cache-new /tmp/.buildx-cache
   build-ui:
+    needs: docker-meta
     runs-on: ubuntu-latest
     steps:
       - name: 📥 检出代码
@@ -161,20 +157,6 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - name: 🏷️ 准备 Docker 镜像元数据
-        id: meta
-        uses: docker/metadata-action@v5
-        env:
-          # This env var ensures {{sha}} is a real commit SHA for type=ref,event=pr
-          DOCKER_METADATA_PR_HEAD_SHA: 'true'
-        with:
-          images: |
-            ghcr.io/${{ github.repository }}-ui
-          # type=ref,event=branch generates tag(s) on branch only. E.g. 'master', 'master-abc0123'
-          # type=ref,event=tag generates tag(s) on tags only. E.g. 'v0.0.0', 'v0.0.0-abc0123', and 'latest'
-          tags: |
-            type=ref,event=branch
-            type=ref,event=tag
       - name: 🖥️ 设置 QEMU
         uses: docker/setup-qemu-action@v3
       - name: 🐳 设置 Docker Buildx
@@ -186,7 +168,7 @@ jobs:
           push: true
           file: docker-multiarch/Dockerfile.ui
           platforms: linux/amd64,linux/arm64
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+          tags: ${{ needs.docker-meta.outputs.tags }}
+          labels: ${{ needs.docker-meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
