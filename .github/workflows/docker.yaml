@@ -4,7 +4,7 @@ on:
     branches:
       - feat-docker-multiarch
     tags:
-      - '*'
+      - 'v*'
 permissions: # This is needed to push to GitHub Container Registry. See https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry
   contents: read
   packages: write
@@ -12,6 +12,29 @@ concurrency: # This is needed to prevent concurrent builds from running at the s
   group: ${{github.workflow}} - ${{github.ref}} - ${{github.ref_name}}
   cancel-in-progress: true
 jobs:
+  docker-meta:
+    runs-on: ubuntu-latest
+    outputs:
+      tags: ${{ steps.meta.outputs.tags }}
+      labels: ${{ steps.meta.outputs.labels }}
+    steps:
+      # - name: 📥 检出代码
+      #   uses: actions/checkout@main
+      - name: 🏷️ 准备 Docker 镜像元数据
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: |
+            ghcr.io/${{ github.repository }}-mysql
+          # https://github.com/docker/metadata-action/tree/v5/?tab=readme-ov-file#semver
+          # Event: push,     Ref: refs/head/main,       Tags: main
+          # Event: push tag, Ref: refs/tags/v1.2.3,     Tags: v1.2.3, v1.2, v1, latest
+          # Event: push tag, Ref: refs/tags/v2.0.8-rc1, Tags: v2.0.8-rc1
+          tags: |
+            type=ref,event=branch
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=semver,pattern={{major}}
   build-service:
     runs-on: ubuntu-latest
     steps:
@@ -47,17 +70,18 @@ jobs:
       - name: 🏷️ 准备 Docker 镜像元数据
         id: meta
         uses: docker/metadata-action@v5
-        env:
-          # This env var ensures {{sha}} is a real commit SHA for type=ref,event=pr
-          DOCKER_METADATA_PR_HEAD_SHA: 'true'
         with:
           images: |
-            ghcr.io/${{ github.repository }}-service
-          # type=ref,event=branch generates tag(s) on branch only. E.g. 'master', 'master-abc0123'
-          # type=ref,event=tag generates tag(s) on tags only. E.g. 'v0.0.0', 'v0.0.0-abc0123', and 'latest'
+            ghcr.io/${{ github.repository }}-mysql
+          # https://github.com/docker/metadata-action/tree/v5/?tab=readme-ov-file#semver
+          # Event: push,     Ref: refs/head/main,       Tags: main
+          # Event: push tag, Ref: refs/tags/v1.2.3,     Tags: v1.2.3, v1.2, v1, latest
+          # Event: push tag, Ref: refs/tags/v2.0.8-rc1, Tags: v2.0.8-rc1
           tags: |
             type=ref,event=branch
-            type=ref,event=tag
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=semver,pattern={{major}}
       - name: 🖥️ 设置 QEMU
         uses: docker/setup-qemu-action@v3
       - name: 🐳 设置 Docker Buildx
@@ -101,17 +125,18 @@ jobs:
       - name: 🏷️ 准备 Docker 镜像元数据
         id: meta
         uses: docker/metadata-action@v5
-        env:
-          # This env var ensures {{sha}} is a real commit SHA for type=ref,event=pr
-          DOCKER_METADATA_PR_HEAD_SHA: 'true'
         with:
           images: |
             ghcr.io/${{ github.repository }}-mysql
-          # type=ref,event=branch generates tag(s) on branch only. E.g. 'master', 'master-abc0123'
-          # type=ref,event=tag generates tag(s) on tags only. E.g. 'v0.0.0', 'v0.0.0-abc0123', and 'latest'
+          # https://github.com/docker/metadata-action/tree/v5/?tab=readme-ov-file#semver
+          # Event: push,     Ref: refs/head/main,       Tags: main
+          # Event: push tag, Ref: refs/tags/v1.2.3,     Tags: v1.2.3, v1.2, v1, latest
+          # Event: push tag, Ref: refs/tags/v2.0.8-rc1, Tags: v2.0.8-rc1
           tags: |
             type=ref,event=branch
-            type=ref,event=tag
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=semver,pattern={{major}}
       - name: 🖥️ 设置 QEMU
         uses: docker/setup-qemu-action@v3
       - name: 🐳 设置 Docker Buildx
@@ -164,17 +189,18 @@ jobs:
       - name: 🏷️ 准备 Docker 镜像元数据
         id: meta
         uses: docker/metadata-action@v5
-        env:
-          # This env var ensures {{sha}} is a real commit SHA for type=ref,event=pr
-          DOCKER_METADATA_PR_HEAD_SHA: 'true'
         with:
           images: |
-            ghcr.io/${{ github.repository }}-ui
-          # type=ref,event=branch generates tag(s) on branch only. E.g. 'master', 'master-abc0123'
-          # type=ref,event=tag generates tag(s) on tags only. E.g. 'v0.0.0', 'v0.0.0-abc0123', and 'latest'
+            ghcr.io/${{ github.repository }}-mysql
+          # https://github.com/docker/metadata-action/tree/v5/?tab=readme-ov-file#semver
+          # Event: push,     Ref: refs/head/main,       Tags: main
+          # Event: push tag, Ref: refs/tags/v1.2.3,     Tags: v1.2.3, v1.2, v1, latest
+          # Event: push tag, Ref: refs/tags/v2.0.8-rc1, Tags: v2.0.8-rc1
           tags: |
             type=ref,event=branch
-            type=ref,event=tag
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=semver,pattern={{major}}
       - name: 🖥️ 设置 QEMU
         uses: docker/setup-qemu-action@v3
       - name: 🐳 设置 Docker Buildx
