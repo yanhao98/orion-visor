@@ -1,4 +1,4 @@
-import { mergeConfig } from 'vite';
+import { mergeConfig, type UserConfig } from 'vite';
 import eslint from 'vite-plugin-eslint';
 import baseConfig from './vite.config.base';
 
@@ -10,6 +10,13 @@ export default mergeConfig(
       fs: {
         strict: true,
       },
+      proxy: {
+        '/orion-visor': {
+          target: 'http://158.180.89.16:20217',
+          changeOrigin: true,
+          ws: true,
+        },
+      }
     },
     plugins: [
       eslint({
@@ -18,6 +25,6 @@ export default mergeConfig(
         exclude: ['node_modules'],
       }),
     ],
-  },
+  } satisfies UserConfig,
   baseConfig,
 );
