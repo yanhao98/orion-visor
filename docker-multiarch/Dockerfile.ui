@@ -1,0 +1,28 @@
+# syntax=docker/dockerfile:1.14-labs
+FROM caddy:2-alpine
+
+ENV CADDY_TRUSTED_PROXIES=''
+
+COPY <<EOF /etc/caddy/Caddyfile
+{
+	servers {
+		trusted_proxies static {\$CADDY_TRUSTED_PROXIES}
+	}
+}
+
+:80 {
+	@api {
+		path /orion-visor/*
+	}
+	handle @api {
+		reverse_proxy http://service:9200
+	}
+	handle {
+		root * /usr/share/caddy
+		try_files {path} /index.html
+		file_server
+	}
+}
+EOF
+
+COPY orion-visor-ui/dist /usr/share/caddy
