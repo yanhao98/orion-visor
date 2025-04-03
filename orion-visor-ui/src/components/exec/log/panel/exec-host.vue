@@ -27,7 +27,16 @@
           </div>
           <!-- 状态 -->
           <div class="exec-host-item-status">
-            <a-tag :color="getDictValue(execHostStatusKey, item.status, 'execColor')">
+            <a-tag v-if="item.exitCode || item.exitCode === 0"
+                  :color="item.exitCode === 0 ? 'arcoblue' : 'orangered'"
+                  title="exit code">
+              <template #icon>
+                <icon-check v-if="item.exitCode === 0" />
+                <icon-exclamation v-else />
+              </template>
+              <span class="tag-value">{{ item.exitCode }}</span>
+            </a-tag>
+            <a-tag v-else :color="getDictValue(execHostStatusKey, item.status, 'execColor')">
               {{ getDictValue(execHostStatusKey, item.status) }}
             </a-tag>
           </div>
@@ -141,6 +150,12 @@
     &-status {
       display: flex;
       justify-content: flex-end;
+      gap: 8px;
+
+      .exit-code {
+        min-width: 60px;
+        text-align: center;
+      }
     }
 
   }
