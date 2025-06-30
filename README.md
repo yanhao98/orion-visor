@@ -1,4 +1,4 @@
-<div align="center"><img src="https://bjuimg.obs.cn-north-4.myhuaweicloud.com/images/2024/9/11/11e7e78e-2af0-4c68-9811-db8a4c4400f4.png" alt="logo" width="520" /></div>
+<div align="center"><img src="docs/assets/logo_horizontal.png?time=20250627" alt="logo" width="520" /></div>
 <p style="margin-top: 12px" align="center"><b>【Dromara】 一款高颜值、现代化的自动化运维&轻量堡垒机平台。</b></p>
 <p align="center">
     <a target="_blank"
@@ -48,7 +48,7 @@
 **`orion-visor`** 提供一站式自动化运维解决方案。
 
 * **资产管理**：支持对资产进行分组，实现对主机、密钥和身份的统一管理和授权。
-* **在线终端**：提供在线终端 SSH 服务，支持快捷命令、自定义快捷键和主题风格。
+* **在线终端**：提供在线终端 SSH/RDP 等多种协议，支持快捷命令、自定义快捷键和主题风格。
 * **文件管理**：支持远程主机 SFTP 大文件的批量上传、下载和在线编辑等操作。
 * **批量操作**：支持批量执行主机命令、多主机文件分发等功能。
 * **计划任务**：支持配置 cron 表达式，定时执行主机命令。
@@ -64,7 +64,7 @@
 * 🎭 演示环境部分功能不可用, 完整功能请本地部署!
 * 📛 演示环境请不要随便删除数据!
 * 📧 如果演示环境不可用请联系我!
-* 📨 **作者已被毕(cai)业(yuan) 寻java高级内推 望京/5号/10号线 有坑位的联系我哦** 微信: `ljh1553488`
+* 📨 **作者随缘寻java高级/资深内推 望京/5号/10号线 有坑位的联系我哦** 微信: `ljh1553488`
 
 ## 快速开始
 
@@ -87,32 +87,42 @@ docker compose up -d
 
 ## 技术栈
 
-* SpringBoot 2.7+
-* Mysql 8+
-* Redis 6+
-* Vue3 3+
-* Arco Design 2+
+* SpringBoot 2.7.17
+* Mysql 8.0+
+* Redis 6.0+
+* Vue3 3.5+
+* Arco Design 2.56+
 
 ## 主要功能预览
 
+#### 工作台
+
+![工作台](docs/assets/screenshot/workplace.png?time=20250627 "工作台")
+
 #### 主机终端
 
-![新建连接](https://bjuimg.obs.cn-north-4.myhuaweicloud.com/images/2024/5/29/aa7efb14-f2cc-4a6f-b96b-a47964ed8f79.png "新建连接")
-![主机终端](https://bjuimg.obs.cn-north-4.myhuaweicloud.com/images/2024/5/29/66f121de-69b6-49f6-adc4-701a22d481c4.png "主机终端")
-![sftp](https://bjuimg.obs.cn-north-4.myhuaweicloud.com/images/2024/5/29/f7a0d141-0ee0-484e-8ddb-24cad9ed2c03.png "sftp")
-![主题设置](https://bjuimg.obs.cn-north-4.myhuaweicloud.com/images/2024/5/29/d6f37ab3-62d2-4c5e-a503-e76a1d5ddc8e.png "主题设置")
+![新建连接](docs/assets/screenshot/terminal-hosts.png?time=20250627 "新建连接")
+![ssh](docs/assets/screenshot/terminal-ssh.png?time=20250627 "ssh")
+![sftp](docs/assets/screenshot/terminal-sftp.png?time=20250627 "sftp")
+![rdp](docs/assets/screenshot/terminal-rdp.png?time=20250627 "rdp")
+![主题设置](docs/assets/screenshot/terminal-theme.png?time=20250627 "主题设置")
+
+#### 主机列表
+
+![主机列表](docs/assets/screenshot/host-list.png?time=20250627 "主机列表")
 
 #### 批量执行
 
-![批量执行](https://bjuimg.obs.cn-north-4.myhuaweicloud.com/images/2024/5/29/3effc2fc-56a5-498d-8dfb-0f4f3b8a4056.png "批量执行")
+![批量执行](docs/assets/screenshot/exec-command.png?time=20250627 "批量执行")
+![执行日志](docs/assets/screenshot/exec-log.png?time=20250627 "执行日志")
 
 #### 批量上传
 
-![批量上传任务](https://bjuimg.obs.cn-north-4.myhuaweicloud.com/images/2024/5/29/98240fa9-4056-4520-9034-290d1aa47d80.png "批量上传任务")
+![批量上传任务](docs/assets/screenshot/batch-upload.png?time=20250627 "批量上传任务")
 
 #### 计划任务
 
-![计划任务详情](https://bjuimg.obs.cn-north-4.myhuaweicloud.com/images/2024/5/29/d5ee6f04-7b2c-42ba-a3b3-642587f40cce.png "计划任务详情")
+![计划任务详情](docs/assets/screenshot/exec-job.png?time=20250627 "计划任务详情")
 
 ## Star History
 
@@ -124,7 +134,7 @@ docker compose up -d
 
 ## 联系我
 
-<img src="https://bjuimg.obs.cn-north-4.myhuaweicloud.com/images/2024/10/11/cf72c603-3951-4171-95b4-06271dda1c80.jpg" alt="wx" width="628px"/>  
+<img src="docs/assets/vx.jpg?time=20250627" alt="vx" width="628px"/>  
 
 微信: ljh1553488  
 QQ群: 755242157
@@ -134,7 +144,7 @@ QQ群: 755242157
 
 ## 支持一下
 
-<img src="https://bjuimg.obs.cn-north-4.myhuaweicloud.com/images/2024/5/17/a5351e59-294c-4bec-b767-1a44c362fcbc.jpg" alt="收款码" width="540px"/>  
+<img src="docs/assets/pay.jpg?time=20250627" alt="收款码" width="540px"/>  
 
 🎁 为了项目能健康持续的发展, 我期望获得相应的资金支持, 你们的支持是我不断更新前进的动力!
 
@@ -148,8 +158,8 @@ QQ群: 755242157
 
 ## Gitee 最有价值的开源项目 GVP
 
-![GVP](https://bjuimg.obs.cn-north-4.myhuaweicloud.com/images/2024/10/24/8dd98b8d-9de5-44e6-86d3-04e27ec66123.jpg "GVP")
+![GVP](docs/assets/gvp.jpg?time=20250627 "GVP")
 
 ## GitCode 最有影响力的开源项目 G-Star
 
-![GSTAR](https://bjuimg.obs.cn-north-4.myhuaweicloud.com/images/2025/5/29/d6c17f1c-eddd-408a-ba67-1052a3dad9e9.jpg "GSTAR")
+![GSTAR](docs/assets/gstar.jpg?time=20250627 "GSTAR")
