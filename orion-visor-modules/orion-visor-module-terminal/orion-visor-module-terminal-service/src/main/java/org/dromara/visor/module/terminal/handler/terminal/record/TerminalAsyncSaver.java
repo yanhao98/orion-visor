@@ -50,7 +50,6 @@ public class TerminalAsyncSaver {
      */
     public static void saveOperatorLog(OperatorLogModel model) {
         TerminalThreadPools.TERMINAL_ASYNC_SAVER.execute(() -> {
-            model.setCreateTime(model.getStartTime());
             operatorLogFrameworkService.insert(model);
         });
     }

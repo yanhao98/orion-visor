@@ -20,38 +20,40 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.dromara.visor.common.entity;
+package org.dromara.visor.common.mapstruct;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import java.util.Date;
 
 /**
- * 请求留痕模型
+ * date 转换器
  *
  * @author Jiahang Li
  * @version 1.0.0
- * @since 2023/12/29 11:57
+ * @since 2025/3/7 17:43
  */
-@Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
-@Schema(name = "RequestIdentityModel", description = "请求留痕模型")
-public class RequestIdentityModel implements RequestIdentity {
+public class DateConversion {
 
-    @Schema(description = "时间戳")
-    private Long timestamp;
+    private DateConversion() {
+    }
 
-    @Schema(description = "请求地址")
-    private String address;
+    /**
+     * Long > Date
+     *
+     * @param timestamp timestamp
+     * @return Date
+     */
+    public static Date longToDate(Long timestamp) {
+        return timestamp != null ? new Date(timestamp) : null;
+    }
 
-    @Schema(description = "请求位置")
-    private String location;
-
-    @Schema(description = "userAgent")
-    private String userAgent;
+    /**
+     * Date > Long
+     *
+     * @param date date
+     * @return Long
+     */
+    public static Long dateToLong(Date date) {
+        return date != null ? date.getTime() : null;
+    }
 
 }

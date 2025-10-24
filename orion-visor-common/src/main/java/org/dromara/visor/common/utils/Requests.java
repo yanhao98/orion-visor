@@ -64,10 +64,24 @@ public class Requests {
                 .map(ServletRequestAttributes::getRequest)
                 .ifPresent(request -> {
                     String address = IpUtils.getRemoteAddr(request);
+                    identity.setTimestamp(System.currentTimeMillis());
                     identity.setAddress(address);
                     identity.setLocation(IpUtils.getLocation(address));
                     identity.setUserAgent(Servlets.getUserAgent(request));
                 });
+    }
+
+    /**
+     * 复制留痕信息
+     *
+     * @param source source
+     * @param target target
+     */
+    public static void copyIdentity(RequestIdentityModel source, RequestIdentityModel target) {
+        target.setTimestamp(source.getTimestamp());
+        target.setAddress(source.getAddress());
+        target.setLocation(source.getLocation());
+        target.setUserAgent(source.getUserAgent());
     }
 
 }

@@ -34,6 +34,20 @@ import java.io.Serializable;
 public interface RequestIdentity extends Serializable {
 
     /**
+     * 获取请求时间戳
+     *
+     * @return timestamp
+     */
+    Long getTimestamp();
+
+    /**
+     * 设置请求时间戳
+     *
+     * @param timestamp timestamp
+     */
+    void setTimestamp(Long timestamp);
+
+    /**
      * 获取请求地址
      *
      * @return address

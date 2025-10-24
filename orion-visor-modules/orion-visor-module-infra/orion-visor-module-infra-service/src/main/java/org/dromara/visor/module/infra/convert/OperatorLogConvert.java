@@ -22,12 +22,14 @@
  */
 package org.dromara.visor.module.infra.convert;
 
+import org.dromara.visor.common.mapstruct.DateConversion;
 import org.dromara.visor.framework.biz.operator.log.core.model.OperatorLogModel;
 import org.dromara.visor.module.infra.entity.domain.OperatorLogDO;
 import org.dromara.visor.module.infra.entity.request.operator.OperatorLogQueryRequest;
 import org.dromara.visor.module.infra.entity.vo.LoginHistoryVO;
 import org.dromara.visor.module.infra.entity.vo.OperatorLogVO;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
 /**
@@ -37,11 +39,12 @@ import org.mapstruct.factory.Mappers;
  * @version 1.0.0
  * @since 2023-10-10 17:08
  */
-@Mapper
+@Mapper(uses = DateConversion.class)
 public interface OperatorLogConvert {
 
     OperatorLogConvert MAPPER = Mappers.getMapper(OperatorLogConvert.class);
 
+    @Mapping(source = "timestamp", target = "createTime")
     OperatorLogDO to(OperatorLogModel model);
 
     OperatorLogDO to(OperatorLogQueryRequest request);
