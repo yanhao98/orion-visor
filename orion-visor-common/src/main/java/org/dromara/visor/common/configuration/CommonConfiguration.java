@@ -20,39 +20,36 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.dromara.visor.module.monitor.enums;
+package org.dromara.visor.common.configuration;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
+import org.dromara.visor.common.utils.IpUtils;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
+
+import javax.annotation.PostConstruct;
 
 /**
- * 告警事件来源
+ * 公共配置类
  *
  * @author Jiahang Li
  * @version 1.0.0
- * @since 2025/10/13 22:03
+ * @since 2023/6/20 10:34
  */
-@Getter
-@AllArgsConstructor
-public enum AlarmEventSourceTypeEnum {
+@Slf4j
+@Configuration
+public class CommonConfiguration {
+
+    @Value("${orion.api.ip-headers}")
+    private String[] ipHeaders;
 
     /**
-     * 主机告警
+     * 设置 IP 请求头
      */
-    HOST,
-
-    ;
-
-    public static AlarmEventSourceTypeEnum of(String value) {
-        if (value == null) {
-            return null;
-        }
-        for (AlarmEventSourceTypeEnum item : values()) {
-            if (item.name().equals(value)) {
-                return item;
-            }
-        }
-        return null;
+    @PostConstruct
+    public void setIpHeader() {
+        IpUtils.setIpHeader(ipHeaders);
+        log.info("IpUtils.setIpHeader {}", String.join(",", ipHeaders));
     }
 
 }

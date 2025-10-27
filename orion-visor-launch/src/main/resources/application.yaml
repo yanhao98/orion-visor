@@ -175,6 +175,8 @@ orion:
     prefix: ${orion.prefix}/api
     # 是否允许跨域
     cors: true
+    # 获取 IP 的请求头
+    ip-headers: X-Forwarded-For,X-Real-IP
     # 对外服务
     expose:
       # 暴露接口请求头

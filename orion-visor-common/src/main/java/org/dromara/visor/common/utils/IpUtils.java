@@ -24,7 +24,7 @@ package org.dromara.visor.common.utils;
 
 import cn.orionsec.kit.ext.location.Region;
 import cn.orionsec.kit.ext.location.region.LocationRegions;
-import cn.orionsec.kit.web.servlet.web.Servlets;
+import cn.orionsec.kit.lang.utils.net.IPs;
 import org.dromara.visor.common.constant.Const;
 
 import javax.servlet.http.HttpServletRequest;
@@ -40,6 +40,8 @@ import java.util.Map;
  */
 public class IpUtils {
 
+    private static String[] IP_HEADER = new String[]{"X-Forwarded-For", "X-Real-IP"};
+
     private static final Map<String, String> CACHE = new HashMap<>();
 
     private IpUtils() {
@@ -52,13 +54,17 @@ public class IpUtils {
      * @return addr
      */
     public static String getRemoteAddr(HttpServletRequest request) {
-        // 获取实际地址 X_REAL_IP 在多代理情况下会有问题
-        // String realIp = request.getHeader(StandardHttpHeader.X_REAL_IP);
-        // if (!Strings.isBlank(realIp)) {
-        //     return realIp;
-        // }
-        // 获取请求地址
-        return Servlets.getRemoteAddr(request);
+        if (request == null) {
+            return null;
+        } else {
+            for (String remoteAddrHeader : IP_HEADER) {
+                String addr = checkIpHeader(request.getHeader(remoteAddrHeader));
+                if (addr != null) {
+                    return addr;
+                }
+            }
+            return checkIpHeader(request.getRemoteAddr());
+        }
     }
 
     /**
@@ -110,6 +116,25 @@ public class IpUtils {
             return location.toString();
         }
         return Const.CN_UNKNOWN;
+    }
+
+    /**
+     * 检查 ip 请求头
+     *
+     * @param headerValue headerValue
+     * @return header
+     */
+    private static String checkIpHeader(String headerValue) {
+        if (headerValue == null) {
+            return null;
+        } else {
+            headerValue = headerValue.split(",")[0];
+            return IPs.checkIp(headerValue);
+        }
+    }
+
+    public static void setIpHeader(String[] ipHeader) {
+        IP_HEADER = ipHeader;
     }
 
 }
