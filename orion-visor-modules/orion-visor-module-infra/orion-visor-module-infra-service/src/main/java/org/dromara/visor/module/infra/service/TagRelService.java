@@ -114,4 +114,20 @@ public interface TagRelService {
      */
     Integer deleteRelIdList(String type, List<Long> relIdList);
 
+    /**
+     * 通过 tagId 删除
+     *
+     * @param tagId tagId
+     * @return effect
+     */
+    Integer deleteTagId(Long tagId);
+
+    /**
+     * 通过 tagId 删除
+     *
+     * @param tagIdList tagIdList
+     * @return effect
+     */
+    Integer deleteTagIdList(List<Long> tagIdList);
+
 }

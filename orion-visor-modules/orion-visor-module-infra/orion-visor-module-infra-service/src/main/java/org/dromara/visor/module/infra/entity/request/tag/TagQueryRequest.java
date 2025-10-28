@@ -29,7 +29,7 @@ import org.dromara.visor.common.entity.BaseQueryRequest;
 import javax.validation.constraints.Size;
 
 /**
- * 标签枚举 查询请求对象
+ * 数据标签 查询请求对象
  *
  * @author Jiahang Li
  * @version 1.0.0
@@ -40,11 +40,15 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@Schema(name = "TagQueryRequest", description = "标签枚举 查询请求对象")
+@Schema(name = "TagQueryRequest", description = "数据标签 查询请求对象")
 public class TagQueryRequest extends BaseQueryRequest {
 
     @Size(max = 12)
     @Schema(description = "标签类型")
     private String type;
+
+    @Size(max = 32)
+    @Schema(description = "标签名称")
+    private String name;
 
 }

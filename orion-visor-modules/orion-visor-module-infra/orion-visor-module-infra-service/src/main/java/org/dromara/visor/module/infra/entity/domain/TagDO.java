@@ -33,7 +33,7 @@ import lombok.experimental.SuperBuilder;
 import org.dromara.visor.framework.mybatis.core.domain.BaseDO;
 
 /**
- * 标签枚举 实体对象
+ * 数据标签 实体对象
  *
  * @author Jiahang Li
  * @version 1.0.0
@@ -45,7 +45,7 @@ import org.dromara.visor.framework.mybatis.core.domain.BaseDO;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @TableName(value = "tag", autoResultMap = true)
-@Schema(name = "TagDO", description = "标签枚举 实体对象")
+@Schema(name = "TagDO", description = "数据标签 实体对象")
 public class TagDO extends BaseDO {
 
     private static final long serialVersionUID = 1L;

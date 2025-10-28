@@ -27,6 +27,7 @@ import cn.orionsec.kit.lang.utils.collect.Lists;
 import cn.orionsec.kit.lang.utils.collect.Maps;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import org.dromara.visor.common.constant.Const;
 import org.dromara.visor.framework.redis.core.utils.RedisStrings;
 import org.dromara.visor.module.infra.convert.TagRelConvert;
 import org.dromara.visor.module.infra.dao.TagDAO;
@@ -204,16 +205,7 @@ public class TagRelServiceImpl implements TagRelService {
 
     @Override
     public Integer deleteRelId(String type, Long relId) {
-        // 删除数据库
-        TagRelQueryRequest queryRequest = new TagRelQueryRequest();
-        queryRequest.setTagType(type);
-        queryRequest.setRelId(relId);
-        LambdaQueryWrapper<TagRelDO> wrapper = this.buildQueryWrapper(queryRequest);
-        int effect = tagRelDAO.delete(wrapper);
-        // 删除缓存
-        String cacheKey = TagCacheKeyDefine.TAG_REL.format(type, relId);
-        redisTemplate.delete(cacheKey);
-        return effect;
+        return this.deleteRelIdList(type, Lists.singleton(relId));
     }
 
     @Override
@@ -232,6 +224,36 @@ public class TagRelServiceImpl implements TagRelService {
         return effect;
     }
 
+    @Override
+    public Integer deleteTagId(Long tagId) {
+        return this.deleteTagIdList(Lists.singleton(tagId));
+    }
+
+    @Override
+    public Integer deleteTagIdList(List<Long> tagIdList) {
+        TagRelQueryRequest queryRequest = new TagRelQueryRequest();
+        queryRequest.setTagIdList(tagIdList);
+        LambdaQueryWrapper<TagRelDO> wrapper = this.buildQueryWrapper(queryRequest);
+        // 查询数据库
+        List<TagRelDO> tags = tagRelDAO.selectList(wrapper);
+        if (tags.isEmpty()) {
+            return Const.N_0;
+        }
+        // 删除数据库
+        int effect = tagRelDAO.delete(wrapper);
+        // 删除缓存
+        String tagType = tags.get(0).getTagType();
+        List<Long> relIdList = tags.stream()
+                .map(TagRelDO::getRelId)
+                .distinct()
+                .collect(Collectors.toList());
+        List<String> cacheKeyList = relIdList.stream()
+                .map(relId -> TagCacheKeyDefine.TAG_REL.format(tagType, relId))
+                .collect(Collectors.toList());
+        redisTemplate.delete(cacheKeyList);
+        return effect;
+    }
+
     /**
      * 构建查询 wrapper
      *
@@ -242,6 +264,7 @@ public class TagRelServiceImpl implements TagRelService {
         return tagRelDAO.wrapper()
                 .eq(TagRelDO::getId, request.getId())
                 .eq(TagRelDO::getTagId, request.getTagId())
+                .in(TagRelDO::getTagId, request.getTagIdList())
                 .eq(TagRelDO::getTagName, request.getTagName())
                 .eq(TagRelDO::getTagType, request.getTagType())
                 .eq(TagRelDO::getRelId, request.getRelId())

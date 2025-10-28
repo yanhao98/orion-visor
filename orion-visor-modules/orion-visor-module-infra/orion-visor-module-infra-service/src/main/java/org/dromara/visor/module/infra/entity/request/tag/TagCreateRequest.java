@@ -33,7 +33,7 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 /**
- * 标签枚举 创建请求对象
+ * 数据标签 创建请求对象
  *
  * @author Jiahang Li
  * @version 1.0.0
@@ -43,17 +43,17 @@ import java.io.Serializable;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Schema(name = "TagCreateRequest", description = "标签枚举 创建请求对象")
+@Schema(name = "TagCreateRequest", description = "数据标签 创建请求对象")
 public class TagCreateRequest implements Serializable {
-
-    @NotBlank
-    @Size(max = 32)
-    @Schema(description = "标签名称")
-    private String name;
 
     @NotBlank
     @Size(max = 12)
     @Schema(description = "标签类型")
     private String type;
+
+    @NotBlank
+    @Size(max = 32)
+    @Schema(description = "标签名称")
+    private String name;
 
 }
