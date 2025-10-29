@@ -20,43 +20,36 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.dromara.visor.module.infra.entity.dto;
+package org.dromara.visor.module.infra.entity.po;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.dromara.visor.common.entity.RequestIdentity;
+
+import java.io.Serializable;
 
 /**
- * 身份信息
+ * 标签关联数量
  *
  * @author Jiahang Li
  * @version 1.0.0
- * @since 2023/11/1 1:01
+ * @since 2024/12/23 16:24
  */
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class LoginTokenIdentityDTO implements RequestIdentity {
+@Schema(name = "TagRelCountPO", description = "标签关联数量")
+public class TagRelCountPO implements Serializable {
 
-    /**
-     * 原始登录时间
-     */
-    private Long loginTime;
+    private static final long serialVersionUID = 1L;
 
-    /**
-     * 当前设备登录地址
-     */
-    private String address;
+    @Schema(description = "tagId")
+    private Long tagId;
 
-    /**
-     * 当前设备登录地址
-     */
-    private String location;
-
-    /**
-     * 当前设备 userAgent
-     */
-    private String userAgent;
+    @Schema(description = "数量")
+    private Integer count;
 
 }

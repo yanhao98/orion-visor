@@ -12,3 +12,18 @@ export const EnabledStatus = {
   DISABLED: 0,
   ENABLED: 1
 };
+
+// 开关值
+export const SwitchValue = {
+  OFF: 0,
+  ON: 1
+};
+
+// tag 颜色
+export const TagColors = [
+  'arcoblue',
+  'green',
+  'purple',
+  'pinkpurple',
+  'magenta'
+];

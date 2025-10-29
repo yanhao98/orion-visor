@@ -27,6 +27,11 @@ const SYSTEM: AppRouteRecordRaw = {
       component: () => import('@/views/system/notify-template/index.vue'),
     },
     {
+      name: 'systemTags',
+      path: '/system/tags',
+      component: () => import('@/views/system/tags/index.vue'),
+    },
+    {
       name: 'systemSetting',
       path: '/system/setting',
       component: () => import('@/views/system/setting/index.vue'),

@@ -34,6 +34,11 @@
       "description": "是否开启 cors 过滤器."
     },
     {
+      "name": "orion.api.ip-headers",
+      "type": "java.lang.String",
+      "description": "获取 IP 的请求头."
+    },
+    {
       "name": "orion.api.expose.header",
       "type": "java.lang.String",
       "description": "对外服务请求头."
