@@ -130,7 +130,7 @@ public class SystemUserServiceImpl implements SystemUserService {
                 // 用户列表
                 UserCacheKeyDefine.USER_LIST.getKey(),
                 // 登录失败次数
-                UserCacheKeyDefine.LOGIN_FAILED_COUNT.format(request.getUsername())
+                UserCacheKeyDefine.LOGIN_FAILED.format(request.getUsername())
         );
         return record.getId();
     }
@@ -179,7 +179,7 @@ public class SystemUserServiceImpl implements SystemUserService {
         log.info("SystemUserService-updateUserStatus effect: {}, updateRecord: {}", effect, JSON.toJSONString(updateRecord));
         // 改为启用则删除登录失败次数缓存
         if (UserStatusEnum.ENABLED.equals(status)) {
-            RedisUtils.delete(UserCacheKeyDefine.LOGIN_FAILED_COUNT.format(record.getUsername()));
+            RedisUtils.delete(UserCacheKeyDefine.LOGIN_FAILED.format(record.getUsername()));
         }
         // 更新用户缓存中的 status
         RedisStrings.<LoginUser>processSetJson(UserCacheKeyDefine.USER_INFO, s -> {
@@ -320,7 +320,7 @@ public class SystemUserServiceImpl implements SystemUserService {
         int effect = systemUserDAO.updateById(update);
         log.info("SystemUserService-resetPassword record: {}, effect: {}", JSON.toJSONString(update), effect);
         // 删除登录失败次数缓存
-        RedisUtils.delete(UserCacheKeyDefine.LOGIN_FAILED_COUNT.format(record.getUsername()));
+        RedisUtils.delete(UserCacheKeyDefine.LOGIN_FAILED.format(record.getUsername()));
         // 删除登录缓存
         RedisUtils.scanKeysDelete(UserCacheKeyDefine.LOGIN_TOKEN.format(id, "*"));
         // 删除续签信息
@@ -375,7 +375,7 @@ public class SystemUserServiceImpl implements SystemUserService {
             // 用户信息缓存
             deleteKeys.add(UserCacheKeyDefine.USER_INFO.format(id));
             // 登录失败次数
-            deleteKeys.add(UserCacheKeyDefine.LOGIN_FAILED_COUNT.format(s.getUsername()));
+            deleteKeys.add(UserCacheKeyDefine.LOGIN_FAILED.format(s.getUsername()));
             // 登录 token
             deleteKeys.addAll(RedisUtils.scanKeys(UserCacheKeyDefine.LOGIN_TOKEN.format(id, "*")));
             // 刷新 token

@@ -25,6 +25,7 @@ package org.dromara.visor.module.infra.api.impl;
 import lombok.extern.slf4j.Slf4j;
 import org.dromara.visor.common.constant.ErrorMessage;
 import org.dromara.visor.common.utils.Assert;
+import org.dromara.visor.common.utils.Requests;
 import org.dromara.visor.module.infra.api.AuthenticationApi;
 import org.dromara.visor.module.infra.entity.domain.SystemUserDO;
 import org.dromara.visor.module.infra.entity.dto.user.SystemUserAuthDTO;
@@ -57,7 +58,11 @@ public class AuthenticationApiImpl implements AuthenticationApi {
             result.setUsername(user.getUsername());
             result.setNickname(user.getNickname());
             // 检查用户密码
-            boolean passRight = authenticationService.checkUserPassword(user, password, addFailedCount);
+            boolean passRight = authenticationService.checkUserPassword(user, password);
+            if (!passRight && addFailedCount) {
+                // 发送站内信
+                authenticationService.addLoginFailedCount(user.getUsername(), Requests.getIdentity());
+            }
             result.setPassRight(passRight);
             Assert.isTrue(passRight, ErrorMessage.USERNAME_PASSWORD_ERROR);
             // 检查用户状态

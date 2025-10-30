@@ -22,6 +22,7 @@
  */
 package org.dromara.visor.module.infra.service;
 
+import org.dromara.visor.common.entity.RequestIdentityModel;
 import org.dromara.visor.common.security.LoginUser;
 import org.dromara.visor.module.infra.entity.domain.SystemUserDO;
 import org.dromara.visor.module.infra.entity.dto.LoginTokenDTO;
@@ -42,11 +43,10 @@ public interface AuthenticationService {
     /**
      * 登录
      *
-     * @param request        request
-     * @param servletRequest servletRequest
+     * @param request request
      * @return login
      */
-    UserLoginVO login(UserLoginRequest request, HttpServletRequest servletRequest);
+    UserLoginVO login(UserLoginRequest request);
 
     /**
      * 登出
@@ -83,12 +83,19 @@ public interface AuthenticationService {
     /**
      * 检查用户密码
      *
-     * @param user           user
-     * @param password       password
-     * @param addFailedCount addFailedCount
+     * @param user     user
+     * @param password password
      * @return passRight
      */
-    boolean checkUserPassword(SystemUserDO user, String password, boolean addFailedCount);
+    boolean checkUserPassword(SystemUserDO user, String password);
+
+    /**
+     * 添加登录失败次数
+     *
+     * @param username username
+     * @param identity identity
+     */
+    void addLoginFailedCount(String username, RequestIdentityModel identity);
 
     /**
      * 检查用户状态

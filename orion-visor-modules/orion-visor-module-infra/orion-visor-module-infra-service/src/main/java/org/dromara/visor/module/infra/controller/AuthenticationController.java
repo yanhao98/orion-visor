@@ -63,9 +63,8 @@ public class AuthenticationController {
     @PermitAll
     @Operation(summary = "登录")
     @PostMapping("/login")
-    public UserLoginVO login(@Validated @RequestBody UserLoginRequest request,
-                             HttpServletRequest servletRequest) {
-        return authenticationService.login(request, servletRequest);
+    public UserLoginVO login(@Validated @RequestBody UserLoginRequest request) {
+        return authenticationService.login(request);
     }
 
     @OperatorLog(AuthenticationOperatorType.LOGOUT)

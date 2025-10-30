@@ -82,12 +82,13 @@ public class SecurityFrameworkServiceImpl implements SecurityFrameworkService {
         if (tokenInfo == null) {
             return null;
         }
+        Long loginTime = tokenInfo.getOrigin().getTimestamp();
         try {
             // 检查 token 状态
             this.checkTokenStatus(tokenInfo);
         } catch (Exception e) {
             // token 失效则删除
-            RedisUtils.delete(UserCacheKeyDefine.LOGIN_TOKEN.format(tokenInfo.getId(), tokenInfo.getOrigin().getLoginTime()));
+            RedisUtils.delete(UserCacheKeyDefine.LOGIN_TOKEN.format(tokenInfo.getId(), loginTime));
             throw e;
         }
         // 获取登录信息
@@ -98,7 +99,7 @@ public class SecurityFrameworkServiceImpl implements SecurityFrameworkService {
         // 检查用户状态
         UserStatusEnum.checkUserStatus(user.getStatus());
         // 设置登录时间戳
-        user.setTimestamp(tokenInfo.getOrigin().getLoginTime());
+        user.setTimestamp(loginTime);
         return user;
     }
 
