@@ -112,7 +112,7 @@
 
 <script lang="ts" setup>
   import type { CardProps } from '../types/props';
-  import { ref, computed } from 'vue';
+  import { ref, computed, nextTick } from 'vue';
   import { useAppStore } from '@/store';
   import { triggerMouseEvent } from '@/utils/event';
   import { HeaderEmitter } from '../types/emits';
@@ -157,7 +157,9 @@
   // 搜索
   const filterSearch = () => {
     bubblesEmitter(HeaderEmitter.SEARCH);
-    triggerMouseEvent(filterRef);
+    nextTick(() => {
+      triggerMouseEvent(filterRef);
+    });
   };
 
 </script>
