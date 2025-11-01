@@ -258,7 +258,7 @@ public class HostIdentityServiceImpl implements HostIdentityService {
                 .eq(HostIdentityDO::getName, domain.getName());
         // 检查是否存在
         boolean present = hostIdentityDAO.of(wrapper).present();
-        Assert.isFalse(present, ErrorMessage.DATA_PRESENT);
+        Assert.isFalse(present, ErrorMessage.NAME_PRESENT);
     }
 
     /**

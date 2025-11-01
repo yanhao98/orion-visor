@@ -242,7 +242,7 @@ public class HostKeyServiceImpl implements HostKeyService {
                 .eq(HostKeyDO::getName, domain.getName());
         // 检查是否存在
         boolean present = hostKeyDAO.of(wrapper).present();
-        Assert.isFalse(present, ErrorMessage.DATA_PRESENT);
+        Assert.isFalse(present, ErrorMessage.NAME_PRESENT);
     }
 
     /**
