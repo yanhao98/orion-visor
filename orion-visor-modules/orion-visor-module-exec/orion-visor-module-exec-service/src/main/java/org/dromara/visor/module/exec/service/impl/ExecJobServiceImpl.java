@@ -408,7 +408,7 @@ public class ExecJobServiceImpl implements ExecJobService {
                 .eq(ExecJobDO::getName, domain.getName());
         // 检查是否存在
         boolean present = execJobDAO.of(wrapper).present();
-        Assert.isFalse(present, ErrorMessage.DATA_PRESENT);
+        Assert.isFalse(present, ErrorMessage.NAME_PRESENT);
     }
 
     /**

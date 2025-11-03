@@ -226,7 +226,7 @@ public class NotifyTemplateServiceImpl implements NotifyTemplateService {
                 .eq(NotifyTemplateDO::getBizType, domain.getBizType());
         // 检查是否存在
         boolean present = notifyTemplateDAO.of(wrapper).present();
-        Assert.isFalse(present, ErrorMessage.DATA_PRESENT);
+        Assert.isFalse(present, ErrorMessage.NAME_PRESENT);
     }
 
 }

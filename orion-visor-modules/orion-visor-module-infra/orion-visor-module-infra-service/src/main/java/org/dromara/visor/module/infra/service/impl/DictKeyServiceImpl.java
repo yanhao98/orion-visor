@@ -248,7 +248,7 @@ public class DictKeyServiceImpl implements DictKeyService {
                 .eq(DictKeyDO::getKeyName, domain.getKeyName());
         // 检查是否存在
         boolean present = dictKeyDAO.of(wrapper).present();
-        Assert.isFalse(present, ErrorMessage.DATA_PRESENT);
+        Assert.isFalse(present, ErrorMessage.NAME_PRESENT);
     }
 
     /**

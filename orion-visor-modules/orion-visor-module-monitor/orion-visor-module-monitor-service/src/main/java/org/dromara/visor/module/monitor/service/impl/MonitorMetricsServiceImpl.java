@@ -203,7 +203,7 @@ public class MonitorMetricsServiceImpl implements MonitorMetricsService {
                 .eq(MonitorMetricsDO::getValue, domain.getValue());
         // 检查是否存在
         boolean present = monitorMetricsDAO.of(wrapper).present();
-        Assert.isFalse(present, ErrorMessage.DATA_PRESENT);
+        Assert.isFalse(present, ErrorMessage.NAME_PRESENT);
     }
 
 }
