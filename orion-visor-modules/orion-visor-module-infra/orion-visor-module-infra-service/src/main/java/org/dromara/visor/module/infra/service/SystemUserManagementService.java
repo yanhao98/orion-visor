@@ -23,6 +23,8 @@
 package org.dromara.visor.module.infra.service;
 
 import org.dromara.visor.module.infra.entity.request.user.UserSessionOfflineRequest;
+import org.dromara.visor.module.infra.entity.request.user.UserUnlockRequest;
+import org.dromara.visor.module.infra.entity.vo.UserLockedVO;
 import org.dromara.visor.module.infra.entity.vo.UserSessionVO;
 
 import java.util.List;
@@ -43,6 +45,27 @@ public interface SystemUserManagementService {
      * @return count
      */
     Integer getUserSessionCount(Long userId);
+
+    /**
+     * 获取锁定的用户列表
+     *
+     * @return list
+     */
+    List<UserLockedVO> getLockedUserList();
+
+    /**
+     * 解锁用户
+     *
+     * @param request request
+     */
+    void unlockLockedUser(UserUnlockRequest request);
+
+    /**
+     * 获取全部用户会话列表
+     *
+     * @return list
+     */
+    List<UserSessionVO> getUsersSessionList();
 
     /**
      * 获取用户会话列表
