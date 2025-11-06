@@ -22,30 +22,32 @@
  */
 package org.dromara.visor.module.infra.service.impl;
 
+import cn.orionsec.kit.lang.utils.Objects1;
 import cn.orionsec.kit.lang.utils.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.dromara.visor.common.constant.ErrorMessage;
+import org.dromara.visor.common.entity.RequestIdentityModel;
 import org.dromara.visor.common.utils.Assert;
 import org.dromara.visor.common.utils.Requests;
 import org.dromara.visor.framework.biz.operator.log.core.utils.OperatorLogs;
 import org.dromara.visor.framework.redis.core.utils.RedisStrings;
 import org.dromara.visor.framework.security.core.utils.SecurityUtils;
+import org.dromara.visor.module.common.config.AppLoginConfig;
 import org.dromara.visor.module.infra.dao.SystemUserDAO;
 import org.dromara.visor.module.infra.define.cache.UserCacheKeyDefine;
 import org.dromara.visor.module.infra.entity.domain.SystemUserDO;
+import org.dromara.visor.module.infra.entity.dto.LoginFailedDTO;
 import org.dromara.visor.module.infra.entity.dto.LoginTokenDTO;
-import org.dromara.visor.module.infra.entity.dto.LoginTokenIdentityDTO;
 import org.dromara.visor.module.infra.entity.request.user.UserSessionOfflineRequest;
+import org.dromara.visor.module.infra.entity.request.user.UserUnlockRequest;
+import org.dromara.visor.module.infra.entity.vo.UserLockedVO;
 import org.dromara.visor.module.infra.entity.vo.UserSessionVO;
 import org.dromara.visor.module.infra.enums.LoginTokenStatusEnum;
 import org.dromara.visor.module.infra.service.SystemUserManagementService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -60,6 +62,9 @@ import java.util.stream.Collectors;
 public class SystemUserManagementServiceImpl implements SystemUserManagementService {
 
     @Resource
+    private AppLoginConfig appLoginConfig;
+
+    @Resource
     private SystemUserDAO systemUserDAO;
 
     @Override
@@ -70,29 +75,92 @@ public class SystemUserManagementServiceImpl implements SystemUserManagementServ
     }
 
     @Override
+    public List<UserLockedVO> getLockedUserList() {
+        // 扫描缓存
+        Set<String> keys = RedisStrings.scanKeys(UserCacheKeyDefine.LOGIN_FAILED.format("*"));
+        if (Lists.isEmpty(keys)) {
+            return Lists.empty();
+        }
+        // 查询缓存
+        List<LoginFailedDTO> loginFailedList = RedisStrings.getJsonList(keys, UserCacheKeyDefine.LOGIN_FAILED);
+        if (Lists.isEmpty(loginFailedList)) {
+            return Lists.empty();
+        }
+        // 返回
+        return loginFailedList.stream()
+                .filter(Objects::nonNull)
+                .filter(s -> s.getFailedCount() >= appLoginConfig.getLoginFailedLockThreshold())
+                .map(s -> {
+                    RequestIdentityModel origin = s.getOrigin();
+                    return UserLockedVO.builder()
+                            .username(s.getUsername())
+                            .expireTime(s.getExpireTime())
+                            .address(origin.getAddress())
+                            .location(origin.getLocation())
+                            .userAgent(origin.getUserAgent())
+                            .loginTime(new Date(origin.getTimestamp()))
+                            .build();
+                })
+                .sorted(Comparator.comparing(UserLockedVO::getLoginTime).reversed())
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public void unlockLockedUser(UserUnlockRequest request) {
+        RedisStrings.delete(UserCacheKeyDefine.LOGIN_FAILED.format(request.getUsername()));
+    }
+
+    @Override
+    public List<UserSessionVO> getUsersSessionList() {
+        // 扫描缓存
+        Set<String> keys = RedisStrings.scanKeys(UserCacheKeyDefine.LOGIN_TOKEN.format("*", "*"));
+        if (Lists.isEmpty(keys)) {
+            return Lists.empty();
+        }
+        // 获取用户会话列表
+        return this.getUserSessionList(keys);
+    }
+
+    @Override
     public List<UserSessionVO> getUserSessionList(Long userId) {
         // 扫描缓存
         Set<String> keys = RedisStrings.scanKeys(UserCacheKeyDefine.LOGIN_TOKEN.format(userId, "*"));
         if (Lists.isEmpty(keys)) {
             return Lists.empty();
         }
+        // 获取用户会话列表
+        return this.getUserSessionList(keys);
+    }
+
+    /**
+     * 获取用户会话列表
+     *
+     * @param keys keys
+     * @return rows
+     */
+    private List<UserSessionVO> getUserSessionList(Set<String> keys) {
+        Long loginUserId = SecurityUtils.getLoginUserId();
         // 查询缓存
         List<LoginTokenDTO> tokens = RedisStrings.getJsonList(keys, UserCacheKeyDefine.LOGIN_TOKEN);
         if (Lists.isEmpty(tokens)) {
             return Lists.empty();
         }
-        final boolean isCurrentUser = userId.equals(SecurityUtils.getLoginUserId());
         // 返回
         return tokens.stream()
+                .filter(Objects::nonNull)
                 .filter(s -> LoginTokenStatusEnum.OK.getStatus().equals(s.getStatus()))
-                .map(LoginTokenDTO::getOrigin)
-                .map(s -> UserSessionVO.builder()
-                        .current(isCurrentUser && s.getLoginTime().equals(SecurityUtils.getLoginTimestamp()))
-                        .address(s.getAddress())
-                        .location(s.getLocation())
-                        .userAgent(s.getUserAgent())
-                        .loginTime(new Date(s.getLoginTime()))
-                        .build())
+                .map(s -> {
+                    RequestIdentityModel origin = s.getOrigin();
+                    return UserSessionVO.builder()
+                            .id(s.getId())
+                            .username(s.getUsername())
+                            .current(Objects1.eq(loginUserId, s.getId()) && origin.getTimestamp().equals(SecurityUtils.getLoginTimestamp()))
+                            .address(origin.getAddress())
+                            .location(origin.getLocation())
+                            .userAgent(origin.getUserAgent())
+                            .loginTime(new Date(origin.getTimestamp()))
+                            .build();
+                })
                 .sorted(Comparator.comparing(UserSessionVO::getCurrent).reversed()
                         .thenComparing(Comparator.comparing(UserSessionVO::getLoginTime).reversed()))
                 .collect(Collectors.toList());
@@ -115,11 +183,8 @@ public class SystemUserManagementServiceImpl implements SystemUserManagementServ
         LoginTokenDTO tokenInfo = RedisStrings.getJson(tokenKey, UserCacheKeyDefine.LOGIN_TOKEN);
         if (tokenInfo != null) {
             tokenInfo.setStatus(LoginTokenStatusEnum.SESSION_OFFLINE.getStatus());
-            LoginTokenIdentityDTO override = new LoginTokenIdentityDTO();
-            override.setLoginTime(System.currentTimeMillis());
-            // 设置请求信息
-            Requests.fillIdentity(override);
-            tokenInfo.setOverride(override);
+            // 设置留痕信息
+            tokenInfo.setOverride(Requests.getIdentity());
             // 更新 token
             RedisStrings.setJson(tokenKey, UserCacheKeyDefine.LOGIN_TOKEN, tokenInfo);
         }

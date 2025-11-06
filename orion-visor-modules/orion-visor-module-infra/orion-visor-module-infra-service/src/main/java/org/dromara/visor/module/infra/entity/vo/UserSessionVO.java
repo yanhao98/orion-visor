@@ -47,6 +47,12 @@ public class UserSessionVO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @Schema(description = "id")
+    private Long id;
+
+    @Schema(description = "用户名")
+    private String username;
+
     @Schema(description = "是否为当前会话")
     private Boolean current;
 
