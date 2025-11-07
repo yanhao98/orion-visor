@@ -61,9 +61,30 @@ export interface UserQueryResponse extends TableData {
 }
 
 /**
+ * 锁定用户查询响应
+ */
+export interface LockedUserQueryResponse {
+  username: string;
+  address: string;
+  location: string;
+  userAgent: string;
+  expireTime: number;
+  loginTime: number;
+}
+
+/**
+ * 解锁用户请求
+ */
+export interface UserUnlockRequest {
+  username: string;
+}
+
+/**
  * 用户会话查询响应
  */
 export interface UserSessionQueryResponse {
+  id: number;
+  username: string;
   visible: boolean;
   current: boolean;
   address: string;
@@ -183,10 +204,31 @@ export function batchDeleteUser(idList: Array<number>) {
 }
 
 /**
- * 获取用户会话列表
+ * 获取锁定的用户列表
+ */
+export function getLockedUserList() {
+  return axios.get<Array<LockedUserQueryResponse>>('/infra/system-user/locked/list');
+}
+
+/**
+ * 解锁锁定的用户
+ */
+export function unlockLockedUser(request: UserUnlockRequest) {
+  return axios.put('/infra/system-user/locked/unlock', request);
+}
+
+/**
+ * 获取全部用户会话列表
+ */
+export function getUsersSessionList() {
+  return axios.get<Array<UserSessionQueryResponse>>('/infra/system-user/session/users/list');
+}
+
+/**
+ * 获取单个用户会话列表
  */
 export function getUserSessionList(id: number) {
-  return axios.get<Array<UserSessionQueryResponse>>('/infra/system-user/session/list', { params: { id } });
+  return axios.get<Array<UserSessionQueryResponse>>('/infra/system-user/session/user/list', { params: { id } });
 }
 
 /**
