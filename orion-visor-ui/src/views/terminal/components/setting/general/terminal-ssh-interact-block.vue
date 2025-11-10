@@ -64,7 +64,7 @@
           <a-switch v-model="formModel.enableBell" type="round" />
         </block-setting-item>
         <!-- 单词分隔符 -->
-        <block-setting-item label="单词分隔符" desc="在终端中双击文本将使用该分隔符进行分割 (一般不用修改)">
+        <block-setting-item label="单词分隔符" desc="在终端中双击文本将使用该分隔符进行分隔 (一般不用修改)">
           <a-input v-model="formModel.wordSeparator"
                    size="small"
                    style="width: 168px"

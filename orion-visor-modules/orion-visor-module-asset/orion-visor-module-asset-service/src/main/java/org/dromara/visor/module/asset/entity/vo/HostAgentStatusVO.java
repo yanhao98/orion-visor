@@ -29,6 +29,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * 主机探针状态 视图响应对象
@@ -60,5 +61,8 @@ public class HostAgentStatusVO implements Serializable {
 
     @Schema(description = "探针在线状态")
     private Integer agentOnlineStatus;
+
+    @Schema(description = "探针切换在线状态时间")
+    private Date agentOnlineChangeTime;
 
 }

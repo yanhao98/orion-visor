@@ -85,7 +85,7 @@
 
   // 打开新增
   const openAdd = () => {
-    title.value = '添加路径标签';
+    title.value = '添加路径书签';
     isAddHandle.value = true;
     renderForm({ ...defaultForm() });
     setVisible(true);
@@ -93,7 +93,7 @@
 
   // 打开修改
   const openUpdate = (record: any) => {
-    title.value = '修改路径标签';
+    title.value = '修改路径书签';
     isAddHandle.value = false;
     renderForm({ ...defaultForm(), ...record });
     setVisible(true);

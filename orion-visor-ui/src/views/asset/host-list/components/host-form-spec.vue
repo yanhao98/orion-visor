@@ -143,6 +143,7 @@
                      v-model="formModel.publicIpAddresses"
                      class="input"
                      size="mini"
+                     placeholder="支持输入多个地址 回车后添加"
                      allow-clear />
         <a-space v-else>
           <a-tag v-for="addr in (formModel.publicIpAddresses || [])">
@@ -156,6 +157,7 @@
                      v-model="formModel.privateIpAddresses"
                      class="input"
                      size="mini"
+                     placeholder="支持输入多个地址 回车后添加"
                      allow-clear />
         <a-space v-else>
           <a-tag v-for="addr in (formModel.privateIpAddresses || [])">
