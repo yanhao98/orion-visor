@@ -23,6 +23,7 @@
 package org.dromara.visor.module.asset.handler.agent.intstall;
 
 import cn.orionsec.kit.lang.utils.Exceptions;
+import cn.orionsec.kit.lang.utils.Strings;
 import cn.orionsec.kit.net.host.ssh.command.CommandExecutors;
 import lombok.extern.slf4j.Slf4j;
 import org.dromara.visor.common.constant.FileConst;
@@ -50,7 +51,7 @@ public class LinuxAgentInstaller extends AbstractAgentInstaller {
         sftpExecutor.write(agentHomePath + FileConst.CONFIG_YAML, this.replaceContent(params.getConfigFilePath()));
         log.info("写入配置文件成功");
         // 写入启动脚本
-        sftpExecutor.write(agentHomePath + startScriptName, this.replaceContent(params.getStartScriptPath()));
+        sftpExecutor.write(agentHomePath + startScriptName, Strings.replaceCRLF(this.replaceContent(params.getStartScriptPath())));
         log.info("写入启动脚本成功");
         // 上传探针文件
         sftpExecutor.uploadFile(agentHomePath + uploadAgentName, params.getAgentFilePath());
