@@ -23,7 +23,9 @@
 package org.dromara.visor.module.terminal.handler.terminal.handler;
 
 import cn.orionsec.kit.lang.utils.collect.Lists;
+import cn.orionsec.kit.lang.utils.io.Files1;
 import lombok.extern.slf4j.Slf4j;
+import org.dromara.visor.common.constant.Const;
 import org.dromara.visor.common.enums.BooleanBit;
 import org.dromara.visor.module.terminal.handler.terminal.model.TerminalChannelProps;
 import org.dromara.visor.module.terminal.handler.terminal.model.request.SftpListRequest;
@@ -60,6 +62,12 @@ public class SftpListHandler extends AbstractTerminalHandler<ISftpTerminalSender
             // 空目录则直接获取 home 目录
             if (HOME_PATH.equals(path)) {
                 path = session.getHome();
+            }
+            // 格式化目录
+            path = Files1.getPath(path);
+            // 去除尾部的 /
+            if (path.endsWith(Const.SLASH) && path.length() > 1) {
+                path = path.substring(0, path.length() - 1);
             }
             // 文件列表
             list = session.list(path, BooleanBit.toBoolean(payload.getShowHiddenFile()));
