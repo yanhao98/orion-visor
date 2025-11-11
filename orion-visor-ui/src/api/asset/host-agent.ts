@@ -10,6 +10,7 @@ export interface HostAgentStatusResponse {
   latestVersion: string;
   agentInstallStatus: number;
   agentOnlineStatus: number;
+  agentOnlineChangeTime: number;
 }
 
 /**

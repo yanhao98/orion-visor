@@ -29,7 +29,6 @@ import cn.orionsec.kit.lang.utils.collect.Maps;
 import cn.orionsec.kit.lang.utils.crypto.Keys;
 import cn.orionsec.kit.lang.utils.crypto.RSA;
 import cn.orionsec.kit.spring.SpringHolder;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import lombok.extern.slf4j.Slf4j;
 import org.dromara.visor.common.constant.AppConst;
 import org.dromara.visor.common.constant.ConfigKeys;
@@ -124,28 +123,12 @@ public class SystemSettingServiceImpl implements SystemSettingService {
 
     @Override
     public void updateSystemSetting(SystemSettingUpdateRequest request) {
-        String type = request.getType();
-        String configKey = request.getConfigKey();
-        String value = request.getValue();
-        // 删除
-        systemSettingDAO.delete(Conditions.eq(SystemSettingDO::getConfigKey, configKey));
-        // 插入
-        SystemSettingDO insert = SystemSettingDO.builder()
-                .type(type)
-                .configKey(configKey)
-                .value(Strings.def(value))
+        SystemSettingUpdateBatchRequest params = SystemSettingUpdateBatchRequest.builder()
+                .type(request.getType())
+                .settings(Maps.of(request.getConfigKey(), request.getValue()))
                 .build();
-        systemSettingDAO.insert(insert);
         // 更新
-        SystemSettingDO update = new SystemSettingDO();
-        update.setValue(value);
-        LambdaQueryWrapper<SystemSettingDO> wrapper = systemSettingDAO.lambda()
-                .eq(SystemSettingDO::getConfigKey, configKey);
-        systemSettingDAO.update(update, wrapper);
-        // 删除缓存
-        RedisUtils.delete(SystemSettingKeyDefine.SETTING);
-        // 触发修改事件
-        SpringHolder.publishEvent(ConfigUpdateEvent.of(configKey, value));
+        this.updateSystemSettingBatch(params);
     }
 
     @Override

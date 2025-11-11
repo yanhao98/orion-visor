@@ -22,13 +22,16 @@
  */
 package org.dromara.visor.module.infra.service;
 
+import cn.orionsec.kit.lang.define.wrapper.DataGrid;
 import org.dromara.visor.module.infra.entity.request.tag.TagCreateRequest;
+import org.dromara.visor.module.infra.entity.request.tag.TagQueryRequest;
+import org.dromara.visor.module.infra.entity.request.tag.TagUpdateRequest;
 import org.dromara.visor.module.infra.entity.vo.TagVO;
 
 import java.util.List;
 
 /**
- * 标签枚举 服务类
+ * 数据标签 服务类
  *
  * @author Jiahang Li
  * @version 1.0.0
@@ -37,7 +40,7 @@ import java.util.List;
 public interface TagService {
 
     /**
-     * 创建标签枚举
+     * 创建数据标签
      *
      * @param request request
      * @return id
@@ -45,7 +48,23 @@ public interface TagService {
     Long createTag(TagCreateRequest request);
 
     /**
-     * 查询标签枚举
+     * 更新数据标签
+     *
+     * @param request request
+     * @return effect
+     */
+    Integer updateTag(TagUpdateRequest request);
+
+    /**
+     * 查询数据标签
+     *
+     * @param request request
+     * @return dataGrid
+     */
+    DataGrid<TagVO> getTagPage(TagQueryRequest request);
+
+    /**
+     * 查询数据标签
      *
      * @param type type
      * @return rows
@@ -53,7 +72,7 @@ public interface TagService {
     List<TagVO> getTagList(String type);
 
     /**
-     * 通过 id 删除标签枚举
+     * 通过 id 删除数据标签
      *
      * @param id id
      * @return effect
@@ -61,7 +80,7 @@ public interface TagService {
     Integer deleteTagById(Long id);
 
     /**
-     * 通过 id 删除标签枚举
+     * 通过 id 删除数据标签
      *
      * @param idList idList
      * @return effect
@@ -70,7 +89,9 @@ public interface TagService {
 
     /**
      * 清理未使用的 tag
+     *
+     * @param days days
      */
-    void clearUnusedTag();
+    void clearUnusedTag(Integer days);
 
 }

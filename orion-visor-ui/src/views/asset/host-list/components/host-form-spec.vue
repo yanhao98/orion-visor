@@ -11,6 +11,24 @@
                  allow-clear />
         <span v-else class="text">{{ formModel.sn }}</span>
       </a-descriptions-item>
+      <!-- 制造商 -->
+      <a-descriptions-item label="制造商" :span="2">
+        <a-input v-if="editing"
+                 v-model="formModel.vendor"
+                 class="input"
+                 size="mini"
+                 allow-clear />
+        <span v-else class="text">{{ formModel.vendor }}</span>
+      </a-descriptions-item>
+      <!-- 设备型号 -->
+      <a-descriptions-item label="设备型号" :span="2">
+        <a-input v-if="editing"
+                 v-model="formModel.model"
+                 class="input"
+                 size="mini"
+                 allow-clear />
+        <span v-else class="text">{{ formModel.model }}</span>
+      </a-descriptions-item>
       <!-- 系统名称 -->
       <a-descriptions-item label="系统名称" :span="2">
         <a-input v-if="editing"
@@ -121,19 +139,31 @@
       </a-descriptions-item>
       <!-- 公网地址 -->
       <a-descriptions-item label="公网地址" :span="2">
-        <a-input-tag v-model="formModel.publicIpAddresses"
-                     :readonly="!editing"
+        <a-input-tag v-if="editing"
+                     v-model="formModel.publicIpAddresses"
                      class="input"
                      size="mini"
+                     placeholder="支持输入多个地址 回车后添加"
                      allow-clear />
+        <a-space v-else>
+          <a-tag v-for="addr in (formModel.publicIpAddresses || [])">
+            {{ addr }}
+          </a-tag>
+        </a-space>
       </a-descriptions-item>
       <!-- 私网地址 -->
       <a-descriptions-item label="私网地址" :span="2">
-        <a-input-tag v-model="formModel.privateIpAddresses"
-                     :readonly="!editing"
+        <a-input-tag v-if="editing"
+                     v-model="formModel.privateIpAddresses"
                      class="input"
                      size="mini"
+                     placeholder="支持输入多个地址 回车后添加"
                      allow-clear />
+        <a-space v-else>
+          <a-tag v-for="addr in (formModel.privateIpAddresses || [])">
+            {{ addr }}
+          </a-tag>
+        </a-space>
       </a-descriptions-item>
       <!-- 负责人 -->
       <a-descriptions-item label="负责人" :span="2">

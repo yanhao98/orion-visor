@@ -174,6 +174,7 @@ export default function useMonitorHostList(options: UseMonitorHostListOptions) {
             s.latestVersion = item.latestVersion;
             s.agentInstallStatus = item.agentInstallStatus;
             s.agentOnlineStatus = item.agentOnlineStatus;
+            s.agentOnlineChangeTime = item.agentOnlineChangeTime;
           });
         });
       } catch (e) {

@@ -24,8 +24,10 @@ package org.dromara.visor.module.infra.dao;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.dromara.visor.framework.mybatis.core.mapper.IMapper;
 import org.dromara.visor.module.infra.entity.domain.TagRelDO;
+import org.dromara.visor.module.infra.entity.po.TagRelCountPO;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -71,5 +73,13 @@ public interface TagRelDAO extends IMapper<TagRelDO> {
                 .map(TagRelDO::getRelId)
                 .collect(Collectors.toList());
     }
+
+    /**
+     * 查询标签引用数量
+     *
+     * @param tagIdList tagIdList
+     * @return count
+     */
+    List<TagRelCountPO> selectTagRelCount(@Param("tagIdList") List<Long> tagIdList);
 
 }

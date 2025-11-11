@@ -16,9 +16,28 @@
         <result column="rel_id" property="relId"/>
     </resultMap>
 
+    <!-- 数量查询映射结果 -->
+    <resultMap id="CountResultMap" type="org.dromara.visor.module.infra.entity.po.TagRelCountPO">
+        <result column="tag_id" property="tagId"/>
+        <result column="total_count" property="count"/>
+    </resultMap>
+
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
         id, tag_id, tag_name, tag_type, rel_id, create_time, update_time, creator, updater, deleted
     </sql>
+
+    <select id="selectTagRelCount" resultMap="CountResultMap">
+        SELECT tag_id, count(1) total_count
+        FROM tag_rel
+        WHERE deleted = 0
+        <if test="tagIdList != null and tagIdList.size() > 0">
+            AND tag_id IN
+            <foreach collection="tagIdList" item="item" open=" (" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        GROUP BY tag_id
+    </select>
 
 </mapper>

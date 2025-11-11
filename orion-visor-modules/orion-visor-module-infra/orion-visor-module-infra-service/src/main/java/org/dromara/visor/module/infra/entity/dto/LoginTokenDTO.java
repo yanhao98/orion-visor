@@ -26,7 +26,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.dromara.visor.module.infra.enums.LoginTokenStatusEnum;
+import org.dromara.visor.common.entity.RequestIdentityModel;
 
 /**
  * 登录 token 缓存
@@ -42,14 +42,19 @@ import org.dromara.visor.module.infra.enums.LoginTokenStatusEnum;
 public class LoginTokenDTO {
 
     /**
-     * 用户id
+     * userId
      */
     private Long id;
 
     /**
+     * 用户名
+     */
+    private String username;
+
+    /**
      * token 状态
      *
-     * @see LoginTokenStatusEnum
+     * @see org.dromara.visor.module.infra.enums.LoginTokenStatusEnum
      */
     private Integer status;
 
@@ -59,13 +64,13 @@ public class LoginTokenDTO {
     private Integer refreshCount;
 
     /**
-     * 原始登录身份
+     * 原始登录留痕信息
      */
-    private LoginTokenIdentityDTO origin;
+    private RequestIdentityModel origin;
 
     /**
-     * 覆盖登录身份
+     * 覆盖登录刘海信息
      */
-    private LoginTokenIdentityDTO override;
+    private RequestIdentityModel override;
 
 }

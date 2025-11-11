@@ -7,12 +7,12 @@ const USER: AppRouteRecordRaw = {
   component: DEFAULT_LAYOUT,
   children: [
     {
-      name: 'role',
+      name: 'userRole',
       path: '/user/role',
       component: () => import('@/views/user/role/index.vue'),
     },
     {
-      name: 'user',
+      name: 'userList',
       path: '/user/list',
       component: () => import('@/views/user/user/index.vue'),
     },
@@ -25,6 +25,16 @@ const USER: AppRouteRecordRaw = {
       name: 'operatorLog',
       path: '/user/operator-log',
       component: () => import('@/views/user/operator-log/index.vue'),
+    },
+    {
+      name: 'userSession',
+      path: '/user/session',
+      component: () => import('@/views/user/user-session/index.vue'),
+    },
+    {
+      name: 'lockedUser',
+      path: '/user/locked',
+      component: () => import('@/views/user/locked-user/index.vue'),
     },
   ],
 };

@@ -147,6 +147,7 @@ INSERT INTO `dict_key` VALUES (89, 'alarmLevel', 'INTEGER', '[{\"name\": \"level
 INSERT INTO `dict_key` VALUES (90, 'alarmEventHandleStatus', 'STRING', '[{\"name\": \"color\", \"type\": \"STRING\"}]', '告警事件处理状态', '2025-09-17 16:20:03', '2025-10-07 08:15:15', 'admin', 'admin', 0);
 INSERT INTO `dict_key` VALUES (92, 'falseAlarm', 'INTEGER', '[]', '是否为误报', '2025-09-17 16:20:03', '2025-09-17 16:20:03', 'admin', 'admin', 0);
 INSERT INTO `dict_key` VALUES (95, 'metricsChartUnit', 'STRING', '[]', '指标图表单位', '2025-10-05 01:56:57', '2025-10-05 02:01:28', 'admin', 'admin', 0);
+INSERT INTO `dict_key` VALUES (97, 'tagType', 'STRING', '[]', '标签类型', '2025-10-08 22:50:11', '2025-10-08 22:50:11', 'admin', 'admin', 0);
 INSERT INTO `dict_key` VALUES (99, 'alarmPolicyType', 'STRING', '[]', '告警策略类型', '2025-10-13 21:23:35', '2025-10-13 21:23:35', 'admin', 'admin', 0);
 INSERT INTO `dict_key` VALUES (101, 'monitorSourceType', 'STRING', '[]', '监控数据来源', '2025-10-19 22:18:01', '2025-10-19 22:18:01', 'admin', 'admin', 0);
 
@@ -596,15 +597,20 @@ INSERT INTO `dict_value` VALUES (634, 95, 'metricsChartUnit', 's', '秒', '{}', 
 INSERT INTO `dict_value` VALUES (635, 95, 'metricsChartUnit', 'm', '分钟', '{}', 20, '2025-10-05 01:58:08', '2025-10-07 00:53:09', 'admin', 'admin', 0);
 INSERT INTO `dict_value` VALUES (636, 95, 'metricsChartUnit', 'h', '小时', '{}', 30, '2025-10-05 01:58:22', '2025-10-07 00:53:05', 'admin', 'admin', 0);
 INSERT INTO `dict_value` VALUES (637, 95, 'metricsChartUnit', 'd', '天', '{}', 40, '2025-10-05 01:59:03', '2025-10-07 00:52:59', 'admin', 'admin', 0);
+INSERT INTO `dict_value` VALUES (638, 2, 'operatorLogType', 'system-user:unlock', '解锁用户', '{}', 80, '2025-10-08 22:36:01', '2025-10-08 22:36:29', 'admin', 'admin', 0);
+INSERT INTO `dict_value` VALUES (639, 1, 'operatorLogModule', 'infra:tag', '数据标签', '{}', 2220, '2025-10-08 22:38:47', '2025-10-08 22:39:00', 'admin', 'admin', 0);
+INSERT INTO `dict_value` VALUES (640, 2, 'operatorLogType', 'tag:create', '创建数据标签', '{}', 10, '2025-10-08 22:39:17', '2025-10-08 22:39:22', 'admin', 'admin', 0);
+INSERT INTO `dict_value` VALUES (641, 2, 'operatorLogType', 'tag:update', '修改数据标签', '{}', 20, '2025-10-08 22:39:33', '2025-10-08 22:39:33', 'admin', 'admin', 0);
+INSERT INTO `dict_value` VALUES (642, 2, 'operatorLogType', 'tag:delete', '删除数据标签', '{}', 30, '2025-10-08 22:39:43', '2025-10-08 22:39:43', 'admin', 'admin', 0);
+INSERT INTO `dict_value` VALUES (643, 97, 'tagType', 'HOST', '主机标签', '{}', 10, '2025-10-08 22:50:28', '2025-10-08 22:50:28', 'admin', 'admin', 0);
 INSERT INTO `dict_value` VALUES (663, 99, 'alarmPolicyType', 'HOST', '主机告警', '{}', 10, '2025-10-13 21:23:58', '2025-10-13 21:23:58', 'admin', 'admin', 0);
 INSERT INTO `dict_value` VALUES (672, 101, 'monitorSourceType', 'HOST', '主机数据', '{}', 10, '2025-10-19 22:18:19', '2025-10-19 22:18:19', 'admin', 'admin', 0);
-INSERT INTO `dict_value` VALUES (673, 101, 'monitorSourceType', 'UPTIME', '拨测数据', '{}', 20, '2025-10-19 22:18:37', '2025-10-19 22:18:37', 'admin', 'admin', 0);
 
 -- 菜单配置
 INSERT INTO `system_menu` VALUES (1, 0, '工作台', NULL, 1, 10, 1, 1, 1, 0, 'IconComputer', NULL, 'workplace', '2023-07-28 10:51:50', '2024-08-11 00:05:44', 'admin', 'admin', 0);
 INSERT INTO `system_menu` VALUES (5, 0, '用户管理', NULL, 1, 700, 1, 1, 1, 0, 'icon-user', NULL, 'userModule', '2023-07-28 10:55:38', '2024-06-17 20:45:29', 'admin', 'admin', 0);
 INSERT INTO `system_menu` VALUES (8, 0, '项目地址', NULL, 1, 1000, 1, 1, 1, 0, 'icon-link', 'https://visor.orionsec.cn', '', '2023-07-28 11:04:59', '2024-08-29 18:10:57', 'admin', 'admin', 0);
-INSERT INTO `system_menu` VALUES (10, 5, '角色管理', NULL, 2, 10, 1, 1, 1, 0, 'IconUserGroup', '', 'role', '2023-07-28 10:55:52', '2024-03-07 19:10:13', 'admin', 'admin', 0);
+INSERT INTO `system_menu` VALUES (10, 5, '角色管理', NULL, 2, 10, 1, 1, 1, 0, 'IconUserGroup', '', 'userRole', '2023-07-28 10:55:52', '2024-03-07 19:10:13', 'admin', 'admin', 0);
 INSERT INTO `system_menu` VALUES (12, 0, '系统管理', NULL, 1, 800, 1, 1, 1, 0, 'icon-tool', NULL, 'systemModule', '2023-08-02 18:24:24', '2024-06-17 20:45:39', 'admin', 'admin', 0);
 INSERT INTO `system_menu` VALUES (13, 12, '系统菜单', '', 2, 10, 1, 1, 1, 0, 'icon-menu', NULL, 'systemMenu', '2023-08-02 18:29:01', '2024-03-07 22:25:00', 'admin', 'admin', 0);
 INSERT INTO `system_menu` VALUES (20, 10, '创建角色', 'infra:system-role:create', 3, 10, 1, 1, 1, 0, NULL, NULL, NULL, '2023-08-15 16:36:54', '2023-10-27 01:20:46', 'admin', 'admin', 0);
@@ -618,7 +624,7 @@ INSERT INTO `system_menu` VALUES (27, 13, '修改菜单', 'infra:system-menu:upd
 INSERT INTO `system_menu` VALUES (28, 13, '修改状态', 'infra:system-menu:update-status', 3, 10, 1, 1, 1, 0, NULL, NULL, NULL, '2023-08-15 16:42:41', '2023-10-27 01:16:10', 'admin', 'admin', 0);
 INSERT INTO `system_menu` VALUES (29, 13, '查询菜单', 'infra:system-menu:query', 3, 10, 1, 1, 1, 0, NULL, NULL, NULL, '2023-08-15 16:42:57', '2023-10-27 01:16:10', 'admin', 'admin', 0);
 INSERT INTO `system_menu` VALUES (30, 13, '删除菜单', 'infra:system-menu:delete', 3, 10, 1, 1, 1, 0, NULL, NULL, NULL, '2023-08-15 16:43:16', '2023-10-27 01:16:10', 'admin', 'admin', 0);
-INSERT INTO `system_menu` VALUES (48, 5, '用户管理', NULL, 2, 10, 1, 1, 1, 0, 'IconUserAdd', NULL, 'user', '2023-08-16 10:19:24', '2024-03-07 19:10:21', 'admin', 'admin', 0);
+INSERT INTO `system_menu` VALUES (48, 5, '用户管理', NULL, 2, 20, 1, 1, 1, 0, 'IconUserAdd', NULL, 'userList', '2023-08-16 10:19:24', '2025-10-08 22:28:46', 'admin', 'admin', 0);
 INSERT INTO `system_menu` VALUES (49, 48, '创建用户', 'infra:system-user:create', 3, 10, 1, 1, 1, 0, NULL, NULL, NULL, '2023-08-16 10:19:24', '2023-10-27 01:20:46', 'admin', 'admin', 0);
 INSERT INTO `system_menu` VALUES (50, 48, '修改用户', 'infra:system-user:update', 3, 20, 1, 1, 1, 0, NULL, NULL, NULL, '2023-08-16 10:19:24', '2023-10-27 01:20:46', 'admin', 'admin', 0);
 INSERT INTO `system_menu` VALUES (51, 48, '查询用户', 'infra:system-user:query', 3, 30, 1, 1, 1, 0, NULL, NULL, NULL, '2023-08-16 10:19:24', '2023-10-27 01:20:46', 'admin', 'admin', 0);
@@ -646,7 +652,7 @@ INSERT INTO `system_menu` VALUES (81, 79, '创建主机密钥', 'asset:host-key:
 INSERT INTO `system_menu` VALUES (82, 79, '修改主机密钥', 'asset:host-key:update', 3, 30, 1, 1, 1, 0, NULL, NULL, NULL, '2023-09-20 11:47:18', '2024-05-17 12:49:59', 'admin', 'admin', 0);
 INSERT INTO `system_menu` VALUES (83, 79, '删除主机密钥', 'asset:host-key:delete', 3, 40, 1, 1, 1, 0, NULL, NULL, NULL, '2023-09-20 11:47:18', '2024-05-17 12:50:01', 'admin', 'admin', 0);
 INSERT INTO `system_menu` VALUES (84, 79, '查询主机密钥详情', 'asset:host-key:query-detail', 3, 50, 1, 1, 1, 0, NULL, NULL, NULL, '2023-09-20 11:47:18', '2024-05-17 12:50:05', 'admin', 'admin', 0);
-INSERT INTO `system_menu` VALUES (94, 5, '个人中心', NULL, 2, 20, 0, 1, 0, 0, 'IconUser', NULL, 'userInfo', '2023-10-08 18:53:01', '2023-11-02 11:47:34', 'admin', 'admin', 0);
+INSERT INTO `system_menu` VALUES (94, 5, '个人中心', NULL, 2, 21, 0, 1, 0, 0, 'IconUser', NULL, 'userInfo', '2023-10-08 18:53:01', '2025-10-08 22:28:28', 'admin', 'admin', 0);
 INSERT INTO `system_menu` VALUES (97, 12, '数据字典项', NULL, 2, 20, 1, 1, 1, 0, 'IconBook', NULL, 'dictKey', '2023-10-17 11:38:13', '2024-03-07 19:10:45', 'admin', 'admin', 0);
 INSERT INTO `system_menu` VALUES (99, 97, '创建字典配置项', 'infra:dict-key:create', 3, 110, 1, 1, 1, 0, NULL, NULL, NULL, '2023-10-17 11:38:13', '2023-10-27 01:16:10', 'admin', 'admin', 0);
 INSERT INTO `system_menu` VALUES (100, 97, '修改字典配置项', 'infra:dict-key:update', 3, 120, 1, 1, 1, 0, NULL, NULL, NULL, '2023-10-17 11:38:13', '2023-10-27 01:16:10', 'admin', 'admin', 0);
@@ -660,8 +666,8 @@ INSERT INTO `system_menu` VALUES (120, 97, '查询字典配置项', 'infra:dict-
 INSERT INTO `system_menu` VALUES (121, 97, '刷新缓存', 'infra:dict-key:management:refresh-cache', 3, 140, 1, 1, 1, 0, NULL, NULL, NULL, '2023-10-27 15:50:04', '2023-12-27 12:40:12', 'admin', 'admin', 0);
 INSERT INTO `system_menu` VALUES (122, 5, '操作日志', NULL, 2, 30, 1, 1, 1, 0, 'IconCalendarClock', NULL, 'operatorLog', '2023-11-01 14:09:36', '2024-03-07 19:10:30', 'admin', 'admin', 0);
 INSERT INTO `system_menu` VALUES (123, 122, '查询操作日志', 'infra:operator-log:query', 3, 10, 1, 1, 1, 0, NULL, NULL, NULL, '2023-11-02 11:22:54', '2023-11-02 11:22:54', 'admin', 'admin', 0);
-INSERT INTO `system_menu` VALUES (124, 48, '查询用户会话', 'infra:system-user:query-session', 3, 50, 1, 1, 1, 0, NULL, NULL, NULL, '2023-11-02 11:24:14', '2023-11-02 11:24:14', 'admin', 'admin', 0);
-INSERT INTO `system_menu` VALUES (125, 48, '下线用户会话', 'infra:system-user:management:offline-session', 3, 60, 1, 1, 1, 0, NULL, NULL, NULL, '2023-11-02 11:24:37', '2023-12-27 12:39:17', 'admin', 'admin', 0);
+INSERT INTO `system_menu` VALUES (124, 325, '查询在线用户', 'infra:system-user:query-session', 3, 50, 1, 1, 1, 0, NULL, NULL, NULL, '2023-11-02 11:24:14', '2025-10-08 22:33:48', 'admin', 'admin', 0);
+INSERT INTO `system_menu` VALUES (125, 325, '下线用户会话', 'infra:system-user:management:offline-session', 3, 60, 1, 1, 1, 0, NULL, NULL, NULL, '2023-11-02 11:24:37', '2025-10-08 22:34:06', 'admin', 'admin', 0);
 INSERT INTO `system_menu` VALUES (126, 48, '查询用户登录日志', 'infra:system-user:login-history', 3, 70, 1, 1, 1, 0, NULL, NULL, NULL, '2023-12-27 15:05:37', '2023-12-27 15:07:19', 'admin', 'admin', 0);
 INSERT INTO `system_menu` VALUES (129, 64, '编辑主机分组', 'asset:host-group:update', 3, 100, 1, 1, 1, 0, NULL, NULL, NULL, '2023-11-13 18:16:32', '2023-12-01 01:47:58', 'admin', 'admin', 0);
 INSERT INTO `system_menu` VALUES (133, 144, '主机分组授权', 'asset:host-group:grant', 3, 10, 1, 1, 1, 0, NULL, NULL, NULL, '2023-11-23 18:08:57', '2023-11-30 22:39:53', 'admin', 'admin', 0);
@@ -717,7 +723,7 @@ INSERT INTO `system_menu` VALUES (199, 197, '上传文件', 'exec:upload-task:up
 INSERT INTO `system_menu` VALUES (200, 198, '查询上传日志', 'exec:upload-task:query', 3, 10, 1, 1, 1, 0, NULL, NULL, NULL, '2024-05-08 22:20:01', '2024-10-14 10:36:36', 'admin', 'admin', 0);
 INSERT INTO `system_menu` VALUES (201, 198, '删除上传日志', 'exec:upload-task:delete', 3, 20, 1, 1, 1, 0, NULL, NULL, NULL, '2024-05-08 22:20:26', '2024-10-14 10:36:36', 'admin', 'admin', 0);
 INSERT INTO `system_menu` VALUES (202, 198, '清理上传日志', 'exec:upload-task:management:clear', 3, 30, 1, 1, 1, 0, NULL, NULL, NULL, '2024-05-08 22:20:37', '2024-10-14 10:36:36', 'admin', 'admin', 0);
-INSERT INTO `system_menu` VALUES (203, 12, '系统设置', NULL, 2, 50, 1, 1, 1, 0, 'IconSettings', NULL, 'systemSetting', '2024-06-17 20:46:15', '2025-09-13 13:34:57', 'admin', 'admin', 0);
+INSERT INTO `system_menu` VALUES (203, 12, '系统设置', NULL, 2, 100, 1, 1, 1, 0, 'IconSettings', NULL, 'systemSetting', '2024-06-17 20:46:15', '2025-10-08 22:21:25', 'admin', 'admin', 0);
 INSERT INTO `system_menu` VALUES (265, 203, '更新系统设置', 'infra:system-setting:update', 3, 20, 1, 1, 1, 0, NULL, NULL, NULL, '2024-10-09 19:25:28', '2025-01-02 22:14:45', 'admin', 'admin', 0);
 INSERT INTO `system_menu` VALUES (271, 177, '修改任务执行用户', 'exec:exec-job:update-exec-user', 3, 45, 1, 1, 1, 0, NULL, NULL, NULL, '2024-12-13 00:18:13', '2024-12-13 00:18:13', 'admin', 'admin', 0);
 INSERT INTO `system_menu` VALUES (282, 0, '系统监控', NULL, 1, 350, 1, 1, 1, 0, 'IconComputer', NULL, 'monitorModule', '2025-08-12 23:31:02', '2025-08-12 23:38:49', 'admin', 'admin', 0);
@@ -745,8 +751,17 @@ INSERT INTO `system_menu` VALUES (304, 300, '复制告警策略', 'monitor:alarm
 INSERT INTO `system_menu` VALUES (305, 300, '删除告警策略', 'monitor:alarm-policy:delete', 3, 50, 1, 1, 1, 0, NULL, NULL, NULL, '2025-09-13 16:13:36', '2025-09-13 17:10:41', 'admin', 'admin', 0);
 INSERT INTO `system_menu` VALUES (306, 300, '修改告警规则', 'monitor:alarm-policy:update-rule', 3, 60, 1, 1, 1, 0, NULL, NULL, NULL, '2025-09-14 14:34:25', '2025-09-14 14:34:25', 'admin', 'admin', 0);
 INSERT INTO `system_menu` VALUES (307, 282, '告警规则', NULL, 2, 61, 0, 1, 1, 0, 'IconExperiment', NULL, 'alarmRule', '2025-09-15 00:01:55', '2025-10-15 13:14:26', 'admin', 'admin', 0);
-INSERT INTO `system_menu` VALUES (308, 282, '主机告警事件', NULL, 2, 70, 1, 1, 1, 0, 'IconNotification', NULL, 'alarmEvent', '2025-09-17 16:06:34', '2025-10-19 23:55:25', 'admin', 'admin', 0);
+INSERT INTO `system_menu` VALUES (308, 282, '主机告警事件', NULL, 2, 70, 1, 1, 1, 0, 'IconNotification', NULL, 'hostAlarmEvent', '2025-09-17 16:06:34', '2025-10-19 23:55:25', 'admin', 'admin', 0);
 INSERT INTO `system_menu` VALUES (309, 308, '查询告警事件', 'monitor:alarm-event:query', 3, 10, 1, 1, 1, 0, NULL, NULL, NULL, '2025-09-17 16:06:34', '2025-10-07 08:14:48', 'admin', 'admin', 0);
 INSERT INTO `system_menu` VALUES (310, 308, '处理告警事件', 'monitor:alarm-event:handle', 3, 20, 1, 1, 1, 0, NULL, NULL, NULL, '2025-09-17 16:06:34', '2025-10-07 08:14:48', 'admin', 'admin', 0);
 INSERT INTO `system_menu` VALUES (311, 308, '删除告警事件', 'monitor:alarm-event:delete', 3, 30, 1, 1, 1, 0, NULL, NULL, NULL, '2025-09-17 16:06:34', '2025-10-07 08:14:48', 'admin', 'admin', 0);
 INSERT INTO `system_menu` VALUES (312, 308, '清理告警事件', 'monitor:alarm-event:management:clear', 3, 40, 1, 1, 1, 0, NULL, NULL, NULL, '2025-09-17 16:06:34', '2025-10-07 08:14:48', 'admin', 'admin', 0);
+INSERT INTO `system_menu` VALUES (321, 12, '标签列表', NULL, 2, 50, 1, 1, 1, 0, 'IconTags', NULL, 'systemTags', '2025-10-08 22:25:41', '2025-10-08 22:30:44', 'admin', 'admin', 0);
+INSERT INTO `system_menu` VALUES (322, 321, '修改标签', 'infra:tag:update', 3, 20, 1, 1, 1, 0, NULL, NULL, NULL, '2025-10-08 22:27:11', '2025-10-08 22:27:42', 'admin', 'admin', 0);
+INSERT INTO `system_menu` VALUES (323, 321, '删除标签', 'infra:tag:delete', 3, 30, 1, 1, 1, 0, NULL, NULL, NULL, '2025-10-08 22:27:38', '2025-10-08 22:27:38', 'admin', 'admin', 0);
+INSERT INTO `system_menu` VALUES (324, 321, '创建标签', 'infra:tag:create', 3, 10, 1, 1, 1, 0, NULL, NULL, NULL, '2025-10-08 22:28:03', '2025-10-08 22:28:03', 'admin', 'admin', 0);
+INSERT INTO `system_menu` VALUES (325, 5, '在线用户', NULL, 2, 40, 1, 1, 1, 0, 'IconIdcard', NULL, 'userSession', '2025-10-08 22:30:03', '2025-10-08 23:23:03', 'admin', 'admin', 0);
+INSERT INTO `system_menu` VALUES (326, 5, '锁定用户', NULL, 2, 50, 1, 1, 1, 0, 'IconLock', NULL, 'lockedUser', '2025-10-08 22:31:23', '2025-10-08 22:31:23', 'admin', 'admin', 0);
+INSERT INTO `system_menu` VALUES (327, 326, '查询锁定用户', 'infra:system-user:query-lock', 3, 10, 1, 1, 1, 0, NULL, NULL, NULL, '2025-10-08 22:32:28', '2025-10-08 22:32:28', 'admin', 'admin', 0);
+INSERT INTO `system_menu` VALUES (328, 326, '解锁用户', 'infra:system-user:management:unlock', 3, 20, 1, 1, 1, 0, NULL, NULL, NULL, '2025-10-08 22:32:44', '2025-10-08 22:32:44', 'admin', 'admin', 0);
+INSERT INTO `system_menu` VALUES (329, 321, '查询标签', 'infra:tag:query', 3, 40, 1, 1, 1, 0, NULL, NULL, NULL, '2025-10-08 22:38:06', '2025-10-08 22:38:06', 'admin', 'admin', 0);

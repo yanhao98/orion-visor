@@ -208,7 +208,7 @@ public class ExecTemplateServiceImpl implements ExecTemplateService {
                 .eq(ExecTemplateDO::getName, domain.getName());
         // 检查是否存在
         boolean present = execTemplateDAO.of(wrapper).present();
-        Assert.isFalse(present, ErrorMessage.DATA_PRESENT);
+        Assert.isFalse(present, ErrorMessage.NAME_PRESENT);
     }
 
 }

@@ -26,6 +26,7 @@ import cn.orionsec.kit.lang.define.cache.key.CacheKeyBuilder;
 import cn.orionsec.kit.lang.define.cache.key.CacheKeyDefine;
 import cn.orionsec.kit.lang.define.cache.key.struct.RedisCacheStruct;
 import org.dromara.visor.common.security.LoginUser;
+import org.dromara.visor.module.infra.entity.dto.LoginFailedDTO;
 import org.dromara.visor.module.infra.entity.dto.LoginTokenDTO;
 import org.dromara.visor.module.infra.entity.dto.UserInfoDTO;
 
@@ -56,12 +57,13 @@ public interface UserCacheKeyDefine {
             .timeout(8, TimeUnit.HOURS)
             .build();
 
-    CacheKeyDefine LOGIN_FAILED_COUNT = new CacheKeyBuilder()
-            .key("user:login-failed:{}")
-            .desc("用户登录失败次数 ${username}")
+    CacheKeyDefine LOGIN_FAILED = new CacheKeyBuilder()
+            .key("user:login-failed-info:{}")
+            .desc("用户登录失败信息 ${username}")
             .noPrefix()
-            .type(Integer.class)
+            .type(LoginFailedDTO.class)
             .struct(RedisCacheStruct.STRING)
+            .timeout(24 * 60, TimeUnit.MINUTES)
             .build();
 
     CacheKeyDefine LOGIN_TOKEN = new CacheKeyBuilder()

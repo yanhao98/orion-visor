@@ -1,6 +1,6 @@
 version: '3.3'
 
-# latest = 2.5.4
+# latest = 2.5.5
 
 # 支持以下源
 # lijiahangmax/*
@@ -49,6 +49,7 @@ services:
       GUACD_DRIVE_PATH: ${GUACD_DRIVE_PATH:-/drive}
       SECRET_KEY: ${SECRET_KEY:-uQeacXV8b3isvKLK}
       API_EXPOSE_TOKEN: ${API_EXPOSE_TOKEN:-pmqeHOyZaumHm0Wt}
+      API_IP_HEADERS: ${API_IP_HEADERS:-X-Forwarded-For,X-Real-IP}
       API_CORS: ${API_CORS:-true}
       DEMO_MODE: ${DEMO_MODE:-false}
     volumes:

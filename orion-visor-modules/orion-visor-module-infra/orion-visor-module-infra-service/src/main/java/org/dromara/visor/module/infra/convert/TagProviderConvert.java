@@ -30,7 +30,7 @@ import org.mapstruct.factory.Mappers;
 import java.util.List;
 
 /**
- * 标签枚举 对外对象转换器
+ * 数据标签 对外对象转换器
  *
  * @author Jiahang Li
  * @version 1.0.0

@@ -41,7 +41,8 @@
       <a-tabs v-model:active-key="bizType"
               direction="vertical"
               type="rounded"
-              :hide-content="true">
+              :hide-content="true"
+              @change="reload">
         <a-tab-pane v-for="item in toOptions(BizTypeKey)"
                     :key="item.value as string"
                     :title="item.label" />

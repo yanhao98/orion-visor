@@ -20,43 +20,49 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.dromara.visor.module.infra.entity.dto;
+package org.dromara.visor.module.infra.entity.vo;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.dromara.visor.common.entity.RequestIdentity;
+
+import java.io.Serializable;
+import java.util.Date;
 
 /**
- * 身份信息
+ * 用户锁定 响应对象
  *
  * @author Jiahang Li
  * @version 1.0.0
- * @since 2023/11/1 1:01
+ * @since 2023-7-13 18:42
  */
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class LoginTokenIdentityDTO implements RequestIdentity {
+@Schema(name = "UserLockedVO", description = "用户锁定 响应对象")
+public class UserLockedVO implements Serializable {
 
-    /**
-     * 原始登录时间
-     */
-    private Long loginTime;
+    private static final long serialVersionUID = 1L;
 
-    /**
-     * 当前设备登录地址
-     */
+    @Schema(description = "用户名")
+    private String username;
+
+    @Schema(description = "失效时间")
+    private Long expireTime;
+
+    @Schema(description = "请求ip")
     private String address;
 
-    /**
-     * 当前设备登录地址
-     */
+    @Schema(description = "请求地址")
     private String location;
 
-    /**
-     * 当前设备 userAgent
-     */
+    @Schema(description = "userAgent")
     private String userAgent;
+
+    @Schema(description = "登录时间")
+    private Date loginTime;
 
 }

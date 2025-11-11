@@ -26,8 +26,8 @@ import cn.orionsec.kit.lang.utils.time.Dates;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.dromara.visor.common.constant.ErrorCode;
+import org.dromara.visor.common.entity.RequestIdentityModel;
 import org.dromara.visor.module.infra.entity.dto.LoginTokenDTO;
-import org.dromara.visor.module.infra.entity.dto.LoginTokenIdentityDTO;
 
 import java.util.Date;
 
@@ -53,9 +53,9 @@ public enum LoginTokenStatusEnum {
     OTHER_DEVICE(1) {
         @Override
         public RuntimeException toException(LoginTokenDTO token) {
-            LoginTokenIdentityDTO override = token.getOverride();
+            RequestIdentityModel override = token.getOverride();
             return ErrorCode.USER_OTHER_DEVICE_LOGIN.exception(
-                    Dates.format(new Date(override.getLoginTime()), Dates.MD_HM),
+                    Dates.format(new Date(override.getTimestamp()), Dates.MD_HM),
                     override.getAddress(),
                     override.getLocation());
         }
@@ -68,9 +68,9 @@ public enum LoginTokenStatusEnum {
     SESSION_OFFLINE(2) {
         @Override
         public RuntimeException toException(LoginTokenDTO token) {
-            LoginTokenIdentityDTO override = token.getOverride();
+            RequestIdentityModel override = token.getOverride();
             return ErrorCode.USER_OFFLINE.exception(
-                    Dates.format(new Date(override.getLoginTime()), Dates.MD_HM),
+                    Dates.format(new Date(override.getTimestamp()), Dates.MD_HM),
                     override.getAddress(),
                     override.getLocation());
         }

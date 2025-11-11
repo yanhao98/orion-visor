@@ -52,6 +52,16 @@ public class HostSpecExtraModel implements GenericsDataModel {
     private String sn;
 
     /**
+     * 制造商
+     */
+    private String vendor;
+
+    /**
+     * 型号
+     */
+    private String model;
+
+    /**
      * 系统名称
      */
     private String osName;

@@ -23,7 +23,10 @@
 package org.dromara.visor.common.entity;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * 请求留痕模型
@@ -33,8 +36,14 @@ import lombok.Data;
  * @since 2023/12/29 11:57
  */
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Schema(name = "RequestIdentityModel", description = "请求留痕模型")
 public class RequestIdentityModel implements RequestIdentity {
+
+    @Schema(description = "时间戳")
+    private Long timestamp;
 
     @Schema(description = "请求地址")
     private String address;

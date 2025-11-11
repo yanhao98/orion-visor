@@ -38,6 +38,7 @@ import org.dromara.visor.module.infra.define.operator.SystemUserOperatorType;
 import org.dromara.visor.module.infra.entity.request.user.*;
 import org.dromara.visor.module.infra.entity.vo.LoginHistoryVO;
 import org.dromara.visor.module.infra.entity.vo.SystemUserVO;
+import org.dromara.visor.module.infra.entity.vo.UserLockedVO;
 import org.dromara.visor.module.infra.entity.vo.UserSessionVO;
 import org.dromara.visor.module.infra.service.OperatorLogService;
 import org.dromara.visor.module.infra.service.SystemUserManagementService;
@@ -190,7 +191,33 @@ public class SystemUserController {
     }
 
     @IgnoreLog(IgnoreLogMode.RET)
-    @GetMapping("/session/list")
+    @GetMapping("/locked/list")
+    @Operation(summary = "获取锁定的用户列表")
+    @PreAuthorize("@ss.hasPermission('infra:system-user:query-lock')")
+    public List<UserLockedVO> getLockedUserList() {
+        return systemUserManagementService.getLockedUserList();
+    }
+
+    @OperatorLog(SystemUserOperatorType.UNLOCK)
+    @IgnoreLog(IgnoreLogMode.RET)
+    @PutMapping("/locked/unlock")
+    @Operation(summary = "解锁用户")
+    @PreAuthorize("@ss.hasPermission('infra:system-user:management:unlock')")
+    public Boolean unlockLockedUser(@RequestBody UserUnlockRequest request) {
+        systemUserManagementService.unlockLockedUser(request);
+        return true;
+    }
+
+    @IgnoreLog(IgnoreLogMode.RET)
+    @GetMapping("/session/users/list")
+    @Operation(summary = "获取全部用户会话列表")
+    @PreAuthorize("@ss.hasPermission('infra:system-user:query-session')")
+    public List<UserSessionVO> getUsersSessionList() {
+        return systemUserManagementService.getUsersSessionList();
+    }
+
+    @IgnoreLog(IgnoreLogMode.RET)
+    @GetMapping("/session/user/list")
     @Operation(summary = "获取用户会话列表")
     @PreAuthorize("@ss.hasPermission('infra:system-user:query-session')")
     public List<UserSessionVO> getUserSessionList(@RequestParam("id") Long id) {

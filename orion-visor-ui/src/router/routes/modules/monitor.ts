@@ -23,7 +23,7 @@ const MONITOR: AppRouteRecordRaw = {
       component: () => import('@/views/monitor/alarm-policy/index.vue'),
     },
     {
-      name: 'alarmEvent',
+      name: 'hostAlarmEvent',
       path: '/monitor/alarm-event',
       component: () => import('@/views/monitor/alarm-event/index.vue'),
     },

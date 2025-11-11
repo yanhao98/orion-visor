@@ -26,25 +26,31 @@ import lombok.extern.slf4j.Slf4j;
 import org.dromara.visor.common.utils.LockerUtils;
 import org.dromara.visor.module.infra.service.TagService;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 
 /**
  * tag 定时清理任务
+ * <p>
+ * 提供了 web 管理删除, 所以不需要定时清理
  *
  * @author Jiahang Li
  * @version 1.0.0
  * @since 2024/4/15 23:50
  */
 @Slf4j
-@Component
+// @Component
 public class TagAutoClearTask {
 
     /**
      * 分布式锁名称
      */
     private static final String LOCK_KEY = "clear:tag:lock";
+
+    /**
+     * 未使用的天数
+     */
+    private static final Integer UN_USED_DAYS = 3;
 
     @Resource
     private TagService tagService;
@@ -56,7 +62,7 @@ public class TagAutoClearTask {
     public void clear() {
         log.info("TagAutoClearTask.clear start");
         // 获取锁并执行
-        LockerUtils.tryLockExecute(LOCK_KEY, tagService::clearUnusedTag);
+        LockerUtils.tryLockExecute(LOCK_KEY, () -> tagService.clearUnusedTag(UN_USED_DAYS));
         log.info("TagAutoClearTask.clear finish");
     }
 

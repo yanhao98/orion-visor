@@ -34,7 +34,7 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 /**
- * 标签枚举 更新请求对象
+ * 数据标签 更新请求对象
  *
  * @author Jiahang Li
  * @version 1.0.0
@@ -44,7 +44,7 @@ import java.io.Serializable;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Schema(name = "TagUpdateRequest", description = "标签枚举 更新请求对象")
+@Schema(name = "TagUpdateRequest", description = "数据标签 更新请求对象")
 public class TagUpdateRequest implements Serializable {
 
     @NotNull
@@ -55,10 +55,5 @@ public class TagUpdateRequest implements Serializable {
     @Size(max = 32)
     @Schema(description = "标签名称")
     private String name;
-
-    @NotBlank
-    @Size(max = 12)
-    @Schema(description = "标签类型")
-    private String type;
 
 }

@@ -119,7 +119,8 @@ public class HostAgentServiceImpl implements HostAgentService {
                 .select(HostDO::getId,
                         HostDO::getAgentVersion,
                         HostDO::getAgentInstallStatus,
-                        HostDO::getAgentOnlineStatus)
+                        HostDO::getAgentOnlineStatus,
+                        HostDO::getAgentOnlineChangeTime)
                 .in(HostDO::getId, idList)
                 .then()
                 .stream()

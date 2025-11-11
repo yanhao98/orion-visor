@@ -37,5 +37,5 @@ export const triggerMouseEvent = (ref: Ref, e = 'click') => {
     bubbles: true,
     cancelable: true,
   });
-  ref.value.dispatchEvent(event);
+  ref.value?.dispatchEvent?.(event);
 };

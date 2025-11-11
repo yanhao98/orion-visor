@@ -16,7 +16,7 @@
 
 <script lang="ts">
   export default {
-    name: 'role'
+    name: 'userRole'
   };
 </script>
 

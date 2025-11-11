@@ -41,11 +41,6 @@ public enum AlarmEventSourceTypeEnum {
      */
     HOST,
 
-    /**
-     * 拨测告警
-     */
-    UPTIME,
-
     ;
 
     public static AlarmEventSourceTypeEnum of(String value) {

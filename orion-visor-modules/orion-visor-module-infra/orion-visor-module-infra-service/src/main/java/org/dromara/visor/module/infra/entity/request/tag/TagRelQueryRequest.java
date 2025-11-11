@@ -64,4 +64,7 @@ public class TagRelQueryRequest extends BaseQueryRequest {
     @Schema(description = "关联id")
     private Collection<Long> relIdList;
 
+    @Schema(description = "tagId")
+    private Collection<Long> tagIdList;
+
 }

@@ -29,9 +29,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
- * 标签枚举 视图响应对象
+ * 数据标签 视图响应对象
  *
  * @author Jiahang Li
  * @version 1.0.0
@@ -41,7 +42,7 @@ import java.io.Serializable;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Schema(name = "TagVO", description = "标签枚举 视图响应对象")
+@Schema(name = "TagVO", description = "数据标签 视图响应对象")
 public class TagVO implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -49,7 +50,25 @@ public class TagVO implements Serializable {
     @Schema(description = "id")
     private Long id;
 
+    @Schema(description = "标签类型")
+    private String type;
+
     @Schema(description = "标签名称")
     private String name;
+
+    @Schema(description = "关联数量")
+    private Integer relCount;
+
+    @Schema(description = "创建时间")
+    private Date createTime;
+
+    @Schema(description = "修改时间")
+    private Date updateTime;
+
+    @Schema(description = "创建人")
+    private String creator;
+
+    @Schema(description = "修改人")
+    private String updater;
 
 }

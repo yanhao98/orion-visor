@@ -30,7 +30,7 @@ import org.dromara.visor.module.infra.entity.domain.TagDO;
 import java.util.List;
 
 /**
- * 标签枚举 Mapper 接口
+ * 数据标签 Mapper 接口
  *
  * @author Jiahang Li
  * @version 1.0.0

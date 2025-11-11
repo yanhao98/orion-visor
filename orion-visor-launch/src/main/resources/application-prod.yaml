@@ -74,6 +74,9 @@ orion:
   api:
     # 是否允许跨域
     cors: ${API_CORS:true}
+    # 获取 IP 的请求头
+    ip-headers: ${API_IP_HEADERS:X-Forwarded-For,X-Real-IP}
+    # 对外服务
     expose:
       # 暴露接口请求头值
       token: ${API_EXPOSE_TOKEN:pmqeHOyZaumHm0Wt}
