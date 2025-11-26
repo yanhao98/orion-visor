@@ -15,9 +15,10 @@
       <a-form-item field="path"
                    :label="`${touch ? '文件' : '文件夹'}路径`"
                    :rules="[{ required: true, message: `请输入${touch ? '文件' : '文件夹'}路径` }]">
-        <a-input ref="pathRef"
-                 v-model="formModel.path"
-                 :placeholder="`请输入${touch ? '文件' : '文件夹'}路径`" />
+        <a-textarea ref="pathRef"
+                    v-model="formModel.path"
+                    :placeholder="`请输入${touch ? '文件' : '文件夹'}路径`"
+                    :auto-size="{ minRows: 3, maxRows: 3 }" />
       </a-form-item>
     </a-form>
   </a-modal>

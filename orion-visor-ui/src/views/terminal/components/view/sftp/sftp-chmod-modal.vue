@@ -15,8 +15,9 @@
       <a-form-item field="path"
                    disabled
                    label="文件路径">
-        <a-input v-model="formModel.path"
-                 placeholder="原始路径" />
+        <a-textarea v-model="formModel.path"
+                    placeholder="原始路径"
+                    :auto-size="{ minRows: 3, maxRows: 3 }" />
       </a-form-item>
       <!-- 文件权限 -->
       <a-form-item field="mod"
@@ -56,7 +57,6 @@
 
   const { visible, setVisible } = useVisible();
 
-  const sessionKey = ref();
   const modRef = ref();
   const formRef = ref();
   const formModel = ref({
