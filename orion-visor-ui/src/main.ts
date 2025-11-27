@@ -14,6 +14,7 @@ import '@/assets/style/chart.less';
 import '@/assets/style/arco-extends.less';
 import '@/api/interceptor';
 import App from './App.vue';
+import globalErrorHandler from '@/utils/monitor';
 
 const app = createApp(App);
 
@@ -25,6 +26,9 @@ app.use(store);
 app.use(i18n);
 app.use(globalComponents);
 app.use(directive);
+
+// 全局异常处理
+globalErrorHandler(app);
 
 app.mount('#app');
 

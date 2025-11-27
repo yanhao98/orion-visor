@@ -202,7 +202,6 @@
       selectedKeys.value = [];
       // 重新加载
       reload();
-    } catch (e) {
     } finally {
       setLoading(false);
     }
@@ -220,7 +219,6 @@
       Message.success('删除成功');
       // 重新加载
       reload();
-    } catch (e) {
     } finally {
       setLoading(false);
     }
@@ -246,7 +244,6 @@
       #if($vue.enableRowSelection)
       selectedKeys.value = [];
       #end
-    } catch (e) {
     } finally {
       setLoading(false);
     }

@@ -40,5 +40,6 @@ export const playBellHz = (frequency: number = 400, duration: number = .15) => {
     source.connect(audioCtx.destination);
     source.start();
   } catch (e) {
+    // ignored
   }
 };
