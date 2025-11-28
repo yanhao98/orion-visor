@@ -33,6 +33,7 @@ export const useQueryOrder = (table: string, defaultSort: number = ASC): QueryOr
       try {
         preferConfig = JSON.parse(localConfig as string);
       } catch (e) {
+        preferConfig = {};
       }
     }
     // 解析配置
@@ -57,6 +58,7 @@ export const useQueryOrder = (table: string, defaultSort: number = ASC): QueryOr
       try {
         preferConfig = JSON.parse(localConfig as string);
       } catch (e) {
+        preferConfig = {};
       }
     }
     // 设置缓存

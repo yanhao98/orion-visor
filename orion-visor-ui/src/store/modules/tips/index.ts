@@ -22,6 +22,7 @@ export default defineStore('tips', {
         await setTipsTipped(key);
         this.tippedKeys.push(key);
       } catch (e) {
+        console.error('set tipped error', e);
       }
     }
   },

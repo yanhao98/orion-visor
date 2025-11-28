@@ -113,6 +113,7 @@ export default defineStore('user', {
       try {
         await userLogout();
       } catch (e) {
+        console.error('logout error', e);
       } finally {
         // 登出回调
         this.logoutCallBack();
