@@ -66,7 +66,6 @@
         setVisible(false);
         Message.error('cron 表达式错误');
       }
-    } catch (e) {
     } finally {
       setLoading(false);
     }

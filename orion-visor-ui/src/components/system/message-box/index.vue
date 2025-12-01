@@ -96,10 +96,16 @@
   const reloadAllMessage = async () => {
     hasMore.value = true;
     messageList.value = [];
-    // 查询数量
-    queryMessageCount();
-    // 加载列表
-    await loadMessage();
+    try {
+      await Promise.all([
+        // 查询数量
+        queryMessageCount(),
+        // 加载列表
+        loadMessage()
+      ]);
+    } catch (e) {
+      console.error('load message error', e);
+    }
   };
 
   // 获取数量
@@ -108,7 +114,6 @@
     try {
       const { data } = await getSystemMessageCount(queryUnread.value);
       classifyCount.value = data;
-    } catch (ex) {
     } finally {
       setFetchLoading(false);
     }
@@ -135,17 +140,16 @@
         limit: messageLimit,
         classify: currentClassify.value,
         queryUnread: queryUnread.value,
-        maxId,
+        maxId
       });
       data.forEach(s => {
         messageList.value.push({
           ...s,
           content: clearHtmlTag(s.content),
-          contentHtml: replaceHtmlTag(s.content),
+          contentHtml: replaceHtmlTag(s.content)
         });
       });
       hasMore.value = data.length === messageLimit;
-    } catch (ex) {
     } finally {
       setFetchLoading(false);
     }
@@ -159,7 +163,6 @@
       await updateSystemMessageReadAll(currentClassify.value);
       // 修改状态
       messageList.value.forEach(s => s.status = MessageStatus.READ);
-    } catch (ex) {
     } finally {
       setMessageLoading(false);
     }
@@ -171,7 +174,6 @@
     try {
       // 清理消息
       await clearSystemMessage(currentClassify.value);
-    } catch (ex) {
     } finally {
       setMessageLoading(false);
     }
@@ -204,7 +206,6 @@
       // 移除
       const index = messageList.value.findIndex(s => s.id === message.id);
       messageList.value.splice(index, 1);
-    } catch (ex) {
     } finally {
       setMessageLoading(false);
     }
@@ -237,7 +238,7 @@
   onUnmounted(() => {
     localStorage.setItem(MESSAGE_CONFIG_KEY, JSON.stringify({
       currentClassify: currentClassify.value,
-      queryUnread: queryUnread.value,
+      queryUnread: queryUnread.value
     }));
   });
 

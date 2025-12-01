@@ -126,7 +126,6 @@
           }
         };
       });
-    } catch (e) {
     } finally {
       setLoading(false);
     }

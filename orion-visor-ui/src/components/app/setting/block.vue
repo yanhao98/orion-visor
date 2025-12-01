@@ -58,15 +58,13 @@
     // 修改配置
     appStore.updateSettings({ [key]: value });
     // 同步偏好
-    try {
-      await updatePreference({
-        type: 'SYSTEM',
-        item: key,
-        value
-      });
-    } catch (e) {
-    }
+    await updatePreference({
+      type: 'SYSTEM',
+      item: key,
+      value
+    });
   };
+
 </script>
 
 <style lang="less" scoped>

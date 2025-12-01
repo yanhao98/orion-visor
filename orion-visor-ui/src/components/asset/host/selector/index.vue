@@ -62,7 +62,6 @@
             value: s.id,
           };
         });
-    } catch (e) {
     } finally {
       setLoading(false);
     }

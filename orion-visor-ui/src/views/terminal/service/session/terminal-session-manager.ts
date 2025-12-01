@@ -180,6 +180,7 @@ export default class TerminalSessionManager implements ITerminalSessionManager {
       // 移除 resize 事件
       removeEventListen(window, 'resize', this.dispatchFitFn);
     } catch (e) {
+      // ignored
     }
   }
 

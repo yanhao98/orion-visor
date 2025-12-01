@@ -163,7 +163,6 @@
           }
         }
       }
-    } catch (e) {
     } finally {
       emits('setLoading', false);
     }
@@ -300,7 +299,6 @@
       });
       // 移动分组
       moveNode(treeData.value, dragNode, dropNode, dropPosition);
-    } catch (e) {
     } finally {
       emits('setLoading', false);
     }
@@ -312,7 +310,6 @@
       emits('setLoading', true);
       const groups = await cacheStore.loadHostGroupTree(force);
       treeData.value = groups || [];
-    } catch (e) {
     } finally {
       emits('setLoading', false);
     }

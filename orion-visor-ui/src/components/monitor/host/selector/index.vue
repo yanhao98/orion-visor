@@ -48,7 +48,6 @@
             value: s.agentKey,
           };
         });
-    } catch (e) {
     } finally {
       setLoading(false);
     }
