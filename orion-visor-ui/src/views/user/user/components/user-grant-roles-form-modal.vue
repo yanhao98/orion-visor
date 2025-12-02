@@ -78,12 +78,9 @@
 
   // 加载角色
   const loadRoles = async () => {
-    try {
-      // 加载用户角色
-      const { data: roleIdList } = await getUserRoleIdList(formModel.value.id as number);
-      formModel.value.roleIdList = roleIdList;
-    } catch (e) {
-    }
+    // 加载用户角色
+    const { data: roleIdList } = await getUserRoleIdList(formModel.value.id as number);
+    formModel.value.roleIdList = roleIdList;
   };
 
   defineExpose({ open });
@@ -96,8 +93,6 @@
       Message.success('修改成功');
       // 清空
       handlerClear();
-    } catch (e) {
-      return false;
     } finally {
       setLoading(false);
     }

@@ -81,7 +81,6 @@
       // 获取角色菜单
       const { data: roleMenuIdList } = await getRoleMenuId(record.id);
       table.value.init(roleMenuIdList);
-    } catch (e) {
     } finally {
       setLoading(false);
     }
@@ -106,8 +105,6 @@
       Message.success('分配成功');
       // 清空
       handlerClear();
-    } catch (e) {
-      return false;
     } finally {
       setLoading(false);
     }

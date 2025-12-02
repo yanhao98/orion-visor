@@ -88,7 +88,6 @@
         nickname.value = formModel.value.nickname?.substring(0, 1) as string;
       }
       Message.success('保存成功');
-    } catch (e) {
     } finally {
       setLoading(false);
     }
@@ -110,7 +109,6 @@
       formModel.value = pick(u, 'id', 'username', 'nickname', 'mobile', 'email');
       roles.value = (u.roles || []).map(s => `${s.name}(${s.code})`);
       nickname.value = u.nickname?.substring(0, 1);
-    } catch (e) {
     } finally {
       setLoading(false);
     }

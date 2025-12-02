@@ -104,7 +104,6 @@
       }
       Message.success('操作成功');
       item.visible = false;
-    } catch (e) {
     } finally {
       setLoading(false);
     }
@@ -126,7 +125,6 @@
       }
       sessions.forEach(s => s.visible = true);
       list.value = sessions;
-    } catch (e) {
     } finally {
       setLoading(false);
     }
