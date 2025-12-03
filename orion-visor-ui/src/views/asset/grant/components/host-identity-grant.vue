@@ -81,7 +81,6 @@
     try {
       const { data } = await getAuthorizedHostIdentity(request);
       selectedKeys.value = data;
-    } catch (e) {
     } finally {
       setLoading(false);
     }
@@ -99,7 +98,6 @@
       Message.success('授权成功');
       // 清空缓存
       cacheStore.reset('authorizedHostIdentities');
-    } catch (e) {
     } finally {
       setLoading(false);
     }
@@ -136,7 +134,6 @@
       hostIdentities.value = await cacheStore.loadHostIdentities();
       // 加载主机密钥
       hostKeys.value = await cacheStore.loadHostKeys();
-    } catch (e) {
     } finally {
       setLoading(false);
     }

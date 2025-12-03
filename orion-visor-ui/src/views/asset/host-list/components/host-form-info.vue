@@ -155,7 +155,6 @@
       renderForm({ ...detail, tags });
       // 响应类型
       emits('changeType', data.types);
-    } catch (e) {
     } finally {
       setLoading(false);
     }
@@ -209,7 +208,6 @@
         emits('updated', formModel.value.id);
       }
       emits('changeType', formModel.value.types);
-    } catch (e) {
     } finally {
       setLoading(false);
     }

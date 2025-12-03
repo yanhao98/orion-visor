@@ -137,7 +137,6 @@
         // 无数据
         Message.warning('当前条件未查询到数据');
       }
-    } catch (e) {
     } finally {
       setLoading(false);
     }
@@ -159,7 +158,6 @@
           // 清空
           setVisible(false);
           handlerClear();
-        } catch (e) {
         } finally {
           setLoading(false);
         }

@@ -264,7 +264,6 @@
       selectedKeys.value = [];
       // 重新加载
       reload();
-    } catch (e) {
     } finally {
       setLoading(false);
     }
@@ -280,7 +279,6 @@
       selectedKeys.value = [];
       // 重新加载
       reload();
-    } catch (e) {
     } finally {
       setLoading(false);
     }
@@ -304,7 +302,6 @@
       pagination.current = request.page;
       pagination.pageSize = request.limit;
       selectedKeys.value = [];
-    } catch (e) {
     } finally {
       setLoading(false);
     }
@@ -328,7 +325,6 @@
       record.status = HostConnectStatus.FORCE_OFFLINE;
       record.endTime = Date.now();
       Message.success('已下线');
-    } catch (e) {
     } finally {
       setLoading(false);
     }

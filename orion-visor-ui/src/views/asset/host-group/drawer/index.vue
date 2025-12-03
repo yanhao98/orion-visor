@@ -116,7 +116,6 @@
         hostIdList: currentGroupHost.value
       });
       Message.success('保存成功');
-    } catch (e) {
     } finally {
       setLoading(false);
     }

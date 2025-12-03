@@ -398,7 +398,6 @@
           });
           record.status = newStatus;
           Message.success(`已${dict.label}`);
-        } catch (e) {
         } finally {
           setLoading(false);
         }
@@ -421,7 +420,6 @@
           Message.success('删除成功');
           // 重新加载
           reload();
-        } catch (e) {
         } finally {
           setLoading(false);
         }
@@ -439,7 +437,6 @@
       selectedKeys.value = [];
       // 重新加载
       reload();
-    } catch (e) {
     } finally {
       setLoading(false);
     }
@@ -466,7 +463,6 @@
       pagination.current = request.page;
       pagination.pageSize = request.limit;
       selectedKeys.value = [];
-    } catch (e) {
     } finally {
       setLoading(false);
     }

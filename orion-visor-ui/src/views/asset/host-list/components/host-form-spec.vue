@@ -307,7 +307,6 @@
       // 查询规格信息
       const { data } = await getHostExtraItem<HostSpecExtraModel>({ hostId: props.hostId, item: 'SPEC' });
       formModel.value = data;
-    } catch (e) {
     } finally {
       setLoading(false);
     }
@@ -343,7 +342,6 @@
       });
       toggleEditing();
       emits('updated');
-    } catch (e) {
     } finally {
       setLoading(false);
     }
