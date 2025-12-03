@@ -188,7 +188,7 @@
   const queryOrder = useQueryOrder(TableName, DESC);
   const { tableColumns, columnsHook } = useTableColumns(TableName, columns);
   const { loading, setLoading } = useLoading();
-  const { toOptions, getDictValue } = useDictStore();
+  const { getDictValue } = useDictStore();
 
   const selectedKeys = ref<Array<number>>([]);
   const tableRenderData = ref<Array<DictKeyQueryResponse>>([]);
@@ -207,7 +207,6 @@
       Message.success('删除成功');
       // 重新加载
       reload();
-    } catch (e) {
     } finally {
       setLoading(false);
     }
@@ -223,7 +222,6 @@
       selectedKeys.value = [];
       // 重新加载
       reload();
-    } catch (e) {
     } finally {
       setLoading(false);
     }
@@ -246,7 +244,6 @@
       // 查看
       const { data } = await getDictValueList([record.keyName]);
       emits('openView', data[record.keyName], `${record.keyName} - ${record.description}`);
-    } catch (e) {
     } finally {
       setLoading(false);
     }
@@ -260,7 +257,6 @@
       Message.success('刷新成功 页面缓存刷新后生效');
       // 加载字典数据
       fetchTableData();
-    } catch (e) {
     } finally {
       setLoading(false);
     }
@@ -276,7 +272,6 @@
       pagination.current = request.page;
       pagination.pageSize = request.limit;
       selectedKeys.value = [];
-    } catch (e) {
     } finally {
       setLoading(false);
     }

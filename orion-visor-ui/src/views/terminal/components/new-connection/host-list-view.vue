@@ -215,7 +215,6 @@
         extra: JSON.stringify({ alias: item.alias })
       });
       item.editable = false;
-    } catch (e) {
     } finally {
       item.loading = false;
       item.modCount = 0;

@@ -265,7 +265,6 @@
       }
       cacheStore.reset('menus');
       Message.success('删除成功');
-    } catch (e) {
     } finally {
       setFetchLoading(false);
     }
@@ -289,7 +288,6 @@
       if (all) {
         cacheStore.set('menus', data);
       }
-    } catch (e) {
     } finally {
       setFetchLoading(false);
     }
@@ -318,7 +316,6 @@
       Message.success('刷新成功 页面缓存刷新后生效');
       // 加载菜单数据
       await loadMenuData(true);
-    } catch (e) {
     } finally {
       setFetchLoading(false);
     }

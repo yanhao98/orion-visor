@@ -86,18 +86,14 @@
 
   // 确定
   const handlerOk = async () => {
-    try {
-      // 验证参数
-      const error = await formRef.value.validate();
-      if (error) {
-        return false;
-      }
-      // 提权
-      if (props.session) {
-        props.session.chmod(formModel.value.path, formModel.value.mod);
-      }
-    } catch (e) {
+    // 验证参数
+    const error = await formRef.value.validate();
+    if (error) {
       return false;
+    }
+    // 提权
+    if (props.session) {
+      props.session.chmod(formModel.value.path, formModel.value.mod);
     }
   };
 
