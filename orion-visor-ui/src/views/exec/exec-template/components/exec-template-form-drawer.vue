@@ -214,7 +214,6 @@
       // 查询模板信息
       const { data } = await getExecTemplateWithAuthorized(id);
       renderForm({ ...defaultForm(), ...data });
-    } catch (e) {
     } finally {
       setLoading(false);
     }
@@ -282,8 +281,6 @@
       }
       // 清空
       handlerClear();
-    } catch (e) {
-      return false;
     } finally {
       setLoading(false);
     }

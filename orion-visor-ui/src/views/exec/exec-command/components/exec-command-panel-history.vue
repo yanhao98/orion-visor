@@ -99,7 +99,6 @@
     try {
       const { data } = await getExecCommandLogHistory(historyCount);
       historyLogs.value = data;
-    } catch (e) {
     } finally {
       setLoading(false);
     }

@@ -288,7 +288,6 @@
       });
       Message.success('已中断');
       record.status = ExecStatus.COMPLETED;
-    } catch (e) {
     } finally {
       setLoading(false);
     }
@@ -363,7 +362,6 @@
       Message.success('删除成功');
       // 重新加载
       reload();
-    } catch (e) {
     } finally {
       setLoading(false);
     }
@@ -379,7 +377,6 @@
       selectedKeys.value = [];
       // 重新加载
       reload();
-    } catch (e) {
     } finally {
       setLoading(false);
     }
@@ -404,7 +401,6 @@
       pagination.pageSize = request.limit;
       selectedKeys.value = [];
       tableRef.value.expandAll(false);
-    } catch (e) {
     } finally {
       setLoading(false);
     }

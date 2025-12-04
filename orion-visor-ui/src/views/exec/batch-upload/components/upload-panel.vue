@@ -106,7 +106,6 @@
       } else {
         taskStatus.value = UploadTaskStepStatus.UPLOADING;
       }
-    } catch (e) {
     } finally {
       setLoading(false);
     }
@@ -159,7 +158,6 @@
       taskStatus.value = UploadTaskStepStatus.WAITING;
       Message.success('已取消');
       taskId.value = undefined;
-    } catch (e) {
     } finally {
       setLoading(false);
     }
@@ -207,7 +205,6 @@
       // 开始上传
       await cancelUploadTask(taskId.value, true);
       taskStatus.value = UploadTaskStepStatus.FAILED;
-    } catch (e) {
     } finally {
       setLoading(false);
     }
