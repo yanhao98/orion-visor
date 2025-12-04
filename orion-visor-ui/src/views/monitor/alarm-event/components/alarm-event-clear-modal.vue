@@ -175,7 +175,6 @@
         // 无数据
         Message.warning('当前条件未查询到数据');
       }
-    } catch (e) {
     } finally {
       setLoading(false);
     }
@@ -195,7 +194,6 @@
           Message.success(`已成功清理 ${data} 条数据`);
           emits('clear');
           handleClose();
-        } catch (e) {
         } finally {
           setLoading(false);
         }

@@ -91,11 +91,8 @@
 
   // 加载用户主题
   onMounted(async () => {
-    try {
-      const { data } = await getPreference<Record<string, any>>('TERMINAL', [TerminalPreferenceItem.SSH_THEME]);
-      currentThemeName.value = data[TerminalPreferenceItem.SSH_THEME]?.name;
-    } catch (e) {
-    }
+    const { data } = await getPreference<Record<string, any>>('TERMINAL', [TerminalPreferenceItem.SSH_THEME]);
+    currentThemeName.value = data[TerminalPreferenceItem.SSH_THEME]?.name;
   });
 
   // 加载主题列表
@@ -110,7 +107,6 @@
         result.push(subArray);
       }
       themes.value = result;
-    } catch (e) {
     } finally {
       setLoading(false);
     }

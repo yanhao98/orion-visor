@@ -74,7 +74,6 @@
     try {
       const { data } = await getSystemAppInfo();
       app.value = data;
-    } catch (e) {
     } finally {
       setLoading(false);
     }
@@ -86,6 +85,7 @@
       const { data } = await getAppLatestRelease();
       repo.value = data;
     } catch (e) {
+      // ignored
     }
   });
 

@@ -302,7 +302,6 @@
           props.tableData.filter(s => idList.includes(s.id)).forEach(s => {
             s.falseAlarm = FalseAlarm.TRUE;
           });
-        } catch (e) {
         } finally {
           emits('setLoading', false);
         }
@@ -324,7 +323,6 @@
           selectedKeys.value = [];
           // 重新加载
           emits('query');
-        } catch (e) {
         } finally {
           emits('setLoading', false);
         }

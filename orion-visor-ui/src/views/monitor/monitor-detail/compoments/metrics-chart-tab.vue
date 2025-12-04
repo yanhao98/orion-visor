@@ -160,10 +160,7 @@
     }
     // 顺序刷新
     for (const chunk of chunks) {
-      try {
-        await Promise.all(chunk.map(s => s.refresh()));
-      } catch (e) {
-      }
+      await Promise.all(chunk.map(s => s?.refresh?.()));
     }
   };
 

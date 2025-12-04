@@ -121,7 +121,6 @@
         settings: setting.value
       });
       Message.success('修改成功');
-    } catch (e) {
     } finally {
       setLoading(false);
     }
@@ -137,7 +136,6 @@
         'auto-clear.exec-log.keep-days': toAnonymousNumber(data['auto-clear.exec-log.keep-days']),
         'auto-clear.terminal-log.keep-days': toAnonymousNumber(data['auto-clear.terminal-log.keep-days']),
       };
-    } catch (e) {
     } finally {
       setLoading(false);
     }

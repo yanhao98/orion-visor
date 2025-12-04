@@ -84,7 +84,6 @@
         settings: { ...setting.value }
       });
       Message.success('修改成功');
-    } catch (e) {
     } finally {
       setLoading(false);
     }
@@ -97,7 +96,6 @@
       const { data } = await generatorKeypair();
       setting.value['encrypt.public-key'] = data.publicKey;
       setting.value['encrypt.private-key'] = data.privateKey;
-    } catch (e) {
     } finally {
       setLoading(false);
     }
@@ -111,7 +109,6 @@
       setting.value = {
         ...data
       };
-    } catch (e) {
     } finally {
       setLoading(false);
     }

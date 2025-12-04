@@ -185,7 +185,6 @@
       Message.success('删除成功');
       // 重新加载
       reload();
-    } catch (e) {
     } finally {
       setLoading(false);
     }
@@ -217,7 +216,6 @@
         ruleSwitch: checked
       });
       record.ruleSwitch = checked;
-    } catch (e) {
     } finally {
       setLoading(false);
     }
@@ -237,28 +235,25 @@
       setLoading(true);
       const { data } = await getAlarmRuleList(policyId.value, measurement.value);
       tableRenderData.value = data;
-    } catch (e) {
     } finally {
       setLoading(false);
     }
   };
 
   onMounted(() => {
-    try {
-      // 解析参数
-      const route = useRoute();
-      policyId.value = Number.parseInt(route.query.id as string);
-      policyName.value = route.query.name as string;
-      // 重新加载数据
-      reload();
-    } catch (e) {
-    }
+    // 解析参数
+    const route = useRoute();
+    policyId.value = Number.parseInt(route.query.id as string);
+    policyName.value = route.query.name as string;
+    // 重新加载数据
+    reload();
   });
 
 </script>
 
 <style lang="less" scoped>
   @measurement-card-width: 120px;
+
   .container-content {
     display: flex;
   }

@@ -178,7 +178,6 @@
       Message.success('删除成功');
       // 重新加载
       reload();
-    } catch (e) {
     } finally {
       setLoading(false);
     }
@@ -201,7 +200,6 @@
       pagination.total = data.total;
       pagination.current = request.page;
       pagination.pageSize = request.limit;
-    } catch (e) {
     } finally {
       setLoading(false);
     }
