@@ -109,10 +109,13 @@
 
   // 保存主机
   const saveHost = async () => {
+    if (!currentGroup.value?.key) {
+      return false;
+    }
     setLoading(true);
     try {
       await updateHostGroupRel({
-        groupId: currentGroup.value?.key as number,
+        groupId: currentGroup.value?.key,
         hostIdList: currentGroupHost.value
       });
       Message.success('保存成功');
