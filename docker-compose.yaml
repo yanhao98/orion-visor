@@ -50,6 +50,7 @@ services:
       SECRET_KEY: ${SECRET_KEY:-uQeacXV8b3isvKLK}
       API_EXPOSE_TOKEN: ${API_EXPOSE_TOKEN:-pmqeHOyZaumHm0Wt}
       API_IP_HEADERS: ${API_IP_HEADERS:-X-Forwarded-For,X-Real-IP}
+      API_HOST: ${API_HOST:-0.0.0.0}
       API_CORS: ${API_CORS:-true}
       DEMO_MODE: ${DEMO_MODE:-false}
     volumes:

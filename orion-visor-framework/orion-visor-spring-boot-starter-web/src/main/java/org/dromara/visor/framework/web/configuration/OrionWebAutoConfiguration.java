@@ -29,6 +29,7 @@ import org.dromara.visor.common.constant.AutoConfigureOrderConst;
 import org.dromara.visor.common.constant.FilterOrderConst;
 import org.dromara.visor.common.web.WebFilterCreator;
 import org.dromara.visor.framework.web.configuration.config.ExposeApiConfig;
+import org.dromara.visor.framework.web.configuration.config.OrionApiConfig;
 import org.dromara.visor.framework.web.core.aspect.DemoDisableApiAspect;
 import org.dromara.visor.framework.web.core.aspect.ExposeApiAspect;
 import org.dromara.visor.framework.web.core.filter.TraceIdFilter;
@@ -71,7 +72,7 @@ import java.util.List;
 @DependsOn({"executorContext"})
 @AutoConfiguration
 @AutoConfigureOrder(AutoConfigureOrderConst.FRAMEWORK_WEB)
-@EnableConfigurationProperties(ExposeApiConfig.class)
+@EnableConfigurationProperties({ExposeApiConfig.class, OrionApiConfig.class})
 public class OrionWebAutoConfiguration implements WebMvcConfigurer {
 
     @Value("${orion.prefix}")

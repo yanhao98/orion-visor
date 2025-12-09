@@ -55,4 +55,6 @@ public interface Const extends cn.orionsec.kit.lang.constant.Const, FieldConst, 
 
     int BATCH_COUNT = 500;
 
+    String IP_0000 = "0.0.0.0";
+
 }
