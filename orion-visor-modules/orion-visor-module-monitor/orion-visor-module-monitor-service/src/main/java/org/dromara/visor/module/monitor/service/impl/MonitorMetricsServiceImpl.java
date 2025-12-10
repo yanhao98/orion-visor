@@ -30,6 +30,7 @@ import org.dromara.visor.common.constant.ErrorMessage;
 import org.dromara.visor.common.utils.Assert;
 import org.dromara.visor.framework.biz.operator.log.core.utils.OperatorLogs;
 import org.dromara.visor.framework.redis.core.utils.RedisMaps;
+import org.dromara.visor.framework.redis.core.utils.RedisUtils;
 import org.dromara.visor.framework.redis.core.utils.barrier.CacheBarriers;
 import org.dromara.visor.module.monitor.context.MonitorMetricsContext;
 import org.dromara.visor.module.monitor.convert.MonitorMetricsConvert;
@@ -84,7 +85,7 @@ public class MonitorMetricsServiceImpl implements MonitorMetricsService {
         int effect = monitorMetricsDAO.insert(record);
         Long id = record.getId();
         // 删除缓存
-        RedisMaps.delete(MonitorMetricsCacheKeyDefine.MONITOR_METRICS);
+        RedisUtils.delete(MonitorMetricsCacheKeyDefine.MONITOR_METRICS);
         // 设置日志参数
         OperatorLogs.add(OperatorLogs.ID, id);
         // 重新加载本地缓存
@@ -110,7 +111,7 @@ public class MonitorMetricsServiceImpl implements MonitorMetricsService {
         int effect = monitorMetricsDAO.updateById(updateRecord);
         log.info("MonitorMetricsService-updateMonitorMetricsById effect: {}", effect);
         // 删除缓存
-        RedisMaps.delete(MonitorMetricsCacheKeyDefine.MONITOR_METRICS);
+        RedisUtils.delete(MonitorMetricsCacheKeyDefine.MONITOR_METRICS);
         // 重新加载本地缓存
         monitorMetricsContext.reloadMonitorMetrics(id);
         return effect;

@@ -104,7 +104,7 @@ public class HostKeyServiceImpl implements HostKeyService {
         log.info("HostKeyService-createHostKey effect: {}", effect);
         Long id = record.getId();
         // 删除缓存
-        RedisMaps.delete(HostCacheKeyDefine.HOST_KEY);
+        RedisUtils.delete(HostCacheKeyDefine.HOST_KEY);
         return id;
     }
 
@@ -128,7 +128,7 @@ public class HostKeyServiceImpl implements HostKeyService {
         int effect = hostKeyDAO.updateById(updateRecord);
         // 删除缓存
         if (!record.getName().equals(updateRecord.getName())) {
-            RedisMaps.delete(HostCacheKeyDefine.HOST_KEY);
+            RedisUtils.delete(HostCacheKeyDefine.HOST_KEY);
         }
         log.info("HostKeyService-updateHostKeyById effect: {}", effect);
         return effect;

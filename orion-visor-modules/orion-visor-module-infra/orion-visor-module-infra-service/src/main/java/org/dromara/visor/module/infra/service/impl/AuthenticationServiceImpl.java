@@ -42,6 +42,7 @@ import org.dromara.visor.common.utils.Assert;
 import org.dromara.visor.common.utils.Requests;
 import org.dromara.visor.framework.biz.operator.log.core.utils.OperatorLogs;
 import org.dromara.visor.framework.redis.core.utils.RedisStrings;
+import org.dromara.visor.framework.redis.core.utils.RedisUtils;
 import org.dromara.visor.framework.security.core.utils.SecurityUtils;
 import org.dromara.visor.module.common.config.AppLoginConfig;
 import org.dromara.visor.module.infra.api.SystemMessageApi;
@@ -420,7 +421,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         }
         // 删除续签信息
         if (Booleans.isTrue(appLoginConfig.getAllowRefresh())) {
-            RedisStrings.scanKeysDelete(UserCacheKeyDefine.LOGIN_REFRESH.format(id, "*"));
+            RedisUtils.scanKeysDelete(UserCacheKeyDefine.LOGIN_REFRESH.format(id, "*"));
         }
     }
 

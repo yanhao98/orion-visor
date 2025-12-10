@@ -110,7 +110,7 @@ public class HostIdentityServiceImpl implements HostIdentityService {
         int effect = hostIdentityDAO.insert(record);
         log.info("HostIdentityService-createHostIdentity effect: {}", effect);
         // 删除缓存
-        RedisMaps.delete(HostCacheKeyDefine.HOST_IDENTITY);
+        RedisUtils.delete(HostCacheKeyDefine.HOST_IDENTITY);
         return record.getId();
     }
 
@@ -143,7 +143,7 @@ public class HostIdentityServiceImpl implements HostIdentityService {
         int effect = hostIdentityDAO.update(updateRecord, wrapper);
         log.info("HostIdentityService-updateHostIdentityById effect: {}", effect);
         // 删除缓存
-        RedisMaps.delete(HostCacheKeyDefine.HOST_IDENTITY);
+        RedisUtils.delete(HostCacheKeyDefine.HOST_IDENTITY);
         return effect;
     }
 
