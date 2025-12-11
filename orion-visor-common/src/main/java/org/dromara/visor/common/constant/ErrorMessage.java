@@ -210,6 +210,10 @@ public interface ErrorMessage {
 
     String PLEASE_SELECT_SUFFIX_FILE = "请选择 {} 类型的文件";
 
+    String SPEC_FORMAT_INCORRECT = "规格格式不正确";
+
+    String INFLUXDB_UNSUPPORTED = "InfluxDB 服务未开启";
+
     /**
      * 是否为业务异常
      *
