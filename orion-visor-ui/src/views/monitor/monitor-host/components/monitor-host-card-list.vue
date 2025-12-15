@@ -423,7 +423,6 @@
       pagination.total = data.total;
       pagination.current = request.page;
       pagination.pageSize = request.limit;
-    } catch (e) {
     } finally {
       setLoading(false);
     }

@@ -57,7 +57,6 @@
     try {
       const { data } = await getAuthorizedHostKey(request);
       selectedKeys.value = data;
-    } catch (e) {
     } finally {
       setLoading(false);
     }
@@ -75,7 +74,6 @@
       Message.success('授权成功');
       // 清空缓存
       cacheStore.reset('authorizedHostKeys');
-    } catch (e) {
     } finally {
       setLoading(false);
     }
@@ -109,7 +107,6 @@
     setLoading(true);
     try {
       hostKeys.value = await cacheStore.loadHostKeys();
-    } catch (e) {
     } finally {
       setLoading(false);
     }

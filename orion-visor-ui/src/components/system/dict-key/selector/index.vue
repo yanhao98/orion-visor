@@ -70,7 +70,6 @@
           origin: s
         };
       });
-    } catch (e) {
     } finally {
       setLoading(false);
     }

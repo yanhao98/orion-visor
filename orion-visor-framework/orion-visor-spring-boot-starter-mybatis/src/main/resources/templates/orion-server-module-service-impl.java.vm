@@ -32,6 +32,7 @@ import org.dromara.visor.common.constant.ErrorMessage;
 import org.dromara.visor.common.utils.Assert;
 #if($meta.enableCache)
 import org.dromara.visor.framework.redis.core.utils.RedisMaps;
+import org.dromara.visor.framework.redis.core.utils.RedisUtils;
 import org.dromara.visor.framework.redis.core.utils.barrier.CacheBarriers;
 #end
 #foreach($pkg in ${customModuleFilePackages})
@@ -76,7 +77,7 @@ public class ${table.serviceImplName} implements ${table.serviceName} {
         log.info("${type}Service-create${type} id: {}, effect: {}", id, effect);
         #if($meta.enableCache)
         // 删除缓存
-        RedisMaps.delete(${type}CacheKeyDefine.${typeConst});
+        RedisUtils.delete(${type}CacheKeyDefine.${typeConst});
         #end
         return id;
     }
@@ -98,7 +99,7 @@ public class ${table.serviceImplName} implements ${table.serviceName} {
         log.info("${type}Service-update${type}ById effect: {}", effect);
         #if($meta.enableCache)
         // 删除缓存
-        RedisMaps.delete(${type}CacheKeyDefine.${typeConst});
+        RedisUtils.delete(${type}CacheKeyDefine.${typeConst});
         #end
         return effect;
     }
@@ -116,7 +117,7 @@ public class ${table.serviceImplName} implements ${table.serviceName} {
         log.info("${type}Service.update${type} effect: {}", effect);
         #if($meta.enableCache)
         // 删除缓存
-        RedisMaps.delete(${type}CacheKeyDefine.${typeConst});
+        RedisUtils.delete(${type}CacheKeyDefine.${typeConst});
         #end
         return effect;
     }
@@ -237,7 +238,7 @@ public class ${table.serviceImplName} implements ${table.serviceName} {
         log.info("${type}Service.delete${type} effect: {}", effect);
         #if($meta.enableCache)
         // 删除缓存
-        RedisMaps.delete(${type}CacheKeyDefine.${typeConst});
+        RedisUtils.delete(${type}CacheKeyDefine.${typeConst});
         #end
         return effect;
     }

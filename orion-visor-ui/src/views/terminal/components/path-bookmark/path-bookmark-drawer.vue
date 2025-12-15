@@ -149,7 +149,6 @@
       ungroupedItems.value = data.ungroupedItems || [];
       // 设置状态
       filterPath();
-    } catch (e) {
     } finally {
       setLoading(false);
     }

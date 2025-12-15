@@ -7,8 +7,8 @@ export const terminalLogColumns = [
     title: '连接主机',
     dataIndex: 'hostName',
     slotName: 'hostName',
-    align: 'left',
     minWidth: 98,
+    align: 'left',
     ellipsis: true,
   }, {
     title: '类型',

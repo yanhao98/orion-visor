@@ -162,7 +162,6 @@
       setLoading(true);
       const { data } = await getTerminalConnectSessions(formModel);
       tableRenderData.value = data;
-    } catch (e) {
     } finally {
       setLoading(false);
     }
@@ -177,7 +176,6 @@
       Message.success('已下线');
       // 移除行
       tableRenderData.value.splice(tableRenderData.value.findIndex(s => s.id === record.id), 1);
-    } catch (e) {
     } finally {
       setLoading(false);
     }

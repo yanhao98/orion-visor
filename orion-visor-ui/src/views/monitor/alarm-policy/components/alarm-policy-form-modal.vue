@@ -116,7 +116,6 @@
       setLoading(true);
       const { data } = await getAlarmPolicy(id);
       formModel.value = assignOmitRecord(data);
-    } catch (e) {
     } finally {
       setLoading(false);
     }
@@ -151,8 +150,6 @@
       }
       // 清空
       handlerClear();
-    } catch (e) {
-      return false;
     } finally {
       setLoading(false);
     }

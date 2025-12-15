@@ -30,6 +30,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.dromara.visor.common.constant.ErrorMessage;
 import org.dromara.visor.common.utils.Assert;
 import org.dromara.visor.framework.redis.core.utils.RedisMaps;
+import org.dromara.visor.framework.redis.core.utils.RedisUtils;
 import org.dromara.visor.framework.redis.core.utils.barrier.CacheBarriers;
 import org.dromara.visor.framework.security.core.utils.SecurityUtils;
 import org.dromara.visor.module.terminal.convert.CommandSnippetConvert;
@@ -84,7 +85,7 @@ public class CommandSnippetServiceImpl implements CommandSnippetService {
         Long id = record.getId();
         log.info("CommandSnippetService-createCommandSnippet id: {}, effect: {}", id, effect);
         // 删除缓存
-        RedisMaps.delete(CommandSnippetCacheKeyDefine.SNIPPET.format(userId));
+        RedisUtils.delete(CommandSnippetCacheKeyDefine.SNIPPET.format(userId));
         return id;
     }
 
@@ -109,7 +110,7 @@ public class CommandSnippetServiceImpl implements CommandSnippetService {
         int effect = commandSnippetDAO.update(null, update);
         log.info("CommandSnippetService-updateCommandSnippetById effect: {}", effect);
         // 删除缓存
-        RedisMaps.delete(CommandSnippetCacheKeyDefine.SNIPPET.format(userId));
+        RedisUtils.delete(CommandSnippetCacheKeyDefine.SNIPPET.format(userId));
         return effect;
     }
 
@@ -169,7 +170,7 @@ public class CommandSnippetServiceImpl implements CommandSnippetService {
     public Integer setGroupNull(Long userId, Long groupId) {
         int effect = commandSnippetDAO.setGroupIdWithNull(groupId);
         // 删除缓存
-        RedisMaps.delete(CommandSnippetCacheKeyDefine.SNIPPET.format(userId));
+        RedisUtils.delete(CommandSnippetCacheKeyDefine.SNIPPET.format(userId));
         return effect;
     }
 
@@ -192,7 +193,7 @@ public class CommandSnippetServiceImpl implements CommandSnippetService {
     public Integer deleteByGroupId(Long userId, Long groupId) {
         int effect = commandSnippetDAO.deleteByGroupId(groupId);
         // 删除缓存
-        RedisMaps.delete(CommandSnippetCacheKeyDefine.SNIPPET.format(userId));
+        RedisUtils.delete(CommandSnippetCacheKeyDefine.SNIPPET.format(userId));
         return effect;
     }
 

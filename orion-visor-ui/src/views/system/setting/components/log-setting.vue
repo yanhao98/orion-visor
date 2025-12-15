@@ -126,7 +126,6 @@
         settings: setting.value
       });
       Message.success('修改成功');
-    } catch (e) {
     } finally {
       setLoading(false);
     }
@@ -143,7 +142,6 @@
         'log.tracker-load-interval': toAnonymousNumber(data['log.tracker-load-interval']),
         'log.tracker-load-lines': toAnonymousNumber(data['log.tracker-load-lines']),
       };
-    } catch (e) {
     } finally {
       setLoading(false);
     }

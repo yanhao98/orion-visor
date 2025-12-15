@@ -30,7 +30,9 @@ import com.influxdb.client.write.Point;
 import com.influxdb.query.FluxRecord;
 import com.influxdb.query.FluxTable;
 import org.dromara.visor.common.constant.Const;
+import org.dromara.visor.common.constant.ErrorMessage;
 import org.dromara.visor.common.entity.chart.TimeChartSeries;
+import org.dromara.visor.common.utils.Assert;
 import org.dromara.visor.framework.influxdb.core.query.FluxQueryBuilder;
 
 import java.time.Instant;
@@ -66,6 +68,7 @@ public class InfluxdbUtils {
      * @param points points
      */
     public static void writePoints(List<Point> points) {
+        Assert.notNull(client, ErrorMessage.INFLUXDB_UNSUPPORTED);
         try (WriteApi api = client.makeWriteApi()) {
             // 写入指标
             api.writePoints(points);
@@ -79,6 +82,7 @@ public class InfluxdbUtils {
      * @return points
      */
     public static List<FluxTable> queryTable(String query) {
+        Assert.notNull(client, ErrorMessage.INFLUXDB_UNSUPPORTED);
         return client.getQueryApi().query(query);
     }
 

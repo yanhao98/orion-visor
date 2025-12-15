@@ -351,7 +351,6 @@
           });
           record.status = newStatus;
           Message.success(`已${dict.label}`);
-        } catch (e) {
         } finally {
           setLoading(false);
         }
@@ -374,7 +373,6 @@
           Message.success('删除成功');
           // 重新加载
           reload();
-        } catch (e) {
         } finally {
           setLoading(false);
         }
@@ -408,7 +406,6 @@
       pagination.total = data.total;
       pagination.current = request.page;
       pagination.pageSize = request.limit;
-    } catch (e) {
     } finally {
       setLoading(false);
     }

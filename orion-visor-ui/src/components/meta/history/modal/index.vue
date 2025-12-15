@@ -125,7 +125,6 @@
       Message.success('回滚成功');
       emits('updated');
       handleClear();
-    } catch (e) {
     } finally {
       setLoading(false);
     }
@@ -144,7 +143,6 @@
       pagination.total = data.total;
       pagination.current = request.page;
       pagination.pageSize = request.limit;
-    } catch (e) {
     } finally {
       setLoading(false);
     }

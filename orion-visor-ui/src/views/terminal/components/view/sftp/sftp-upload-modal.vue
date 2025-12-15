@@ -8,67 +8,73 @@
            :align-center="false"
            :mask-closable="false"
            :unmount-on-close="true"
-           :on-before-ok="handlerOk"
+           :on-before-ok="handleOk"
            @cancel="handleClose">
-    <div class="upload-container">
+    <a-form :model="formModel"
+            ref="formRef"
+            label-align="right"
+            :auto-label-width="true">
       <!-- 上传目录 -->
-      <div class="item-wrapper">
-        <div class="form-item">
-          <span class="item-label">上传至文件夹</span>
-          <a-input class="item-input"
-                   v-model="parentPath"
-                   placeholder="上传目录" />
+      <a-form-item field="parentPath"
+                   label="上传目录"
+                   :rules="[{ required: true, message: '请输入文件上传目录' }]">
+        <a-textarea ref="pathRef"
+                    v-model="formModel.parentPath"
+                    placeholder="上传目录"
+                    :auto-size="{ minRows: 3, maxRows: 3 }" />
+      </a-form-item>
+      <!-- 选择文件 -->
+      <a-form-item class="mb0" hide-asterisk>
+        <div class="button-container">
+          <!-- 选择文件 -->
+          <a-upload v-model:file-list="fileList"
+                    :auto-upload="false"
+                    :show-file-list="false"
+                    :multiple="true">
+            <template #upload-button>
+              <a-button type="primary" long>选择文件</a-button>
+            </template>
+          </a-upload>
+          <!-- 选择文件夹 -->
+          <a-upload v-model:file-list="fileList"
+                    :auto-upload="false"
+                    :show-file-list="false"
+                    :directory="true">
+            <template #upload-button>
+              <a-button type="primary" long>选择文件夹</a-button>
+            </template>
+          </a-upload>
         </div>
-      </div>
-      <a-space>
-        <!-- 选择文件 -->
-        <a-upload v-model:file-list="fileList"
-                  :auto-upload="false"
-                  :show-file-list="false"
-                  :multiple="true">
-          <template #upload-button>
-            <a-button type="primary">选择文件</a-button>
-          </template>
-        </a-upload>
-        <!-- 选择文件夹 -->
-        <a-upload v-model:file-list="fileList"
-                  :auto-upload="false"
-                  :show-file-list="false"
-                  :directory="true">
-          <template #upload-button>
-            <a-button type="primary">选择文件夹</a-button>
-          </template>
-        </a-upload>
-      </a-space>
-      <!-- 文件列表 -->
-      <a-upload v-if="fileList.length"
-                class="file-list-uploader"
-                v-model:file-list="fileList"
-                :auto-upload="false"
-                :show-file-list="true">
-        <template #upload-button />
-        <template #file-name="{ fileItem }">
-          <div class="file-name-wrapper">
+      </a-form-item>
+    </a-form>
+    <!-- 文件列表 -->
+    <a-upload v-if="fileList.length"
+              class="file-list-uploader"
+              v-model:file-list="fileList"
+              :auto-upload="false"
+              :show-file-list="true">
+      <template #upload-button />
+      <template #file-name="{ fileItem }">
+        <div class="file-name-wrapper">
+          <!-- 文件名称 -->
+          <a-tooltip position="left"
+                     :mini="true"
+                     :auto-fix-position="false"
+                     content-class="terminal-tooltip-content"
+                     arrow-class="terminal-tooltip-content"
+                     :content="fileItem.file.webkitRelativePath || fileItem.file.name">
             <!-- 文件名称 -->
-            <a-tooltip position="left"
-                       :mini="true"
-                       :auto-fix-position="false"
-                       content-class="terminal-tooltip-content"
-                       arrow-class="terminal-tooltip-content"
-                       :content="fileItem.file.webkitRelativePath || fileItem.file.name">
-              <!-- 文件名称 -->
-              <span class="file-name text-ellipsis">
-                {{ fileItem.file.webkitRelativePath || fileItem.file.name }}
-              </span>
-            </a-tooltip>
-            <!-- 文件大小 -->
-            <span class="file-size span-blue">
-              {{ getFileSize(fileItem.file.size) }}
+            <span class="file-name text-ellipsis">
+              {{ fileItem.file.webkitRelativePath || fileItem.file.name }}
             </span>
-          </div>
-        </template>
-      </a-upload>
-    </div>
+          </a-tooltip>
+          <!-- 文件大小 -->
+          <span class="file-size span-blue">
+            {{ getFileSize(fileItem.file.size) }}
+          </span>
+        </div>
+      </template>
+    </a-upload>
   </a-modal>
 </template>
 
@@ -81,12 +87,11 @@
 <script lang="ts" setup>
   import type { FileItem } from '@arco-design/web-vue';
   import type { ITerminalSession } from '@/views/terminal/interfaces';
-  import { ref } from 'vue';
+  import { ref, nextTick } from 'vue';
   import { useTerminalStore } from '@/store';
   import { Message } from '@arco-design/web-vue';
   import { getFileSize } from '@/utils/file';
   import useVisible from '@/hooks/visible';
-  import useLoading from '@/hooks/loading';
 
   const props = defineProps<{
     session?: ITerminalSession;
@@ -94,24 +99,31 @@
   const emits = defineEmits(['closed']);
 
   const { visible, setVisible } = useVisible();
-  const { loading, setLoading } = useLoading();
   const { transferManager } = useTerminalStore();
 
-  const parentPath = ref('');
+  const pathRef = ref();
+  const formRef = ref();
+  const formModel = ref({
+    parentPath: ''
+  });
   const fileList = ref<FileItem[]>([]);
 
   // 打开
   const open = (parent: string) => {
-    parentPath.value = parent;
+    formModel.value.parentPath = parent;
     setVisible(true);
+    nextTick(() => {
+      pathRef.value?.focus();
+    });
   };
 
   defineExpose({ open });
 
   // 确定
-  const handlerOk = async () => {
-    if (!parentPath.value) {
-      Message.error('请输入上传目录');
+  const handleOk = async () => {
+    // 验证参数
+    const error = await formRef.value.validate();
+    if (error) {
       return false;
     }
     if (!fileList.value.length) {
@@ -120,20 +132,19 @@
     }
     // 获取上传的文件
     const files = fileList.value.map(s => s.file as File);
-    // 普通上传
-    await transferManager.sftp.addUpload(props.session as ITerminalSession, parentPath.value, files);
-    // 清空
-    handlerClear();
+    await transferManager.sftp.addUpload(props.session as ITerminalSession, formModel.value.parentPath, files);
+    handleClose();
     return true;
   };
 
   // 关闭
   const handleClose = () => {
-    handlerClear();
+    handleClear();
+    setVisible(false);
   };
 
   // 清空
-  const handlerClear = () => {
+  const handleClear = () => {
     fileList.value = [];
     emits('closed');
   };
@@ -142,49 +153,24 @@
 
 <style lang="less" scoped>
   @file-size-width: 82px;
-  @item-label: 104px;
 
   .upload-container {
     width: 100%;
     padding: 20px;
   }
 
-  .item-wrapper {
-    margin-bottom: 24px;
+  .button-container {
     display: flex;
-    flex-direction: column;
+    width: 100%;
+    gap: 12px;
 
-    .form-item {
-      display: flex;
-      align-items: center;
-    }
-
-    .item-label {
-      width: @item-label;
-      padding-right: 8px;
-      display: flex;
-      justify-content: flex-end;
-      user-select: none;
-
-      &:after {
-        content: ':';
-        margin-left: 2px;
-      }
-    }
-
-    .item-input {
-      width: 376px;
-    }
-
-    .form-help {
-      margin: 4px 0 0 @item-label;
-      font-size: 12px;
-      color: var(--color-text-2);
+    :deep(.arco-upload) {
+      flex: 1;
     }
   }
 
   .file-list-uploader {
-    margin-top: 24px;
+    margin-top: 16px;
 
     :deep(.arco-upload) {
       display: none;
@@ -192,7 +178,7 @@
 
     :deep(.arco-upload-list) {
       padding: 0 12px 0 0;
-      max-height: calc(100vh - 496px);
+      max-height: calc(100vh - 536px);
       overflow-x: hidden;
       overflow-y: auto;
     }

@@ -457,7 +457,6 @@
     try {
       renderLoading.value = true;
       await reload();
-    } catch (e) {
     } finally {
       renderLoading.value = false;
     }

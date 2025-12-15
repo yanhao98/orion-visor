@@ -39,6 +39,7 @@ import org.dromara.visor.common.utils.Assert;
 import org.dromara.visor.framework.biz.operator.log.core.utils.OperatorLogs;
 import org.dromara.visor.framework.mybatis.core.query.DataQuery;
 import org.dromara.visor.framework.redis.core.utils.RedisMaps;
+import org.dromara.visor.framework.redis.core.utils.RedisUtils;
 import org.dromara.visor.framework.redis.core.utils.barrier.CacheBarriers;
 import org.dromara.visor.module.asset.convert.HostConvert;
 import org.dromara.visor.module.asset.dao.HostConfigDAO;
@@ -376,7 +377,7 @@ public class HostServiceImpl implements HostService {
 
     @Override
     public void clearCache() {
-        RedisMaps.scanKeysDelete(HostCacheKeyDefine.HOST_INFO.format("*"));
+        RedisUtils.scanKeysDelete(HostCacheKeyDefine.HOST_INFO.format("*"));
     }
 
     /**

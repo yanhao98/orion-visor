@@ -194,7 +194,6 @@
       } else {
         parameterFormModel.value = {};
       }
-    } catch (e) {
     } finally {
       setLoading(false);
     }
@@ -252,8 +251,6 @@
       historyRef.value.add(request);
       Message.success('已开始执行');
       emits('submit', data);
-    } catch (e) {
-      return false;
     } finally {
       setLoading(false);
     }

@@ -108,7 +108,6 @@
       Message.success('操作成功');
       // 查询数据
       await fetchTableData();
-    } catch (e) {
     } finally {
       setLoading(false);
     }
@@ -120,7 +119,6 @@
       setLoading(true);
       const { data } = await getLockedUserList();
       tableRenderData.value = data;
-    } catch (e) {
     } finally {
       setLoading(false);
     }

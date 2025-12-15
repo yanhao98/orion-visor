@@ -346,7 +346,7 @@ public class DataPermissionServiceImpl implements DataPermissionService {
                     .map(s -> DataPermissionCacheKeyDefine.DATA_PERMISSION_USER.format(value, s))
                     .forEach(keys::add);
         }
-        RedisLists.delete(keys);
+        RedisUtils.delete(keys);
     }
 
 }

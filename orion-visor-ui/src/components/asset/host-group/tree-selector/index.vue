@@ -48,7 +48,6 @@
     setLoading(true);
     try {
       treeData.value = await cacheStore.loadHostGroupTree();
-    } catch (e) {
     } finally {
       setLoading(false);
     }

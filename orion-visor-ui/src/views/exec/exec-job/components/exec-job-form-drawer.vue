@@ -251,7 +251,6 @@
       setLoading(true);
       const { data } = await getExecJob(id);
       renderForm({ ...defaultForm(), ...data });
-    } catch (e) {
     } finally {
       setLoading(false);
     }
@@ -316,7 +315,6 @@
       } else {
         parameter.value = [];
       }
-    } catch (e) {
     } finally {
       setLoading(false);
     }
@@ -359,8 +357,6 @@
       }
       // 清空
       handlerClear();
-    } catch (e) {
-      return false;
     } finally {
       setLoading(false);
     }

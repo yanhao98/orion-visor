@@ -32,6 +32,7 @@ import org.dromara.visor.common.constant.ErrorMessage;
 import org.dromara.visor.common.utils.Assert;
 import org.dromara.visor.framework.biz.operator.log.core.utils.OperatorLogs;
 import org.dromara.visor.framework.redis.core.utils.RedisMaps;
+import org.dromara.visor.framework.redis.core.utils.RedisUtils;
 import org.dromara.visor.framework.redis.core.utils.barrier.CacheBarriers;
 import org.dromara.visor.module.monitor.convert.AlarmPolicyConvert;
 import org.dromara.visor.module.monitor.dao.AlarmPolicyDAO;
@@ -114,7 +115,7 @@ public class AlarmPolicyServiceImpl implements AlarmPolicyService {
         // 重新加载上下文
         alarmEngineContext.reloadPolicy(id);
         // 删除缓存
-        RedisMaps.delete(AlarmPolicyCacheKeyDefine.ALARM_POLICY.format(record.getType()),
+        RedisUtils.delete(AlarmPolicyCacheKeyDefine.ALARM_POLICY.format(record.getType()),
                 AlarmPolicyCacheKeyDefine.ALARM_POLICY.format(Const.ALL));
         // 设置日志参数
         OperatorLogs.add(OperatorLogs.ID, id);
@@ -137,7 +138,7 @@ public class AlarmPolicyServiceImpl implements AlarmPolicyService {
         // 重新加载上下文
         alarmEngineContext.reloadPolicy(id);
         // 删除缓存
-        RedisMaps.delete(AlarmPolicyCacheKeyDefine.ALARM_POLICY.format(record.getType()),
+        RedisUtils.delete(AlarmPolicyCacheKeyDefine.ALARM_POLICY.format(record.getType()),
                 AlarmPolicyCacheKeyDefine.ALARM_POLICY.format(Const.ALL));
         return newId;
     }
@@ -165,7 +166,7 @@ public class AlarmPolicyServiceImpl implements AlarmPolicyService {
         // 重新加载上下文
         alarmEngineContext.reloadPolicy(id);
         // 删除缓存
-        RedisMaps.delete(AlarmPolicyCacheKeyDefine.ALARM_POLICY.format(record.getType()),
+        RedisUtils.delete(AlarmPolicyCacheKeyDefine.ALARM_POLICY.format(record.getType()),
                 AlarmPolicyCacheKeyDefine.ALARM_POLICY.format(Const.ALL));
         return effect;
     }

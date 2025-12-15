@@ -34,6 +34,7 @@ import org.dromara.visor.common.utils.Assert;
 import org.dromara.visor.framework.biz.operator.log.core.utils.OperatorLogs;
 import org.dromara.visor.framework.mybatis.core.query.Conditions;
 import org.dromara.visor.framework.redis.core.utils.RedisLists;
+import org.dromara.visor.framework.redis.core.utils.RedisUtils;
 import org.dromara.visor.framework.redis.core.utils.barrier.CacheBarriers;
 import org.dromara.visor.module.infra.convert.TagConvert;
 import org.dromara.visor.module.infra.dao.TagDAO;
@@ -116,7 +117,7 @@ public class TagServiceImpl implements TagService {
         int effect = tagDAO.updateById(updateRecord);
         log.info("HostProxyService-updateHostProxyById effect: {}", effect);
         // 删除缓存
-        RedisLists.delete(TagCacheKeyDefine.TAG_NAME.format(record.getType()));
+        RedisUtils.delete(TagCacheKeyDefine.TAG_NAME.format(record.getType()));
         return effect;
     }
 
@@ -201,7 +202,7 @@ public class TagServiceImpl implements TagService {
                 .distinct()
                 .map(TagCacheKeyDefine.TAG_NAME::format)
                 .collect(Collectors.toList());
-        RedisLists.delete(deleteKeys);
+        RedisUtils.delete(deleteKeys);
         return effect;
     }
 
@@ -225,7 +226,7 @@ public class TagServiceImpl implements TagService {
                 .distinct()
                 .map(TagCacheKeyDefine.TAG_NAME::format)
                 .collect(Collectors.toList());
-        RedisLists.delete(cacheKeys);
+        RedisUtils.delete(cacheKeys);
     }
 
     /**

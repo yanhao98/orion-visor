@@ -183,7 +183,6 @@
           Message.error(`主机 ${connectHostId} 不存在/无权限`);
         }
       }
-    } catch (e) {
     } finally {
       setLoading(false);
     }

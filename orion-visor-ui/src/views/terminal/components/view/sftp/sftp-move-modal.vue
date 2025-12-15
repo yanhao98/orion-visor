@@ -15,17 +15,19 @@
       <a-form-item field="path"
                    disabled
                    label="原始路径">
-        <a-input v-model="formModel.path"
-                 placeholder="原始路径" />
+        <a-textarea v-model="formModel.path"
+                    placeholder="原始路径"
+                    :auto-size="{ minRows: 3, maxRows: 3 }" />
       </a-form-item>
       <!-- 目标路径 -->
       <a-form-item field="target"
                    label="目标路径"
                    extra="目标路径可以是绝对路径/相对路径/名称 (可以包含 ./ ../)"
                    :rules="[{ required: true, message: '请输入目标路径' }]">
-        <a-input ref="targetRef"
-                 v-model="formModel.target"
-                 placeholder="请输入目标路径" />
+        <a-textarea ref="targetRef"
+                    v-model="formModel.target"
+                    placeholder="请输入目标路径"
+                    :auto-size="{ minRows: 3, maxRows: 3 }" />
       </a-form-item>
     </a-form>
   </a-modal>
@@ -70,18 +72,14 @@
 
   // 确定
   const handlerOk = async () => {
-    try {
-      // 验证参数
-      const error = await formRef.value.validate();
-      if (error) {
-        return false;
-      }
-      // 移动文件
-      if (props.session) {
-        props.session.move(formModel.value.path, formModel.value.target);
-      }
-    } catch (e) {
+    // 验证参数
+    const error = await formRef.value.validate();
+    if (error) {
       return false;
+    }
+    // 移动文件
+    if (props.session) {
+      props.session.move(formModel.value.path, formModel.value.target);
     }
   };
 

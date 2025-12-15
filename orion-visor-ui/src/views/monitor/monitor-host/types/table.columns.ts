@@ -18,13 +18,6 @@ const columns = [
     fixed: 'left',
     default: true,
   }, {
-    title: '主机规格',
-    dataIndex: 'hostSpec',
-    slotName: 'hostSpec',
-    width: 248,
-    align: 'left',
-    default: true,
-  }, {
     title: '告警策略',
     dataIndex: 'alarmPolicy',
     slotName: 'alarmPolicy',

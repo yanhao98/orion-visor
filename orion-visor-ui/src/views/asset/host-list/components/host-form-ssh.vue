@@ -166,7 +166,6 @@
       // 测试连接
       await testHostConnect({ id: props.hostId, type: HostType.SSH.value });
       Message.success('连接成功');
-    } catch (e) {
     } finally {
       setLoading(false);
     }

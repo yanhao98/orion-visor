@@ -30,7 +30,7 @@ export default function useHostConfigForm<T extends HostBaseConfig>(options: Use
       const { data } = await getHostConfig<T>({ hostId, type });
       data.useNewPassword = !data.hasPassword;
       formModel.value = data;
-    } catch (err: any) {
+    } catch (e) {
       Message.error('配置加载失败');
     } finally {
       setLoading(false);
@@ -62,7 +62,6 @@ export default function useHostConfigForm<T extends HostBaseConfig>(options: Use
         config: JSON.stringify(data),
       });
       Message.success('修改成功');
-    } catch (e) {
     } finally {
       setLoading(false);
     }

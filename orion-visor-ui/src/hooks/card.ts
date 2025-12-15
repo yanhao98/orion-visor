@@ -70,6 +70,7 @@ export const useCardFieldConfig = (table: string, originFieldConfig: CardFieldCo
       try {
         preferConfig = JSON.parse(localConfig as string);
       } catch (e) {
+        preferConfig = {};
       }
     }
     // 解析配置
@@ -92,6 +93,7 @@ export const useCardFieldConfig = (table: string, originFieldConfig: CardFieldCo
       try {
         preferConfig = JSON.parse(localConfig as string);
       } catch (e) {
+        preferConfig = {};
       }
     }
     // 设置缓存

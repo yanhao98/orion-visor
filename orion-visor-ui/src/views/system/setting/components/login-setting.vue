@@ -181,7 +181,7 @@
 
 <script lang="ts">
   export default {
-    name: 'loginSetting',
+    name: 'loginSetting'
   };
 </script>
 
@@ -213,7 +213,6 @@
         settings: setting.value
       });
       Message.success('修改成功');
-    } catch (e) {
     } finally {
       setLoading(false);
     }
@@ -233,7 +232,6 @@
         'login.login-failed-lock-time': toAnonymousNumber(data['login.login-failed-lock-time']),
         'login.login-failed-send-threshold': toAnonymousNumber(data['login.login-failed-send-threshold']),
       };
-    } catch (e) {
     } finally {
       setLoading(false);
     }

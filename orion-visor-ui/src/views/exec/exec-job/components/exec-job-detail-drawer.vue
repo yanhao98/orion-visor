@@ -99,7 +99,6 @@
 <script lang="ts" setup>
   import type { ExecJobQueryResponse } from '@/api/exec/exec-job';
   import { ref } from 'vue';
-  import useLoading from '@/hooks/loading';
   import useVisible from '@/hooks/visible';
   import { useDictStore } from '@/store';
   import { dateFormat } from '@/utils';
@@ -108,45 +107,32 @@
   import { EnabledStatus } from '@/types/const';
   import { execJobStatusKey } from '../types/const';
 
-  const { getDictValue, toOptions } = useDictStore();
+  const { getDictValue } = useDictStore();
   const { visible, setVisible } = useVisible();
-  const { loading, setLoading } = useLoading();
 
   const record = ref<ExecJobQueryResponse>({} as ExecJobQueryResponse);
 
   // 打开
   const open = async (id: any) => {
-    try {
-      // 查询计划任务
-      setLoading(true);
-      const { data } = await getExecJob(id);
-      record.value = data;
-      // 设置参数值
-      if (data.parameterSchema) {
-        const value = JSON.parse(data.parameterSchema);
-        if (value?.length) {
-          data.parameterSchema = JSON.stringify(value, undefined, 4);
-        } else {
-          data.parameterSchema = undefined as unknown as string;
-        }
+    const { data } = await getExecJob(id);
+    record.value = data;
+    // 设置参数值
+    if (data.parameterSchema) {
+      const value = JSON.parse(data.parameterSchema);
+      if (value?.length) {
+        data.parameterSchema = JSON.stringify(value, undefined, 4);
+      } else {
+        data.parameterSchema = undefined as unknown as string;
       }
-      setVisible(true);
-    } catch (e) {
-    } finally {
-      setLoading(false);
     }
+    setVisible(true);
   };
 
   defineExpose({ open });
 
   // 关闭
   const handleClose = () => {
-    handlerClear();
-  };
-
-  // 清空
-  const handlerClear = () => {
-    setLoading(false);
+    setVisible(false);
   };
 
 </script>

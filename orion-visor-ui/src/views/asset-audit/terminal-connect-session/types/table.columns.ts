@@ -20,6 +20,7 @@ const columns = [
     title: '连接主机',
     dataIndex: 'hostName',
     slotName: 'hostName',
+    minWidth: 218,
     align: 'left',
     ellipsis: true,
   }, {

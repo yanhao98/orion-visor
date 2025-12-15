@@ -78,7 +78,6 @@
         title: '根目录',
         children: render([...menus])
       }];
-    } catch (e) {
     } finally {
       setLoading(false);
     }

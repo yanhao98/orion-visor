@@ -22,33 +22,62 @@
  */
 package org.dromara.visor.framework.web.configuration.config;
 
+import cn.orionsec.kit.lang.utils.Strings;
+import cn.orionsec.kit.lang.utils.net.IPs;
 import lombok.Data;
+import org.dromara.visor.common.constant.Const;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
- * 对外服务配置属性
+ * api 配置属性
  *
  * @author Jiahang Li
  * @version 1.0.0
- * @since 2025/8/22 19:57
+ * @since 2025/12/8 14:00
  */
 @Data
-@ConfigurationProperties("orion.api.expose")
-public class ExposeApiConfig {
+@ConfigurationProperties("orion.api")
+public class OrionApiConfig {
+
+    private static final String URL_TEMPLATE = "http://{}:{}{}";
 
     /**
-     * 对外服务地址
+     * 公共 api 前缀
+     */
+    private String prefix;
+
+    /**
+     * 服务端主机地址
      */
     private String host;
 
     /**
-     * 对外服务请求头
+     * 服务端口
      */
-    private String header;
+    @Value("${server.port}")
+    private Integer port;
 
     /**
-     * 对外服务请求值
+     * 服务端 url
      */
-    private String token;
+    private String url;
+
+    public String getHost() {
+        if (Const.IP_0000.equalsIgnoreCase(host)) {
+            // 本机
+            return IPs.IP;
+        } else {
+            return host;
+        }
+    }
+
+    public String getUrl() {
+        if (!Strings.isBlank(url)) {
+            return url;
+        }
+        // 构建
+        return Strings.format(URL_TEMPLATE, this.getHost(), port, prefix);
+    }
 
 }

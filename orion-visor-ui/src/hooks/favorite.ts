@@ -23,7 +23,6 @@ export default function useFavorite(type: FavoriteType) {
         await addFavorite(request);
         record.favorite = true;
       }
-    } catch (e) {
     } finally {
       loading.value = false;
     }

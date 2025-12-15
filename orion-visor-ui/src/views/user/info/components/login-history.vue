@@ -89,7 +89,6 @@
         const { data } = await getCurrentLoginHistory(historyCount);
         list.value = data;
       }
-    } catch (e) {
     } finally {
       setLoading(false);
     }

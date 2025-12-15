@@ -75,7 +75,6 @@
             username: s.username,
           };
         });
-    } catch (e) {
     } finally {
       setLoading(false);
     }

@@ -30,6 +30,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.dromara.visor.common.constant.Const;
 import org.dromara.visor.framework.mybatis.core.query.ThenLambdaWrapper;
 import org.dromara.visor.framework.redis.core.utils.RedisMaps;
+import org.dromara.visor.framework.redis.core.utils.RedisUtils;
 import org.dromara.visor.framework.redis.core.utils.barrier.CacheBarriers;
 import org.dromara.visor.module.infra.dao.DataExtraDAO;
 import org.dromara.visor.module.infra.define.cache.DataExtraCacheKeyDefine;
@@ -92,7 +93,7 @@ public class DataExtraServiceImpl implements DataExtraService {
         insert.setValue(request.getValue());
         dataExtraDAO.insert(insert);
         // 删除缓存
-        RedisMaps.delete(DataExtraCacheKeyDefine.DATA_EXTRA.format(request.getUserId(), request.getType(), request.getItem()));
+        RedisUtils.delete(DataExtraCacheKeyDefine.DATA_EXTRA.format(request.getUserId(), request.getType(), request.getItem()));
         return insert.getId();
     }
 
@@ -114,7 +115,7 @@ public class DataExtraServiceImpl implements DataExtraService {
         Set<String> keys = rows.stream()
                 .map(s -> DataExtraCacheKeyDefine.DATA_EXTRA.format(s.getUserId(), s.getType(), s.getItem()))
                 .collect(Collectors.toSet());
-        RedisMaps.delete(keys);
+        RedisUtils.delete(keys);
     }
 
     @Override
@@ -133,7 +134,7 @@ public class DataExtraServiceImpl implements DataExtraService {
         // 更新
         int effect = dataExtraDAO.updateById(update);
         // 删除缓存
-        RedisMaps.delete(DataExtraCacheKeyDefine.DATA_EXTRA.format(data.getUserId(), data.getType(), data.getItem()));
+        RedisUtils.delete(DataExtraCacheKeyDefine.DATA_EXTRA.format(data.getUserId(), data.getType(), data.getItem()));
         return effect;
     }
 
@@ -315,7 +316,7 @@ public class DataExtraServiceImpl implements DataExtraService {
                 .map(s -> DataExtraCacheKeyDefine.DATA_EXTRA.format(s.getUserId(), s.getType(), s.getItem()))
                 .distinct()
                 .collect(Collectors.toList());
-        RedisMaps.delete(keys);
+        RedisUtils.delete(keys);
     }
 
     /**

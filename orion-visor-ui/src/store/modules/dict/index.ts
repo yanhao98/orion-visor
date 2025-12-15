@@ -42,7 +42,7 @@ export default defineStore('dict', {
         const { data } = await getDictValueList(unloadKeys);
         this.$patch(data as object);
       } catch (e) {
-      } finally {
+        console.error('load dict error', e);
       }
     },
 

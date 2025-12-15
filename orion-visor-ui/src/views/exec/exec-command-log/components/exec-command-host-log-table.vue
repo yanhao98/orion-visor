@@ -163,7 +163,6 @@
       record.startTime = data.startTime;
       record.finishTime = data.finishTime;
       record.refreshed = true;
-    } catch (e) {
     } finally {
       setLoading(false);
     }
@@ -185,7 +184,6 @@
       });
       Message.success('已中断');
       record.status = ExecHostStatus.INTERRUPTED;
-    } catch (e) {
     } finally {
       setLoading(false);
     }
@@ -199,7 +197,6 @@
       await deleteExecCommandHostLog(id);
       Message.success('删除成功');
       emits('refreshHost', logId);
-    } catch (e) {
     } finally {
       setLoading(false);
     }

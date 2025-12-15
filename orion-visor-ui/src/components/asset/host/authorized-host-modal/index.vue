@@ -160,7 +160,6 @@
       hosts.value = data;
       // 设置主机搜索选项
       filterOptions.value = getAuthorizedHostOptions(data.hostList);
-    } catch (e) {
     } finally {
       setLoading(false);
     }

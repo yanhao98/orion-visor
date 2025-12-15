@@ -101,7 +101,6 @@
         emits('loading', true);
         const { data } = await getHostGroupRelList(groupId as number);
         value.value = data.map(String);
-      } catch (e) {
       } finally {
         emits('loading', false);
       }

@@ -284,6 +284,7 @@ export default class LogAppender implements ILogAppender {
         this.client.close();
       }
     } catch (e) {
+      // ignored
     }
   }
 

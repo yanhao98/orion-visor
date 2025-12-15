@@ -220,6 +220,9 @@
       });
       series.value = data;
     } catch (e) {
+      console.error('load metrics error', e);
+      series.value = [];
+      return e;
     } finally {
       setLoading(false);
     }

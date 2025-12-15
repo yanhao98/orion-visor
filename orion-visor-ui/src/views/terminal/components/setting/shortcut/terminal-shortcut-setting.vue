@@ -175,7 +175,6 @@
         keys: shortcutKeys.value
       } as TerminalShortcutSetting);
       Message.success('保存成功');
-    } catch (e) {
     } finally {
       setLoading(false);
     }
@@ -232,7 +231,6 @@
   onMounted(async () => {
     try {
       await loadUserPreference();
-    } catch (e) {
     } finally {
       render.value = true;
     }

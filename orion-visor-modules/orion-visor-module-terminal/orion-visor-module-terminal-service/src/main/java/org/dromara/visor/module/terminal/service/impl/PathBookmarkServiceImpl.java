@@ -30,6 +30,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.dromara.visor.common.constant.ErrorMessage;
 import org.dromara.visor.common.utils.Assert;
 import org.dromara.visor.framework.redis.core.utils.RedisMaps;
+import org.dromara.visor.framework.redis.core.utils.RedisUtils;
 import org.dromara.visor.framework.redis.core.utils.barrier.CacheBarriers;
 import org.dromara.visor.framework.security.core.utils.SecurityUtils;
 import org.dromara.visor.module.terminal.convert.PathBookmarkConvert;
@@ -84,7 +85,7 @@ public class PathBookmarkServiceImpl implements PathBookmarkService {
         Long id = record.getId();
         log.info("PathBookmarkService-createPathBookmark id: {}, effect: {}", id, effect);
         // 删除缓存
-        RedisMaps.delete(PathBookmarkCacheKeyDefine.PATH_BOOKMARK.format(userId));
+        RedisUtils.delete(PathBookmarkCacheKeyDefine.PATH_BOOKMARK.format(userId));
         return id;
     }
 
@@ -109,7 +110,7 @@ public class PathBookmarkServiceImpl implements PathBookmarkService {
         int effect = pathBookmarkDAO.update(null, update);
         log.info("PathBookmarkService-updatePathBookmarkById effect: {}", effect);
         // 删除缓存
-        RedisMaps.delete(PathBookmarkCacheKeyDefine.PATH_BOOKMARK.format(userId));
+        RedisUtils.delete(PathBookmarkCacheKeyDefine.PATH_BOOKMARK.format(userId));
         return effect;
     }
 
@@ -169,7 +170,7 @@ public class PathBookmarkServiceImpl implements PathBookmarkService {
     public Integer setGroupNull(Long userId, Long groupId) {
         int effect = pathBookmarkDAO.setGroupIdWithNull(groupId);
         // 删除缓存
-        RedisMaps.delete(PathBookmarkCacheKeyDefine.PATH_BOOKMARK.format(userId));
+        RedisUtils.delete(PathBookmarkCacheKeyDefine.PATH_BOOKMARK.format(userId));
         return effect;
     }
 
@@ -192,7 +193,7 @@ public class PathBookmarkServiceImpl implements PathBookmarkService {
     public Integer deleteByGroupId(Long userId, Long groupId) {
         int effect = pathBookmarkDAO.deleteByGroupId(groupId);
         // 删除缓存
-        RedisMaps.delete(PathBookmarkCacheKeyDefine.PATH_BOOKMARK.format(userId));
+        RedisUtils.delete(PathBookmarkCacheKeyDefine.PATH_BOOKMARK.format(userId));
         return effect;
     }
 

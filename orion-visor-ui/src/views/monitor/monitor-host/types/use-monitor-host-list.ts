@@ -1,4 +1,4 @@
-import type { MonitorHostQueryResponse, } from '@/api/monitor/monitor-host';
+import type { MonitorHostQueryResponse } from '@/api/monitor/monitor-host';
 import { getMonitorHostMetrics, updateMonitorHostAlarmSwitch } from '@/api/monitor/monitor-host';
 import type { HostAgentLogResponse } from '@/api/asset/host-agent';
 import { getAgentInstallLogStatus, getHostAgentStatus, installHostAgent, updateAgentInstallStatus } from '@/api/asset/host-agent';
@@ -69,13 +69,11 @@ export default function useMonitorHostList(options: UseMonitorHostListOptions) {
             Message.success('开始安装');
             // 重新加载
             reload();
-          } catch (e) {
           } finally {
             setLoading(false);
           }
         }
       });
-    } catch (e) {
     } finally {
       setLoading(false);
     }
@@ -99,7 +97,6 @@ export default function useMonitorHostList(options: UseMonitorHostListOptions) {
           });
           log.status = AgentLogStatus.SUCCESS;
           Message.success('状态已修正');
-        } catch (e) {
         } finally {
           setLoading(false);
         }
@@ -126,7 +123,6 @@ export default function useMonitorHostList(options: UseMonitorHostListOptions) {
           });
           record.alarmSwitch = newSwitch;
           Message.success(`已${dict.label}`);
-        } catch (e) {
         } finally {
           setLoading(false);
         }
@@ -178,6 +174,7 @@ export default function useMonitorHostList(options: UseMonitorHostListOptions) {
           });
         });
       } catch (e) {
+        // ignored
       }
     }
   };
@@ -199,6 +196,7 @@ export default function useMonitorHostList(options: UseMonitorHostListOptions) {
           });
         });
       } catch (e) {
+        // ignored
       }
     }
   };

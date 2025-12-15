@@ -487,7 +487,6 @@
           await updateMonitorHostAlarmSwitch({ idList, alarmSwitch });
           rows.forEach(s => s.alarmSwitch = alarmSwitch);
           Message.success(`已${label}`);
-        } catch (e) {
         } finally {
           setLoading(false);
         }
@@ -505,7 +504,6 @@
       pagination.current = request.page;
       pagination.pageSize = request.limit;
       selectedKeys.value = [];
-    } catch (e) {
     } finally {
       setLoading(false);
     }

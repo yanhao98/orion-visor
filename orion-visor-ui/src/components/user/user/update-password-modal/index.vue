@@ -127,8 +127,6 @@
       // 清空
       handlerClear();
       emits('updated');
-    } catch (e) {
-      return false;
     } finally {
       setLoading(false);
     }

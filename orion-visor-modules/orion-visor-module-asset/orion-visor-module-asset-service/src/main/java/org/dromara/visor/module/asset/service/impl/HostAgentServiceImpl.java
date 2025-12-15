@@ -31,7 +31,6 @@ import cn.orionsec.kit.lang.utils.io.FileReaders;
 import cn.orionsec.kit.lang.utils.io.Files1;
 import cn.orionsec.kit.lang.utils.io.compress.CompressTypeEnum;
 import cn.orionsec.kit.lang.utils.io.compress.FileDecompressor;
-import cn.orionsec.kit.lang.utils.net.IPs;
 import lombok.extern.slf4j.Slf4j;
 import org.dromara.visor.common.constant.Const;
 import org.dromara.visor.common.constant.ErrorMessage;
@@ -41,6 +40,8 @@ import org.dromara.visor.common.utils.Assert;
 import org.dromara.visor.common.utils.PathUtils;
 import org.dromara.visor.framework.biz.operator.log.core.utils.OperatorLogs;
 import org.dromara.visor.framework.redis.core.utils.RedisStrings;
+import org.dromara.visor.framework.web.configuration.config.ExposeApiConfig;
+import org.dromara.visor.framework.web.configuration.config.OrionApiConfig;
 import org.dromara.visor.module.asset.convert.HostConvert;
 import org.dromara.visor.module.asset.dao.HostAgentLogDAO;
 import org.dromara.visor.module.asset.dao.HostDAO;
@@ -53,7 +54,6 @@ import org.dromara.visor.module.asset.enums.*;
 import org.dromara.visor.module.asset.handler.agent.intstall.AgentInstaller;
 import org.dromara.visor.module.asset.handler.agent.model.AgentInstallParams;
 import org.dromara.visor.module.asset.service.HostAgentService;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -77,8 +77,11 @@ public class HostAgentServiceImpl implements HostAgentService {
 
     private String localVersion;
 
-    @Value("${orion.api.expose.token}")
-    private String exposeToken;
+    @Resource
+    private OrionApiConfig orionApiConfig;
+
+    @Resource
+    private ExposeApiConfig exposeApiConfig;
 
     @Resource
     private HostDAO hostDAO;
@@ -302,8 +305,8 @@ public class HostAgentServiceImpl implements HostAgentService {
      */
     private Map<String, String> getReplaceVars() {
         Map<String, String> map = new HashMap<>();
-        map.put("SERVER_HOST", IPs.IP);
-        map.put("SERVER_TOKEN", exposeToken);
+        map.put("SERVER_URL", orionApiConfig.getUrl());
+        map.put("SERVER_TOKEN", exposeApiConfig.getToken());
         return map;
     }
 

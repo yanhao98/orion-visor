@@ -27,6 +27,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import lombok.extern.slf4j.Slf4j;
 import org.dromara.visor.common.utils.Assert;
 import org.dromara.visor.framework.redis.core.utils.RedisLists;
+import org.dromara.visor.framework.redis.core.utils.RedisUtils;
 import org.dromara.visor.framework.redis.core.utils.barrier.CacheBarriers;
 import org.dromara.visor.framework.security.core.utils.SecurityUtils;
 import org.dromara.visor.module.infra.convert.FavoriteConvert;
@@ -79,7 +80,7 @@ public class FavoriteServiceImpl implements FavoriteService {
         // 插入
         favoriteDAO.insert(record);
         // 删除缓存
-        RedisLists.delete(FavoriteCacheKeyDefine.FAVORITE.format(type, userId));
+        RedisUtils.delete(FavoriteCacheKeyDefine.FAVORITE.format(type, userId));
         return record.getId();
     }
 
@@ -91,7 +92,7 @@ public class FavoriteServiceImpl implements FavoriteService {
         // 删除库
         int effect = favoriteDAO.deleteFavorite(type, userId, relId);
         // 删除缓存
-        RedisLists.delete(FavoriteCacheKeyDefine.FAVORITE.format(type, userId));
+        RedisUtils.delete(FavoriteCacheKeyDefine.FAVORITE.format(type, userId));
         return effect;
     }
 

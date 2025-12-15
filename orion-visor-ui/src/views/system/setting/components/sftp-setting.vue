@@ -100,7 +100,6 @@
         settings: setting.value,
       });
       Message.success('修改成功');
-    } catch (e) {
     } finally {
       setLoading(false);
     }
@@ -115,7 +114,6 @@
         ...data,
         'sftp.preview-size': toAnonymousNumber(data['sftp.preview-size']),
       };
-    } catch (e) {
     } finally {
       setLoading(false);
     }

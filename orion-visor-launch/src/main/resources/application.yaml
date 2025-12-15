@@ -175,6 +175,10 @@ orion:
     prefix: ${orion.prefix}/api
     # 是否允许跨域
     cors: true
+    # 服务端主机地址
+    host: 0.0.0.0
+    # 服务端接口地址 默认自动生成
+    url:
     # 获取 IP 的请求头
     ip-headers: X-Forwarded-For,X-Real-IP
     # 对外服务
