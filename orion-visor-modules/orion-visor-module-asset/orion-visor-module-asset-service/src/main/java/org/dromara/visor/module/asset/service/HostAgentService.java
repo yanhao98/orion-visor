@@ -27,6 +27,7 @@ import org.dromara.visor.module.asset.entity.vo.HostAgentStatusVO;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 主机探针 服务类
@@ -49,8 +50,9 @@ public interface HostAgentService {
      * 安装探针
      *
      * @param request request
+     * @return agentKey:installId
      */
-    void installAgent(HostAgentInstallRequest request);
+    Map<String, Long> installAgent(HostAgentInstallRequest request);
 
     /**
      * 上传探针发布包

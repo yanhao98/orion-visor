@@ -24,7 +24,7 @@ package org.dromara.visor.module.infra.handler.preference.strategy;
 
 import cn.orionsec.kit.lang.utils.collect.Lists;
 import cn.orionsec.kit.net.host.ssh.TerminalType;
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson2.JSONObject;
 import org.dromara.visor.common.handler.data.strategy.AbstractGenericsDataStrategy;
 import org.dromara.visor.module.infra.handler.preference.model.TerminalPreferenceModel;
 import org.springframework.stereotype.Component;

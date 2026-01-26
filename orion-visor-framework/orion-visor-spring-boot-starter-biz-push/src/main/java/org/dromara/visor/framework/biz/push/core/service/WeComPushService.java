@@ -25,7 +25,7 @@ package org.dromara.visor.framework.biz.push.core.service;
 import cn.orionsec.kit.http.ok.OkRequests;
 import cn.orionsec.kit.http.ok.OkResponse;
 import cn.orionsec.kit.lang.constant.StandardContentType;
-import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson2.JSON;
 import lombok.extern.slf4j.Slf4j;
 import org.dromara.visor.common.utils.Assert;
 import org.dromara.visor.framework.biz.push.core.annotation.MessageChannel;

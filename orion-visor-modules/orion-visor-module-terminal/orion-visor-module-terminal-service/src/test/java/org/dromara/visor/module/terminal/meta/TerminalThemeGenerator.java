@@ -26,10 +26,10 @@ import cn.orionsec.kit.lang.utils.Colors;
 import cn.orionsec.kit.lang.utils.collect.Lists;
 import cn.orionsec.kit.lang.utils.io.FileReaders;
 import cn.orionsec.kit.lang.utils.io.Files1;
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.annotation.JSONField;
-import com.alibaba.fastjson.serializer.ValueFilter;
+import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.JSONObject;
+import com.alibaba.fastjson2.annotation.JSONField;
+import com.alibaba.fastjson2.filter.ValueFilter;
 import lombok.Data;
 
 import java.io.File;

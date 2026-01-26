@@ -28,8 +28,8 @@ import cn.orionsec.kit.lang.utils.Strings;
 import cn.orionsec.kit.lang.utils.collect.Maps;
 import cn.orionsec.kit.lang.utils.reflect.Annotations;
 import cn.orionsec.kit.lang.utils.reflect.Fields;
-import com.alibaba.fastjson.annotation.JSONField;
-import com.alibaba.fastjson.serializer.ValueFilter;
+import com.alibaba.fastjson2.annotation.JSONField;
+import com.alibaba.fastjson2.filter.ValueFilter;
 import org.dromara.visor.common.constant.Const;
 import org.dromara.visor.framework.desensitize.core.annotation.Desensitize;
 import org.dromara.visor.framework.desensitize.core.annotation.DesensitizeObject;
@@ -53,7 +53,7 @@ public class DesensitizeValueFilter implements ValueFilter {
     private static final Map<String, Map<String, Desensitize>> DESENSITIZE_FIELDS = new HashMap<>();
 
     @Override
-    public Object process(Object object, String name, Object value) {
+    public Object apply(Object object, String name, Object value) {
         if (object == null || value == null) {
             return value;
         }

@@ -106,7 +106,7 @@ public class HostAgentEndpointServiceImpl implements HostAgentEndpointService {
         try {
             // 查询主机信息
             Long hostId = hostDAO.selectIdByAgentKey(agentKey);
-            Assert.notNull(hostId, ErrorMessage.HOST_ABSENT);
+            Assert.notNull(hostId, ErrorMessage.AGENT_KEY_NOT_FOUND, agentKey);
             // 查询主机规格信息
             HostSpecExtraModel spec = hostExtraService.getHostExtra(Const.SYSTEM_USER_ID, hostId, HostExtraItemEnum.SPEC);
             Boolean synced = Optional.ofNullable(spec)
@@ -149,7 +149,7 @@ public class HostAgentEndpointServiceImpl implements HostAgentEndpointService {
         log.info("HostAgentEndpointService setAgentOffline agentKey: {}", agentKey);
         // 查询主机信息
         Long hostId = hostDAO.selectIdByAgentKey(agentKey);
-        Assert.notNull(hostId, ErrorMessage.HOST_ABSENT);
+        Assert.notNull(hostId, ErrorMessage.AGENT_KEY_NOT_FOUND, agentKey);
         // 修改缓存
         ONLINE_STATUS_CACHE.put(agentKey, AgentOnlineStatusEnum.OFFLINE.getValue());
         HEARTBEAT_RECV_CACHE.put(agentKey, 0L);

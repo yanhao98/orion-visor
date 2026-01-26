@@ -27,8 +27,8 @@ import cn.orionsec.kit.lang.utils.Exceptions;
 import cn.orionsec.kit.lang.utils.Refs;
 import cn.orionsec.kit.lang.utils.Strings;
 import cn.orionsec.kit.lang.utils.json.matcher.ReplacementFormatters;
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.serializer.SerializeFilter;
+import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.filter.Filter;
 import org.dromara.visor.common.entity.RequestIdentity;
 import org.dromara.visor.common.enums.BooleanBit;
 import org.dromara.visor.common.security.LoginUser;
@@ -54,7 +54,7 @@ import java.util.Optional;
  */
 public class OperatorLogFiller implements Gettable<OperatorLogModel> {
 
-    private static SerializeFilter[] serializeFilters;
+    private static Filter[] serializeFilters;
 
     private static OperatorLogConfig operatorLogConfig;
 
@@ -275,7 +275,7 @@ public class OperatorLogFiller implements Gettable<OperatorLogModel> {
         return model;
     }
 
-    public static void setSerializeFilters(SerializeFilter[] serializeFilters) {
+    public static void setSerializeFilters(Filter[] serializeFilters) {
         if (OperatorLogFiller.serializeFilters != null) {
             // unmodified
             throw Exceptions.state();

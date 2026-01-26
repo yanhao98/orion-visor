@@ -23,7 +23,7 @@
 package org.dromara.visor.module.monitor.utils;
 
 import cn.orionsec.kit.lang.utils.Strings;
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson2.JSONObject;
 import com.influxdb.client.write.Point;
 import org.dromara.visor.module.monitor.enums.MeasurementEnum;
 

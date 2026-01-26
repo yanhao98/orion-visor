@@ -22,7 +22,7 @@
  */
 package org.dromara.visor.module.infra.api.impl;
 
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson2.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import org.dromara.visor.module.infra.api.DictValueApi;
 import org.dromara.visor.module.infra.service.DictValueService;

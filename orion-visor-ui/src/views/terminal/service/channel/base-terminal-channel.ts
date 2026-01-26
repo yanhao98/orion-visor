@@ -27,8 +27,8 @@ export default abstract class BaseTerminalChannel<T extends ITerminalSession> im
     try {
       await this.openChannel();
     } catch (e) {
-      Message.error('无法连接至服务器');
-      console.error('terminal error', e);
+      Message.error('无法连接 websocket');
+      console.error('terminal websocket error', e);
       throw e;
     }
     if (this.client) {

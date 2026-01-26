@@ -23,17 +23,17 @@
 package ${currentPackage};
 
 import cn.orionsec.kit.lang.utils.collect.Lists;
-import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson2.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import lombok.extern.slf4j.Slf4j;
 import org.dromara.visor.common.constant.ErrorMessage;
 import org.dromara.visor.common.utils.Assert;
-#foreach($pkg in ${customModuleFilePackages})
-import ${pkg}.*;
-#end
-#foreach($pkg in ${customProviderFilePackages})
-import ${pkg}.*;
-#end
+    #foreach($pkg in ${customModuleFilePackages})
+    import ${pkg}.*;
+    #end
+    #foreach($pkg in ${customProviderFilePackages})
+    import ${pkg}.*;
+    #end
 import ${package.Entity}.${entity};
 import ${package.Mapper}.${table.mapperName};
 import ${package.Service}.${table.serviceName};
@@ -66,7 +66,7 @@ public class ${type}ApiImpl implements ${type}Api {
         log.info("${type}Api.create${type} dto: {}", JSON.toJSONString(dto));
         Assert.valid(dto);
         // 转换
-        ${type}CreateRequest request = ${type}ProviderConvert.MAPPER.toRequest(dto);
+            ${type}CreateRequest request = ${type}ProviderConvert.MAPPER.toRequest(dto);
         // 创建
         return ${typeLower}Service.create${type}(request);
     }
@@ -76,7 +76,7 @@ public class ${type}ApiImpl implements ${type}Api {
         log.info("${type}Api.update${type}ById dto: {}", JSON.toJSONString(dto));
         Assert.valid(dto);
         // 转换
-        ${type}UpdateRequest request = ${type}ProviderConvert.MAPPER.toRequest(dto);
+            ${type}UpdateRequest request = ${type}ProviderConvert.MAPPER.toRequest(dto);
         // 修改
         return ${typeLower}Service.update${type}ById(request);
     }
@@ -88,7 +88,7 @@ public class ${type}ApiImpl implements ${type}Api {
         Assert.valid(update);
         // 更新
         int effect = ${typeLower}Service.update${type}(${type}ProviderConvert.MAPPER.toRequest(query),
-                ${type}ProviderConvert.MAPPER.toRequest(update));
+                    ${type}ProviderConvert.MAPPER.toRequest(update));
         log.info("${type}Api.update${type} effect: {}", effect);
         return effect;
     }
@@ -98,7 +98,7 @@ public class ${type}ApiImpl implements ${type}Api {
         log.info("${type}Api.get${type}ById id: {}", id);
         Assert.notNull(id, ErrorMessage.ID_MISSING);
         // 修改
-        ${type}DO record = ${typeLower}DAO.selectById(id);
+            ${type}DO record = ${typeLower}DAO.selectById(id);
         if (record == null) {
             return null;
         }
@@ -129,14 +129,14 @@ public class ${type}ApiImpl implements ${type}Api {
     }
 
     #if($meta.enableCache)
-    @Override
-    public List<${type}DTO> get${type}ListByCache() {
-        return ${typeLower}Service.get${type}ListByCache()
-                .stream()
-                .map(${type}ProviderConvert.MAPPER::to)
-                .sorted(Comparator.comparing(${type}DTO::getId))
-                .collect(Collectors.toList());
-    }
+        @Override
+        public List<${type}DTO> get${type}ListByCache() {
+            return ${typeLower}Service.get${type}ListByCache()
+                    .stream()
+                    .map(${type}ProviderConvert.MAPPER::to)
+                    .sorted(Comparator.comparing(${type}DTO::getId))
+                    .collect(Collectors.toList());
+        }
 
     #end
     @Override
@@ -186,7 +186,7 @@ public class ${type}ApiImpl implements ${type}Api {
      * @return wrapper
      */
     private LambdaQueryWrapper<${type}DO> buildQueryWrapper(${type}QueryDTO dto) {
-        return ${typeLower}DAO.wrapper()
+            return ${typeLower}DAO.wrapper()
         #foreach($field in ${table.fields})
                 .eq(${type}DO::get${field.capitalName}, dto.get${field.capitalName}())#if(!$foreach.hasNext);#end
         #end

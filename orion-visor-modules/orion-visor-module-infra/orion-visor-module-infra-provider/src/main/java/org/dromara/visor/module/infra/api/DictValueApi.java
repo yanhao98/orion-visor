@@ -22,7 +22,7 @@
  */
 package org.dromara.visor.module.infra.api;
 
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson2.JSONObject;
 
 import java.util.List;
 import java.util.Map;

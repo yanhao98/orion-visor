@@ -25,10 +25,10 @@ package org.dromara.visor.framework.log.core.interceptor;
 import cn.orionsec.kit.lang.utils.Strings;
 import cn.orionsec.kit.lang.utils.collect.Maps;
 import cn.orionsec.kit.lang.utils.reflect.Classes;
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.serializer.SerializeFilter;
-import com.alibaba.fastjson.serializer.ValueFilter;
+import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.JSONArray;
+import com.alibaba.fastjson2.filter.Filter;
+import com.alibaba.fastjson2.filter.ValueFilter;
 import org.aopalliance.intercept.MethodInvocation;
 import org.dromara.visor.common.json.FieldDesensitizeFilter;
 import org.dromara.visor.common.json.FieldIgnoreFilter;
@@ -65,7 +65,7 @@ public abstract class AbstractLogPrinterInterceptor implements LogPrinterInterce
     /**
      * 字段过滤器
      */
-    protected SerializeFilter[] serializeFilters;
+    protected Filter[] serializeFilters;
 
     /**
      * 脱敏配置
@@ -91,7 +91,7 @@ public abstract class AbstractLogPrinterInterceptor implements LogPrinterInterce
     @Override
     public void init() {
         // 参数过滤器
-        this.serializeFilters = new SerializeFilter[]{
+        this.serializeFilters = new Filter[]{
                 // 忽略字段过滤器
                 new FieldIgnoreFilter(config.getField().getIgnore()),
                 // 脱敏字段过滤器

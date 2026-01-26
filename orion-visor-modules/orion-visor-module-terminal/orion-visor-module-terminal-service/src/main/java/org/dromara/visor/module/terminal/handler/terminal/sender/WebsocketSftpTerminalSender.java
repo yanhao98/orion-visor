@@ -22,7 +22,7 @@
  */
 package org.dromara.visor.module.terminal.handler.terminal.sender;
 
-import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson2.JSON;
 import org.dromara.visor.common.enums.BooleanBit;
 import org.dromara.visor.module.terminal.handler.terminal.enums.OutputProtocolEnum;
 import org.dromara.visor.module.terminal.handler.terminal.model.response.*;

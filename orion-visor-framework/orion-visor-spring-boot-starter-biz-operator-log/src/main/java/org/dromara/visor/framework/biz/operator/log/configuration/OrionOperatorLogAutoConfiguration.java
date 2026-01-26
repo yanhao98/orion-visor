@@ -22,8 +22,7 @@
  */
 package org.dromara.visor.framework.biz.operator.log.configuration;
 
-import com.alibaba.fastjson.serializer.SerializeFilter;
-import com.alibaba.fastjson.serializer.ValueFilter;
+import com.alibaba.fastjson2.filter.Filter;
 import org.dromara.visor.common.constant.AutoConfigureOrderConst;
 import org.dromara.visor.common.json.FieldDesensitizeFilter;
 import org.dromara.visor.common.json.FieldIgnoreFilter;
@@ -55,7 +54,7 @@ import javax.annotation.Resource;
 public class OrionOperatorLogAutoConfiguration {
 
     @Resource
-    private ValueFilter desensitizeValueFilter;
+    private Filter desensitizeValueFilter;
 
     /**
      * 操作日志委托类
@@ -82,7 +81,7 @@ public class OrionOperatorLogAutoConfiguration {
     public OperatorLogAspect operatorLogAspect(OperatorLogConfig operatorLogConfig,
                                                OperatorLogFrameworkService service) {
         // 参数过滤器
-        SerializeFilter[] serializeFilters = new SerializeFilter[]{
+        Filter[] serializeFilters = new Filter[]{
                 // 忽略字段过滤器
                 new FieldIgnoreFilter(operatorLogConfig.getIgnore()),
                 // 脱敏字段过滤器

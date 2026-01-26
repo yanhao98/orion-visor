@@ -456,7 +456,6 @@
   } = useMonitorHostList({
     hosts: tableRenderData,
     setLoading,
-    reload,
   });
 
   // 获取行样式

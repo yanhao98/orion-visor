@@ -30,7 +30,7 @@ import cn.orionsec.kit.lang.utils.Strings;
 import cn.orionsec.kit.lang.utils.codec.Base64s;
 import cn.orionsec.kit.lang.utils.crypto.Signatures;
 import cn.orionsec.kit.lang.utils.crypto.enums.SecretKeySpecMode;
-import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson2.JSON;
 import lombok.extern.slf4j.Slf4j;
 import org.dromara.visor.common.utils.Assert;
 import org.dromara.visor.framework.biz.push.core.annotation.MessageChannel;

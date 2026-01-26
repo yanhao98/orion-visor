@@ -23,7 +23,7 @@
 package org.dromara.visor.module.infra.service;
 
 import cn.orionsec.kit.lang.define.wrapper.DataGrid;
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson2.JSONObject;
 import org.dromara.visor.module.infra.entity.request.dict.DictValueCreateRequest;
 import org.dromara.visor.module.infra.entity.request.dict.DictValueQueryRequest;
 import org.dromara.visor.module.infra.entity.request.dict.DictValueRollbackRequest;

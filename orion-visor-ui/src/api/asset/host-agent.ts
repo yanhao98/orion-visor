@@ -50,7 +50,7 @@ export interface HostAgentInstallStatusUpdateRequest {
  * 安装主机探针
  */
 export function installHostAgent(request: HostInstallAgentRequest) {
-  return axios.post('/asset/host-agent/install', request);
+  return axios.post<Record<string, number>>('/asset/host-agent/install', request);
 }
 
 /**

@@ -23,7 +23,7 @@
 package org.dromara.visor.module.terminal.handler.terminal.enums;
 
 import cn.orionsec.kit.spring.SpringHolder;
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson2.JSONObject;
 import lombok.Getter;
 import org.dromara.visor.module.terminal.handler.terminal.handler.*;
 import org.dromara.visor.module.terminal.handler.terminal.model.TerminalBasePayload;

@@ -29,7 +29,7 @@ import cn.orionsec.kit.lang.utils.collect.Maps;
 import cn.orionsec.kit.lang.utils.json.matcher.NoMatchStrategy;
 import cn.orionsec.kit.lang.utils.json.matcher.ReplacementFormatter;
 import cn.orionsec.kit.lang.utils.json.matcher.ReplacementFormatters;
-import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson2.JSON;
 import org.dromara.visor.common.constant.Const;
 import org.dromara.visor.module.exec.entity.dto.ExecParameterSchemaDTO;
 

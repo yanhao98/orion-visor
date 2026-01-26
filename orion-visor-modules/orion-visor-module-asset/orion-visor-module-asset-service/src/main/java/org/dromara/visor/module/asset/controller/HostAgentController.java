@@ -45,6 +45,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 主机探针端点 api
@@ -90,9 +91,8 @@ public class HostAgentController {
     @PostMapping("/install")
     @Operation(summary = "安装主机探针")
     @PreAuthorize("@ss.hasPermission('asset:host:install-agent')")
-    public Boolean installAgent(@Validated @RequestBody HostAgentInstallRequest request) {
-        hostAgentService.installAgent(request);
-        return true;
+    public Map<String, Long> installAgent(@Validated @RequestBody HostAgentInstallRequest request) {
+        return hostAgentService.installAgent(request);
     }
 
     @DemoDisableApi

@@ -405,7 +405,6 @@
   } = useMonitorHostList({
     hosts: renderList,
     setLoading,
-    reload,
   });
 
   // 重置条件

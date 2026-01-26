@@ -1,9 +1,9 @@
-import type { MonitorHostQueryResponse } from '@/api/monitor/monitor-host';
-import { getMonitorHostMetrics, updateMonitorHostAlarmSwitch } from '@/api/monitor/monitor-host';
-import type { HostAgentLogResponse } from '@/api/asset/host-agent';
-import { getAgentInstallLogStatus, getHostAgentStatus, installHostAgent, updateAgentInstallStatus } from '@/api/asset/host-agent';
 import type { Ref } from 'vue';
-import { onActivated, onDeactivated, onMounted, onUnmounted, ref } from 'vue';
+import type { MonitorHostQueryResponse } from '@/api/monitor/monitor-host';
+import type { HostAgentLogResponse } from '@/api/asset/host-agent';
+import { getMonitorHostMetrics, updateMonitorHostAlarmSwitch } from '@/api/monitor/monitor-host';
+import { getAgentInstallLogStatus, getHostAgentStatus, installHostAgent, updateAgentInstallStatus } from '@/api/asset/host-agent';
+import { h, onActivated, onDeactivated, onMounted, onUnmounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useDictStore } from '@/store';
 import { Message, Modal } from '@arco-design/web-vue';
@@ -16,8 +16,6 @@ export interface UseMonitorHostListOptions {
   hosts: Ref<Array<MonitorHostQueryResponse>>;
   // 设置加载中
   setLoading: (loading: boolean) => void;
-  // 重新加载
-  reload: () => void;
 }
 
 // 使用监控主机列表
@@ -29,7 +27,7 @@ export default function useMonitorHostList(options: UseMonitorHostListOptions) {
 
   const router = useRouter();
   const { toggleDict } = useDictStore();
-  const { hosts, setLoading, reload } = options;
+  const { hosts, setLoading } = options;
 
   // 打开详情
   const openDetail = (hostId: number, name: string) => {
@@ -59,16 +57,50 @@ export default function useMonitorHostList(options: UseMonitorHostListOptions) {
       Modal.confirm({
         title: '安装提示',
         titleAlign: 'start',
-        bodyStyle: { 'white-space': 'pre-wrap' },
-        content: `请确保探针已关闭\n请确认文件夹是否有权限${hasWindows ? '\nWindows 系统仅支持探针上传, 请手动进行安装' : ''}`,
+        width: 520,
+        content: () => {
+          // 提示消息
+          const installConfirmContent = [
+            '请确保探针进程已关闭',
+            '请确认服务器 (${home}/orion/orion-visor/) 文件夹是否有读写权限',
+            'Linux 系统为 root 安装, 将会自动注册为服务 (systemctl)',
+            'Linux 系统非 root 安装, 服务器重启后需要手动重启探针 (nohup)',
+            hasWindows ? 'Windows 系统仅支持探针上传, 请手动进行安装' : '',
+            '请参考安装文档确保配置文件正确配置'
+          ].filter(Boolean);
+          // 提示节点
+          const nodes = installConfirmContent.map((text, i) => {
+            // 最后一行添加超链接
+            if (i === installConfirmContent.length - 1) {
+              return h('p', { class: 'my4' }, [
+                `${i + 1}. ${text} `,
+                h('a', {
+                  href: 'https://visor.orionsec.cn/agent/readme.html',
+                  target: '_blank'
+                }, '查看文档')
+              ]);
+            }
+            return h('p', { class: 'my4' }, `${i + 1}. ${text}`);
+          });
+          // 返回
+          return h('div', {}, nodes);
+        },
         okText: '确定',
         onOk: async () => {
           try {
             // 调用安装
-            await installHostAgent({ idList: hostIdList });
+            const { data } = await installHostAgent({ idList: hostIdList });
             Message.success('开始安装');
-            // 重新加载
-            reload();
+            // 设置状态
+            installHosts.forEach(host => {
+              const installId = data[host.agentKey];
+              if (installId) {
+                host.installLog = {
+                  id: installId,
+                  eventStatus: AgentLogStatus.WAIT,
+                } as any;
+              }
+            });
           } finally {
             setLoading(false);
           }

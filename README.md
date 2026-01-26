@@ -38,8 +38,8 @@
     </a>
     <a target="_blank"
        style="text-decoration: none !important;"
-       href="https://gitcode.com/dromara/orion-visor">
-      <img src="https://gitcode.com/dromara/orion-visor/star/badge.svg" alt="star"/>
+       href="https://atomgit.com/dromara/orion-visor">
+      <img src="https://atomgit.com/dromara/orion-visor/star/2025top.svg" alt="star" />
     </a>
 </p>
 
@@ -60,7 +60,7 @@
 * 🔗 演示地址: [https://dv.orionsec.cn/](https://dv.orionsec.cn/)
 * 🔏 演示账号: admin/admin
 * ⭐ 体验后可以点一下 `star`
-  这对我很重要! [github](https://github.com/dromara/orion-visor) [gitee](https://gitee.com/dromara/orion-visor) [gitcode](https://gitcode.com/dromara/orion-visor)
+  这对我很重要! [github](https://github.com/dromara/orion-visor) [gitee](https://gitee.com/dromara/orion-visor) [atomgit](https://atomgit.com/dromara/orion-visor)
 * 🌈 如果本项目对你有帮助请帮忙推广一下 让更多的人知道此项目!
 * 🎭 演示环境部分功能不可用, 完整功能请本地部署!
 
@@ -70,6 +70,10 @@
 # clone
 git clone --depth=1 https://github.com/dromara/orion-visor
 cd orion-visor
+# 复制配置
+cp .env.example .env
+# 修改配置
+vim .env
 # 启动
 docker compose up -d
 # 等待后端服务启动后 (2min±) 访问 http://localhost:1081/
@@ -171,6 +175,6 @@ QQ群: 755242157
 
 ![GVP](docs/assets/gvp.jpg?time=20250627 "GVP")
 
-## GitCode 最有影响力的开源项目 G-Star
+## AtomGit 最有影响力的开源项目 G-Star
 
 ![GSTAR](docs/assets/gstar.jpg?time=20250627 "GSTAR")

@@ -22,7 +22,7 @@
  */
 package org.dromara.visor.module.asset.service;
 
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson2.JSONObject;
 import org.dromara.visor.common.handler.data.model.GenericsDataModel;
 import org.dromara.visor.module.asset.entity.request.host.HostExtraUpdateRequest;
 import org.dromara.visor.module.asset.handler.host.extra.HostExtraItemEnum;

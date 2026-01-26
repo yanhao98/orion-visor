@@ -214,6 +214,8 @@ public interface ErrorMessage {
 
     String INFLUXDB_UNSUPPORTED = "InfluxDB 服务未开启";
 
+    String AGENT_KEY_NOT_FOUND = "未通过 agentKey 查询到对应的主机 ({})";
+
     /**
      * 是否为业务异常
      *

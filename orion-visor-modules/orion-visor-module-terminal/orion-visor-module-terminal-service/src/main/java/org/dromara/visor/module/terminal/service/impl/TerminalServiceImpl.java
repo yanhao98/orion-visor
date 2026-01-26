@@ -23,7 +23,7 @@
 package org.dromara.visor.module.terminal.service.impl;
 
 import cn.orionsec.kit.lang.id.UUIds;
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson2.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import org.dromara.visor.common.constant.ExtraFieldConst;
 import org.dromara.visor.common.security.LoginUser;

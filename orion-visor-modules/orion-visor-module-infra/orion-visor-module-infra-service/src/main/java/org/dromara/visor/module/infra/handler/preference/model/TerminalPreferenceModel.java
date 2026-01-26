@@ -23,7 +23,7 @@
 package org.dromara.visor.module.infra.handler.preference.model;
 
 import cn.orionsec.kit.lang.able.IJsonObject;
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson2.JSONObject;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

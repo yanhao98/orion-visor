@@ -25,7 +25,7 @@ package org.dromara.visor.common.json;
 import cn.orionsec.kit.lang.utils.Desensitizes;
 import cn.orionsec.kit.lang.utils.Objects1;
 import cn.orionsec.kit.lang.utils.collect.Lists;
-import com.alibaba.fastjson.serializer.ValueFilter;
+import com.alibaba.fastjson2.filter.ValueFilter;
 
 import java.util.List;
 
@@ -55,7 +55,7 @@ public class FieldDesensitizeFilter implements ValueFilter {
     }
 
     @Override
-    public Object process(Object object, String name, Object value) {
+    public Object apply(Object object, String name, Object value) {
         if (Lists.isEmpty(desensitizeFields) || !desensitizeFields.contains(name)) {
             return value;
         }

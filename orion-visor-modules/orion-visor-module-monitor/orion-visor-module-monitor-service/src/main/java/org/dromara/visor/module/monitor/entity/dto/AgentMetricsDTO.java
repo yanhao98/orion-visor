@@ -22,7 +22,7 @@
  */
 package org.dromara.visor.module.monitor.entity.dto;
 
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson2.JSONObject;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 

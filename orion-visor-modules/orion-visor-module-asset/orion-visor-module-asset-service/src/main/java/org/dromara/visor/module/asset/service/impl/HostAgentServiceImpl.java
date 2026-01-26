@@ -22,6 +22,7 @@
  */
 package org.dromara.visor.module.asset.service.impl;
 
+import cn.orionsec.kit.lang.function.Functions;
 import cn.orionsec.kit.lang.utils.Exceptions;
 import cn.orionsec.kit.lang.utils.Strings;
 import cn.orionsec.kit.lang.utils.collect.Lists;
@@ -133,7 +134,7 @@ public class HostAgentServiceImpl implements HostAgentService {
     }
 
     @Override
-    public void installAgent(HostAgentInstallRequest request) {
+    public Map<String, Long> installAgent(HostAgentInstallRequest request) {
         // 查询主机信息
         List<Long> idList = request.getIdList();
         List<HostDO> hosts = hostDAO.selectBatchIds(idList);
@@ -181,6 +182,12 @@ public class HostAgentServiceImpl implements HostAgentService {
             // 执行任务
             AgentInstaller.start(params);
         }
+
+        // 返回
+        return agentLogs.stream()
+                .collect(Collectors.toMap(HostAgentLogDO::getAgentKey,
+                        HostAgentLogDO::getId,
+                        Functions.right()));
     }
 
     @Override

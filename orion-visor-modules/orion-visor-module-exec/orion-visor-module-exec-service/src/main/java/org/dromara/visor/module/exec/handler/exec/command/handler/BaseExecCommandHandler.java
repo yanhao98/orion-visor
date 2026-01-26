@@ -37,7 +37,7 @@ import cn.orionsec.kit.net.host.SessionStore;
 import cn.orionsec.kit.net.host.sftp.SftpExecutor;
 import cn.orionsec.kit.net.host.ssh.command.CommandExecutor;
 import cn.orionsec.kit.spring.SpringHolder;
-import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson2.JSON;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.dromara.visor.common.constant.ErrorMessage;

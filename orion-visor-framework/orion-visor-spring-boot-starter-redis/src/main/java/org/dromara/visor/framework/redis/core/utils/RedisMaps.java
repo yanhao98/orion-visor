@@ -27,7 +27,7 @@ import cn.orionsec.kit.lang.function.Functions;
 import cn.orionsec.kit.lang.utils.Objects1;
 import cn.orionsec.kit.lang.utils.collect.Lists;
 import cn.orionsec.kit.lang.utils.collect.Maps;
-import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson2.JSON;
 import org.springframework.data.redis.core.HashOperations;
 
 import java.util.List;

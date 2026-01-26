@@ -7,7 +7,7 @@ set -e
 source ./project-build.sh "$@"
 
 # 版本号
-version=2.5.6
+version=2.5.7
 # 是否推送镜像
 push_image=false
 # 是否构建 latest
@@ -140,7 +140,7 @@ function modify_dockerfiles() {
     if [ -f "$file" ]; then
       echo "备份并修改: $file"
       cp "$file" "$file$backup_suffix"
-      sed -i 's/--platform=\TARGETPLATFORM//g' "$file"
+      sed -i "s/--platform=\$TARGETPLATFORM//g" "$file"
     else
       echo "文件不存在 -> $file"
     fi
@@ -189,7 +189,7 @@ function push_image_to_registry() {
       # 推送版本
       docker push "${namespace}/${image_name}:${version}"
       # 推送 latest
-      if [ "latest_image" = true ]; then
+      if [ "$latest_image" = true ]; then
         docker push "${namespace}/${image_name}:latest"
       fi
     done

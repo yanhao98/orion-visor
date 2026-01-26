@@ -25,9 +25,8 @@ package org.dromara.visor.framework.biz.operator.log.core.utils;
 import cn.orionsec.kit.lang.utils.Exceptions;
 import cn.orionsec.kit.lang.utils.Strings;
 import cn.orionsec.kit.lang.utils.collect.Maps;
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.serializer.SerializeFilter;
+import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.filter.Filter;
 import org.dromara.visor.common.constant.ExtraFieldConst;
 import org.dromara.visor.common.security.LoginUser;
 
@@ -44,7 +43,7 @@ public class OperatorLogs implements ExtraFieldConst {
 
     private static final String UN_SAVE_FLAG = "__un__save__";
 
-    private static SerializeFilter[] serializeFilters;
+    private static Filter[] serializeFilters;
 
     /**
      * 拓展信息
@@ -98,7 +97,7 @@ public class OperatorLogs implements ExtraFieldConst {
         if (obj == null) {
             return;
         }
-        if (obj instanceof JSONObject || obj instanceof com.alibaba.fastjson2.JSONObject) {
+        if (obj instanceof com.alibaba.fastjson2.JSONObject || obj instanceof com.alibaba.fastjson2.JSONObject) {
             EXTRA_HOLDER.get().putAll(JSON.parseObject(toJsonString(obj)));
         } else if (obj instanceof Map) {
             EXTRA_HOLDER.get().putAll((Map<String, ?>) obj);
@@ -204,7 +203,7 @@ public class OperatorLogs implements ExtraFieldConst {
                 .replaceAll("<br/>", "\n");
     }
 
-    public static void setSerializeFilters(SerializeFilter[] serializeFilters) {
+    public static void setSerializeFilters(Filter[] serializeFilters) {
         if (OperatorLogs.serializeFilters != null) {
             // unmodified
             throw Exceptions.state();

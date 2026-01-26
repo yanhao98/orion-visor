@@ -23,7 +23,7 @@
 package org.dromara.visor.module.infra.controller;
 
 import cn.orionsec.kit.lang.define.wrapper.DataGrid;
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson2.JSONObject;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;

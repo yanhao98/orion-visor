@@ -22,7 +22,7 @@
  */
 package org.dromara.visor.framework.biz.push.core.enums;
 
-import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson2.JSON;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.dromara.visor.framework.biz.push.core.message.*;

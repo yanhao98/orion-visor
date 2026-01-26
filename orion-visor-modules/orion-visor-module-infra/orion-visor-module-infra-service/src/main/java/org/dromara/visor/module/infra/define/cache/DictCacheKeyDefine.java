@@ -25,7 +25,7 @@ package org.dromara.visor.module.infra.define.cache;
 import cn.orionsec.kit.lang.define.cache.key.CacheKeyBuilder;
 import cn.orionsec.kit.lang.define.cache.key.CacheKeyDefine;
 import cn.orionsec.kit.lang.define.cache.key.struct.RedisCacheStruct;
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson2.JSONObject;
 import org.dromara.visor.module.infra.entity.dto.DictKeyCacheDTO;
 
 import java.util.concurrent.TimeUnit;
